@@ -6,6 +6,7 @@ This is repository contains very basic boilerplate for a [SA-MP#] gamemode/devel
 Setup
 -----
 1. Install [Visual Studio]. You can download the Express edition for free.
+1. Download the latest version of the boilerplate from the [releases] page.
 1. Download [mono] and extract the contents to the `/env` directory.
 1. Rename `/env/server.cfg.template` to `/env/server.cfg` and edit it. At the very least change the `rcon_password` value.
 1. If you haven't already, download [sa-mp server] which is available on the forums. Store it wherever you like. If you store it in your project directory, don't forget to add it to the `.gitignore` file.
@@ -27,3 +28,4 @@ If these instructions are unclear, or you have a question, open an issue.
 [visual studio]: http://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx
 [mono]: http://deploy.timpotze.nl/packages/mono-portable.zip
 [sa-mp server]: http://forum.sa-mp.com/forumdisplay.php?f=74
+[releases]: https://github.com/ikkentim/SampSharp-boilerplate/releases
