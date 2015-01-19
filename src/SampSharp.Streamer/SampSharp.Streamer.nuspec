@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ikkentim/SampSharp-streamer/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ikkentim/SampSharp-streamer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>-</releaseNotes>
+    <copyright>Copyright Tim Potze 2015</copyright>
+    <dependencies> 
+        <group>
+            <dependency id="SampSharp.GameMode" version="0.3.0" />
+        </group>
+    </dependencies>
+    <tags></tags>
+  </metadata>
+</package>

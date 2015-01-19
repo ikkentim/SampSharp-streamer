@@ -33,8 +33,9 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SampSharp.GameMode">
-      <HintPath>..\..\lib\SampSharp.GameMode.dll</HintPath>
+    <Reference Include="SampSharp.GameMode, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SampSharp.GameMode.0.3.0.0\lib\net45\SampSharp.GameMode.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -84,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Natives\StreamerNative.extended.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

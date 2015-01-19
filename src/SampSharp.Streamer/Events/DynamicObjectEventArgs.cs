@@ -17,7 +17,7 @@ using SampSharp.Streamer.World;
 
 namespace SampSharp.Streamer.Events
 {
-    public class DynamicObjectEventArgs : GameModeEventArgs
+    public class DynamicObjectEventArgs
     {
         public DynamicObjectEventArgs(int objectid)
         {

@@ -22,9 +22,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SampSharp.Streamer extension for SA-MP#")]
 [assembly: AssemblyDescription("Provides classes for SA-MP's streamer plugin")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Tim Potze")]
 [assembly: AssemblyProduct("SampSharp.Streamer extension for SA-MP#")]
-[assembly: AssemblyCopyright("Copyright © Tim Potze 2014")]
+[assembly: AssemblyCopyright("Copyright © Tim Potze 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -49,6 +49,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.2.0.0")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]
 [assembly: NeutralResourcesLanguage("en")]
