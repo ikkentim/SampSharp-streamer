@@ -50,13 +50,13 @@
     <Compile Include="Tests\StreamerTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SampSharp.Streamer\SampSharp.Streamer.csproj">
       <Project>{f3b075c9-82aa-4f06-bc37-457097f65315}</Project>
       <Name>SampSharp.Streamer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

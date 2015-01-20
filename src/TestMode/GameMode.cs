@@ -29,7 +29,7 @@ namespace TestMode
             new StreamerTest(),
         };
 
-        public override bool OnGameModeInit()
+        protected override void OnInitialized(EventArgs e)
         {
             SetGameModeText("sa-mp# testmode");
             UsePlayerPedAnims();
@@ -45,7 +45,7 @@ namespace TestMode
                 Console.WriteLine();
             }
 
-            return true;
+            base.OnInitialized(e);
         }
 
         protected override void LoadControllers(ControllerCollection controllers)
