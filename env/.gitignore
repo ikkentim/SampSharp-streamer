@@ -20,3 +20,4 @@ server_log.txt
 
 # Build directories
 /gamemode/
+/plugins/
