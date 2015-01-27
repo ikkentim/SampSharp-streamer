@@ -1,17 +1,4 @@
-﻿// SampSharp
-// Copyright (C) 2014 Tim Potze
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-// 
-// For more information, please refer to <http://unlicense.org>
-
-using System;
+﻿using System;
 using System.Linq;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Natives;
@@ -108,10 +95,10 @@ namespace SampSharp.Streamer.World
                 fontcolor, backcolor, textalignment);
         }
 
-        public event EventHandler<DynamicObjectEventArgs> Moved;
-        public event EventHandler<PlayerSelectDynamicObjectEventArgs> Selected;
-        public event EventHandler<PlayerEditDynamicObjectEventArgs> Edited;
-        public event EventHandler<PlayerShootDynamicObjectEventArgs> Shot;
+        public event EventHandler<EventArgs> Moved;
+        public event EventHandler<PlayerSelectEventArgs> Selected;
+        public event EventHandler<PlayerEditEventArgs> Edited;
+        public event EventHandler<PlayerShootEventArgs> Shot;
 
         protected override void Dispose(bool disposing)
         {
@@ -137,7 +124,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void Edit(GtaPlayer player)
         {
-            CheckDisposure();
+            CheckDisposed();
 
             Native.EditPlayerObject(player.Id, Id);
         }
@@ -154,7 +141,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void AttachTo(GtaVehicle vehicle, Vector offset, Vector rotation)
         {
-            CheckDisposure();
+            CheckDisposed();
 
             if (vehicle == null)
                 throw new ArgumentNullException("vehicle");
@@ -169,30 +156,30 @@ namespace SampSharp.Streamer.World
                 throw new ArgumentNullException("player");
             }
 
-            CheckDisposure();
+            CheckDisposed();
 
             StreamerNative.AttachCameraToDynamicObject(player.Id, Id);
         }
 
-        public virtual void OnMoved(DynamicObjectEventArgs e)
+        public virtual void OnMoved(EventArgs e)
         {
             if (Moved != null)
                 Moved(this, e);
         }
 
-        public virtual void OnSelected(PlayerSelectDynamicObjectEventArgs e)
+        public virtual void OnSelected(PlayerSelectEventArgs e)
         {
             if (Selected != null)
                 Selected(this, e);
         }
 
-        public virtual void OnEdited(PlayerEditDynamicObjectEventArgs e)
+        public virtual void OnEdited(PlayerEditEventArgs e)
         {
             if (Edited != null)
                 Edited(this, e);
         }
 
-        public virtual void OnShot(PlayerShootDynamicObjectEventArgs e)
+        public virtual void OnShot(PlayerShootEventArgs e)
         {
             if (Shot != null)
                 Shot(this, e);

@@ -1,17 +1,4 @@
-﻿// SampSharp
-// Copyright (C) 2014 Tim Potze
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-// 
-// For more information, please refer to <http://unlicense.org>
-
-using SampSharp.GameMode.Controllers;
+﻿using SampSharp.GameMode.Controllers;
 using SampSharp.Streamer.World;
 
 namespace SampSharp.Streamer.Controllers
@@ -31,25 +18,72 @@ namespace SampSharp.Streamer.Controllers
 
         public void RegisterStreamerEvents(Streamer streamer)
         {
-            streamer.DynamicObjectMoved += (sender, args) => DynamicObject.FindOrCreate(args.ObjectId).OnMoved(args);
-            streamer.PlayerEditDynamicObject +=
-                (sender, args) => DynamicObject.FindOrCreate(args.ObjectId).OnEdited(args);
-            streamer.PlayerEnterDynamicArea += (sender, args) => DynamicArea.FindOrCreate(args.AreaId).OnEnter(args);
-            streamer.PlayerEnterDynamicCheckpoint +=
-                (sender, args) => DynamicCheckpoint.FindOrCreate(args.CheckpointId).OnEnter(args);
-            streamer.PlayerEnterDynamicRaceCheckpoint +=
-                (sender, args) => DynamicRaceCheckpoint.FindOrCreate(args.CheckpointId).OnEnter(args);
-            streamer.PlayerLeaveDynamicArea += (sender, args) => DynamicArea.FindOrCreate(args.AreaId).OnLeave(args);
-            streamer.PlayerLeaveDynamicCheckpoint +=
-                (sender, args) => DynamicCheckpoint.FindOrCreate(args.CheckpointId).OnLeave(args);
-            streamer.PlayerLeaveDynamicRaceCheckpoint +=
-                (sender, args) => DynamicRaceCheckpoint.FindOrCreate(args.CheckpointId).OnLeave(args);
-            streamer.PlayerPickUpDynamicPickup +=
-                (sender, args) => DynamicPickup.FindOrCreate(args.PickupId).OnPickedUp(args);
-            streamer.PlayerSelectDynamicObject +=
-                (sender, args) => DynamicObject.FindOrCreate(args.ObjectId).OnSelected(args);
-            streamer.PlayerShootDynamicObject +=
-                (sender, args) => DynamicObject.FindOrCreate(args.ObjectId).OnShot(args);
+            streamer.DynamicObjectMoved += (sender, args) =>
+            {
+                var @object = sender as DynamicObject;
+                if (@object != null)
+                    @object.OnMoved(args);
+            };
+            streamer.PlayerEditDynamicObject += (sender, args) =>
+            {
+                var @object = sender as DynamicObject;
+                if (@object != null)
+                    @object.OnEdited(args);
+            };
+            streamer.PlayerEnterDynamicArea += (sender, args) =>
+            {
+                var area = sender as DynamicArea;
+                if (area != null)
+                    area.OnEnter(args);
+            };
+            streamer.PlayerEnterDynamicCheckpoint += (sender, args) =>
+            {
+                var checkpoint = sender as DynamicCheckpoint;
+                if (checkpoint != null)
+                    checkpoint.OnEnter(args);
+            };
+            streamer.PlayerEnterDynamicRaceCheckpoint += (sender, args) =>
+            {
+                var checkpoint = sender as DynamicRaceCheckpoint;
+                if (checkpoint != null)
+                    checkpoint.OnEnter(args);
+            };
+            streamer.PlayerLeaveDynamicArea += (sender, args) =>
+            {
+                var area = sender as DynamicArea;
+                if (area != null)
+                    area.OnLeave(args);
+            };
+            streamer.PlayerLeaveDynamicCheckpoint += (sender, args) =>
+            {
+                var checkpoint = sender as DynamicCheckpoint;
+                if (checkpoint != null)
+                    checkpoint.OnLeave(args);
+            };
+            streamer.PlayerLeaveDynamicRaceCheckpoint += (sender, args) =>
+            {
+                var checkpoint = sender as DynamicRaceCheckpoint;
+                if (checkpoint != null)
+                    checkpoint.OnLeave(args);
+            };
+            streamer.PlayerPickUpDynamicPickup += (sender, args) =>
+            {
+                var pickup = sender as DynamicPickup;
+                if (pickup != null)
+                    pickup.OnPickedUp(args);
+            };
+            streamer.PlayerSelectDynamicObject += (sender, args) =>
+            {
+                var @object = sender as DynamicObject;
+                if (@object != null)
+                    @object.OnSelected(args);
+            };
+            streamer.PlayerShootDynamicObject += (sender, args) =>
+            {
+                var @object = sender as DynamicObject;
+                if (@object != null)
+                    @object.OnShot(args);
+            };
         }
     }
 }

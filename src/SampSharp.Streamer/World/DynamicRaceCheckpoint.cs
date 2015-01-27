@@ -1,19 +1,7 @@
-﻿// SampSharp
-// Copyright (C) 2014 Tim Potze
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-// 
-// For more information, please refer to <http://unlicense.org>
-
-using System;
+﻿using System;
 using System.Linq;
 using SampSharp.GameMode.Definitions;
+using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Events;
@@ -80,12 +68,12 @@ namespace SampSharp.Streamer.World
             }
         }
 
-        public event EventHandler<PlayerDynamicRaceCheckpointEventArgs> Enter;
-        public event EventHandler<PlayerDynamicRaceCheckpointEventArgs> Leave;
+        public event EventHandler<PlayerEventArgs> Enter;
+        public event EventHandler<PlayerEventArgs> Leave;
 
         public void ToggleForPlayer(GtaPlayer player, bool toggle)
         {
-            CheckDisposure();
+            CheckDisposed();
 
             if (player == null)
             {
@@ -129,13 +117,13 @@ namespace SampSharp.Streamer.World
             StreamerNative.DestroyDynamicRaceCP(Id);
         }
 
-        public virtual void OnEnter(PlayerDynamicRaceCheckpointEventArgs e)
+        public virtual void OnEnter(PlayerEventArgs e)
         {
             if (Enter != null)
                 Enter(this, e);
         }
 
-        public virtual void OnLeave(PlayerDynamicRaceCheckpointEventArgs e)
+        public virtual void OnLeave(PlayerEventArgs e)
         {
             if (Leave != null)
                 Leave(this, e);

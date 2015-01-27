@@ -1,29 +1,14 @@
-﻿// SampSharp
-// Copyright (C) 2014 Tim Potze
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-// 
-// For more information, please refer to <http://unlicense.org>
-
-using System;
+﻿using System;
 using SampSharp.GameMode.Controllers;
-using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Natives;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Controllers;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Events;
 using SampSharp.Streamer.Natives;
 
 namespace SampSharp.Streamer
 {
-    public sealed class Streamer
+    public partial class Streamer
     {
         public static int TickRate
         {
@@ -63,17 +48,6 @@ namespace SampSharp.Streamer
             StreamerNative.ProcessActiveItems();
         }
 
-        public event EventHandler<DynamicObjectEventArgs> DynamicObjectMoved;
-        public event EventHandler<PlayerEditDynamicObjectEventArgs> PlayerEditDynamicObject;
-        public event EventHandler<PlayerSelectDynamicObjectEventArgs> PlayerSelectDynamicObject;
-        public event EventHandler<PlayerShootDynamicObjectEventArgs> PlayerShootDynamicObject;
-        public event EventHandler<PlayerDynamicPickupEventArgs> PlayerPickUpDynamicPickup;
-        public event EventHandler<PlayerDynamicCheckpointEventArgs> PlayerEnterDynamicCheckpoint;
-        public event EventHandler<PlayerDynamicCheckpointEventArgs> PlayerLeaveDynamicCheckpoint;
-        public event EventHandler<PlayerDynamicRaceCheckpointEventArgs> PlayerEnterDynamicRaceCheckpoint;
-        public event EventHandler<PlayerDynamicRaceCheckpointEventArgs> PlayerLeaveDynamicRaceCheckpoint;
-        public event EventHandler<PlayerDynamicAreaEventArgs> PlayerEnterDynamicArea;
-        public event EventHandler<PlayerDynamicAreaEventArgs> PlayerLeaveDynamicArea;
 
         public static Streamer Load(ControllerCollection controllers)
         {
@@ -116,103 +90,6 @@ namespace SampSharp.Streamer
 
             StreamerNative.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid);
         }
-
-        #region Callbacks
-
-        public void OnDynamicObjectMoved(int objectid)
-        {
-            if (DynamicObjectMoved != null)
-            {
-                DynamicObjectMoved(this, new DynamicObjectEventArgs(objectid));
-            }
-        }
-
-        public void OnPlayerEditDynamicObject(int playerid, int objectid, int response, float x, float y, float z,
-            float rx, float ry, float rz)
-        {
-            if (PlayerEditDynamicObject != null)
-            {
-                PlayerEditDynamicObject(this,
-                    new PlayerEditDynamicObjectEventArgs(playerid, objectid, (EditObjectResponse) response,
-                        new Vector(x, y, z), new Vector(rx, ry, rz)));
-            }
-        }
-
-        public void OnPlayerSelectDynamicObject(int playerid, int objectid, int modelid, float x, float y, float z)
-        {
-            if (PlayerSelectDynamicObject != null)
-            {
-                PlayerSelectDynamicObject(this,
-                    new PlayerSelectDynamicObjectEventArgs(playerid, objectid, modelid, new Vector(x, y, z)));
-            }
-        }
-
-        public void OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
-        {
-            if (PlayerShootDynamicObject != null)
-            {
-                PlayerShootDynamicObject(this,
-                    new PlayerShootDynamicObjectEventArgs(playerid, objectid, (Weapon) weaponid, new Vector(x, y, z)));
-            }
-        }
-
-        public void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)
-        {
-            if (PlayerPickUpDynamicPickup != null)
-            {
-                PlayerPickUpDynamicPickup(this, new PlayerDynamicPickupEventArgs(playerid, pickupid));
-            }
-        }
-
-        public void OnPlayerEnterDynamicCP(int playerid, int checkpointid)
-        {
-            if (PlayerEnterDynamicCheckpoint != null)
-            {
-                PlayerEnterDynamicCheckpoint(this, new PlayerDynamicCheckpointEventArgs(playerid, checkpointid));
-            }
-        }
-
-        public void OnPlayerLeaveDynamicCP(int playerid, int checkpointid)
-        {
-            if (PlayerLeaveDynamicCheckpoint != null)
-            {
-                PlayerLeaveDynamicCheckpoint(this, new PlayerDynamicCheckpointEventArgs(playerid, checkpointid));
-            }
-        }
-
-        public void OnPlayerEnterDynamicRaceCP(int playerid, int checkpointid)
-        {
-            if (PlayerEnterDynamicRaceCheckpoint != null)
-            {
-                PlayerEnterDynamicRaceCheckpoint(this, new PlayerDynamicRaceCheckpointEventArgs(playerid, checkpointid));
-            }
-        }
-
-        public void OnPlayerLeaveDynamicRaceCP(int playerid, int checkpointid)
-        {
-            if (PlayerLeaveDynamicRaceCheckpoint != null)
-            {
-                PlayerLeaveDynamicRaceCheckpoint(this, new PlayerDynamicRaceCheckpointEventArgs(playerid, checkpointid));
-            }
-        }
-
-        public void OnPlayerEnterDynamicArea(int playerid, int areaid)
-        {
-            if (PlayerEnterDynamicArea != null)
-            {
-                PlayerEnterDynamicArea(this, new PlayerDynamicAreaEventArgs(playerid, areaid));
-            }
-        }
-
-        public void OnPlayerLeaveDynamicArea(int playerid, int areaid)
-        {
-            if (PlayerLeaveDynamicArea != null)
-            {
-                PlayerLeaveDynamicArea(this, new PlayerDynamicAreaEventArgs(playerid, areaid));
-            }
-        }
-
-        #endregion
 
         #region Subclasses
 
