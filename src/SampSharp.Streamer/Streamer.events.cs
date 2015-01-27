@@ -19,32 +19,33 @@ namespace SampSharp.Streamer
         public event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
 
-        private void OnDynamicObjectMoved(DynamicObject @object, EventArgs e)
+        //todo: remove "Fix" postfix after bug ikkentim/SampSharp#88
+        private void OnDynamicObjectMovedFix(DynamicObject @object, EventArgs e)
         {
             if (DynamicObjectMoved != null)
                 DynamicObjectMoved(@object, e);
         }
 
-        private void OnPlayerEditDynamicObject(DynamicObject @object, PlayerEditEventArgs e)
+        private void OnPlayerEditDynamicObjectFix(DynamicObject @object, PlayerEditEventArgs e)
         {
             if (PlayerEditDynamicObject != null)
                 PlayerEditDynamicObject(@object, e);
         }
 
 
-        private void OnPlayerSelectDynamicObject(DynamicObject @object, PlayerSelectEventArgs e)
+        private void OnPlayerSelectDynamicObjectFix(DynamicObject @object, PlayerSelectEventArgs e)
         {
             if (PlayerSelectDynamicObject != null)
                 PlayerSelectDynamicObject(@object, e);
         }
 
-        private void OnPlayerShootDynamicObject(DynamicObject @object, PlayerShootEventArgs e)
+        private void OnPlayerShootDynamicObjectFix(DynamicObject @object, PlayerShootEventArgs e)
         {
             if (PlayerShootDynamicObject != null)
                 PlayerShootDynamicObject(@object, e);
         }
 
-        private void OnPlayerPickUpDynamicPickup(DynamicPickup pickup, PlayerEventArgs e)
+        private void OnPlayerPickUpDynamicPickupFix(DynamicPickup pickup, PlayerEventArgs e)
         {
             if (PlayerPickUpDynamicPickup != null)
                 PlayerPickUpDynamicPickup(pickup, e);
@@ -74,13 +75,13 @@ namespace SampSharp.Streamer
                 PlayerLeaveDynamicRaceCheckpoint(checkpoint, e);
         }
 
-        private void OnPlayerEnterDynamicArea(DynamicArea area, PlayerEventArgs e)
+        private void OnPlayerEnterDynamicAreaFix(DynamicArea area, PlayerEventArgs e)
         {
             if (PlayerEnterDynamicArea != null)
                 PlayerEnterDynamicArea(area, e);
         }
 
-        protected virtual void OnPlayerLeaveDynamicArea(DynamicArea area, PlayerEventArgs e)
+        private void OnPlayerLeaveDynamicAreaFix(DynamicArea area, PlayerEventArgs e)
         {
             if (PlayerLeaveDynamicArea != null)
                 PlayerLeaveDynamicArea(area, e);

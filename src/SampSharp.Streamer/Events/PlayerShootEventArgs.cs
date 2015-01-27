@@ -1,7 +1,6 @@
 ﻿using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
-using SampSharp.Streamer.World;
 
 namespace SampSharp.Streamer.Events
 {

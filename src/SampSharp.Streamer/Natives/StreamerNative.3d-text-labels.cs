@@ -6,14 +6,14 @@ namespace SampSharp.Streamer.Natives
 {
     public static partial class StreamerNative
     {
-        public static int CreateDynamic3DTextLabel(string text, Color color, float x, float y, float z,
+        public static int CreateDynamic3DTextLabel(string text, int color, float x, float y, float z,
             float drawdistance, int attachedplayer = GtaPlayer.InvalidId, int attachedvehicle = GtaVehicle.InvalidId,
             bool testlos = false, int worldid = -1, int interiorid = -1, int playerid = -1,
             float streamdistance = 100.0f)
         {
             return Native.CallNative("CreateDynamic3DTextLabel",
                 __arglist(
-                    text, (int) color, x, y, z, drawdistance, attachedplayer, attachedvehicle, testlos, worldid,
+                    text, color, x, y, z, drawdistance, attachedplayer, attachedvehicle, testlos, worldid,
                     interiorid, playerid, streamdistance));
         }
 

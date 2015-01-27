@@ -108,19 +108,9 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNativeAsBool("IsPointInDynamicArea", __arglist(areaid, x, y, z));
         }
 
-        public static bool IsPointInDynamicArea(int areaid, Vector point)
-        {
-            return IsPointInDynamicArea(areaid, point.X, point.Y, point.Z);
-        }
-
         public static bool IsPointInAnyDynamicArea(float x, float y, float z)
         {
             return Native.CallNativeAsBool("IsPointInAnyDynamicArea", __arglist(x, y, z));
-        }
-
-        public static bool IsPointInAnyDynamicArea(Vector point)
-        {
-            return IsPointInAnyDynamicArea(point.X, point.Y, point.Z);
         }
 
         public static int AttachDynamicAreaToObject(int areaid, int objectid,

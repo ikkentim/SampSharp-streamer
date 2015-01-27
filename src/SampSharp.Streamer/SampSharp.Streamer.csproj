@@ -76,7 +76,7 @@
     <Compile Include="World\DynamicObject.cs" />
     <Compile Include="World\DynamicPickup.cs" />
     <Compile Include="World\DynamicRaceCheckpoint.cs" />
-    <Compile Include="World\DynamicWorldObject.cs" />
+    <Compile Include="World\DynamicWorldObject`1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Natives\StreamerNative.3d-text-labels.cs" />

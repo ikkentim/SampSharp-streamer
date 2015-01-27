@@ -25,14 +25,24 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNative("Streamer_SetMaxItems", __arglist((int) type, items));
         }
 
-        public static int GetVisibleItems(StreamType type)
+        public static int GetVisibleItems(StreamType type, int playerid = -1)
         {
-            return Native.CallNative("Streamer_GetVisibleItems", __arglist((int) type));
+            return Native.CallNative("Streamer_GetVisibleItems", __arglist((int) type, playerid));
         }
 
-        public static int SetVisibleItems(StreamType type, int items)
+        public static int SetVisibleItems(StreamType type, int items, int playerid = -1)
         {
-            return Native.CallNative("Streamer_SetVisibleItems", __arglist((int) type, items));
+            return Native.CallNative("Streamer_SetVisibleItems", __arglist((int) type, items, playerid));
+        }
+
+        public static int GetRadiusMultiplier(StreamType type, out float multiplier, int playerid = -1)
+        {
+            return Native.CallNative("Streamer_GetRadiusMultiplier", __arglist((int) type, out multiplier, playerid));
+        }
+
+        public static int SetRadiusMultiplier(StreamType type, float multiplier, int playerid = -1)
+        {
+            return Native.CallNative("Streamer_SetRadiusMultiplier", __arglist((int) type, multiplier, playerid));
         }
 
         public static int GetCellDistance(out float distance)

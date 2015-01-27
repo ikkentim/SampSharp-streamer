@@ -2,6 +2,7 @@
 {
     public enum StreamType
     {
+        All = -1,
         Object = 0,
         Pickup = 1,
         Checkpoint = 2,

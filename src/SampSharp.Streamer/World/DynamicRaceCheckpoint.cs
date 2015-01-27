@@ -4,7 +4,6 @@ using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Events;
 using SampSharp.Streamer.Natives;
 
 namespace SampSharp.Streamer.World

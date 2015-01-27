@@ -1,6 +1,5 @@
 ﻿using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Natives;
-using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.World;
 
 namespace SampSharp.Streamer.Natives
@@ -108,10 +107,18 @@ namespace SampSharp.Streamer.Natives
                 __arglist(objectid, vehicleid, offsetx, offsety, offsetz, rx, ry, rz));
         }
 
-        public static int AttachDynamicObjectToVehicle(int objectid, int vehicleid, Vector offset, Vector rotation)
+        public static int AttachDynamicObjectToObject(int objectid, int attachtoid, float offsetx, float offsety,
+            float offsetz, float rx, float ry, float rz, bool syncrotation = true)
         {
-            return AttachDynamicObjectToVehicle(objectid, vehicleid, offset.X, offset.Y, offset.Z, rotation.X,
-                rotation.Y, rotation.Z);
+            return Native.CallNative("AttachDynamicObjectToObject",
+                __arglist(objectid, attachtoid, offsetx, offsety, offsetz, rx, ry, rz, syncrotation));
+        }
+
+        public static int AttachDynamicObjectToPlayer(int objectid, int playerid, float offsetx, float offsety,
+            float offsetz, float rx, float ry, float rz)
+        {
+            return Native.CallNative("AttachDynamicObjectToPlayer",
+                __arglist(objectid, playerid, offsetx, offsety, offsetz, rx, ry, rz));
         }
 
         public static int EditDynamicObject(int playerid, int objectid)
@@ -120,58 +127,52 @@ namespace SampSharp.Streamer.Natives
         }
 
         public static int GetDynamicObjectMaterial(int objectid, int materialindex, out int modelid, out string txdname,
-            out string texturename, out Color materialcolor, int maxtxdname, int maxtexturename)
+            out string texturename, out int materialcolor, int maxtxdname, int maxtexturename)
         {
-            int holderMaterialColor;
             int response = Native.CallNative("GetDynamicObjectMaterial", new[] {6, 7},
                 __arglist(
-                    objectid, materialindex, out modelid, out txdname, out texturename, out holderMaterialColor,
+                    objectid, materialindex, out modelid, out txdname, out texturename, out materialcolor,
                     maxtxdname,
                     maxtexturename));
-
-            materialcolor = holderMaterialColor;
             return response;
         }
 
         public static int SetDynamicObjectMaterial(int objectid, int materialindex, int modelid, string txdname,
-            string texturename, Color materialcolor = new Color())
+            string texturename, int materialcolor)
         {
             return Native.CallNative("SetDynamicObjectMaterial",
                 __arglist(
                     objectid, materialindex, modelid, txdname, texturename,
-                    materialcolor.GetColorValue(ColorFormat.ARGB)));
+                    materialcolor));
         }
 
         public static int GetDynamicObjectMaterialText(int objectid, int materialindex, out string text,
             out ObjectMaterialSize materialsize, out string fontface, out int fontsize, out bool bold,
-            out Color fontcolor, out Color backcolor, out ObjectMaterialTextAlign textalignment, int maxtext,
+            out int fontcolor, out int backcolor, out ObjectMaterialTextAlign textalignment, int maxtext,
             int maxfontface)
         {
-            int holderMaterialSize, holderTextAlignment, holderFontColor, holderBackColor, holderBold;
+            int holderMaterialSize, holderTextAlignment, holderBold;
             int retval = Native.CallNative("GetDynamicObjectMaterialText", new[] {10, 11},
                 __arglist(
                     objectid, materialindex, out text, out holderMaterialSize, out fontface, out fontsize,
                     out holderBold,
-                    out holderFontColor, out holderBackColor, out holderTextAlignment, maxtext, maxfontface));
+                    out fontcolor, out backcolor, out holderTextAlignment, maxtext, maxfontface));
 
             materialsize = (ObjectMaterialSize) holderMaterialSize;
             textalignment = (ObjectMaterialTextAlign) holderTextAlignment;
-            fontcolor = holderFontColor;
-            backcolor = holderBackColor;
             bold = holderBold != 0;
             return retval;
         }
 
         public static int SetDynamicObjectMaterialText(int objectid, int materialindex, string text,
             ObjectMaterialSize materialsize = ObjectMaterialSize.X256X128, string fontface = "Arial", int fontsize = 24,
-            bool bold = true, Color fontcolor = new Color(), Color backcolor = new Color(),
+            bool bold = true, int fontcolor = -1, int backcolor = 0,
             ObjectMaterialTextAlign textalignment = ObjectMaterialTextAlign.Center)
         {
-            //TODO: Default fontcolor should be white.
             return Native.CallNative("SetDynamicObjectMaterialText",
                 __arglist(
-                    objectid, materialindex, text, (int) materialsize, fontface, fontsize, bold, (int) fontcolor,
-                    (int) backcolor, (int) textalignment));
+                    objectid, materialindex, text, (int) materialsize, fontface, fontsize, bold, fontcolor, backcolor,
+                    (int) textalignment));
         }
     }
 }

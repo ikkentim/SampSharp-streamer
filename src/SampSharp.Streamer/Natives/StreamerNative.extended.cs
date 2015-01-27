@@ -1,7 +1,6 @@
 ﻿using System;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Natives;
-using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.World;
 
 namespace SampSharp.Streamer.Natives
@@ -83,7 +82,7 @@ namespace SampSharp.Streamer.Natives
                     maxinteriors, maxplayers));
         }
 
-        public static int CreateDynamicMapIconEx(float x, float y, float z, int type, Color color,
+        public static int CreateDynamicMapIconEx(float x, float y, float z, int type, int color,
             MapIconType style = MapIconType.Local, float streamdistance = 100.0f, int[] worlds = null,
             int[] interiors = null, int[] players = null, int maxworlds = -1, int maxinteriors = -1, int maxplayers = -1)
         {
@@ -98,11 +97,11 @@ namespace SampSharp.Streamer.Natives
 
             return Native.CallNative("CreateDynamicMapIconEx", new[] {10, 11, 12},
                 __arglist(
-                    x, y, z, type, (int) color, (int) style, streamdistance, worlds, interiors, players, maxworlds,
+                    x, y, z, type, color, (int) style, streamdistance, worlds, interiors, players, maxworlds,
                     maxinteriors, maxplayers));
         }
 
-        public static int CreateDynamic3DTextLabelEx(string text, Color color, float x, float y, float z,
+        public static int CreateDynamic3DTextLabelEx(string text, int color, float x, float y, float z,
             float drawdistance, int attachedplayer = GtaPlayer.InvalidId, int attachedvehicle = GtaVehicle.InvalidId,
             bool testlos = false, float streamdistance = 100.0f, int[] worlds = null, int[] interiors = null,
             int[] players = null, int maxworlds = -1, int maxinteriors = -1, int maxplayers = -1)
@@ -118,7 +117,7 @@ namespace SampSharp.Streamer.Natives
 
             return Native.CallNative("CreateDynamic3DTextLabelEx", new[] {13, 14, 15},
                 __arglist(
-                    text, (int) color, x, y, z, drawdistance, attachedplayer, attachedvehicle, testlos, streamdistance,
+                    text, color, x, y, z, drawdistance, attachedplayer, attachedvehicle, testlos, streamdistance,
                     worlds, interiors, players, maxworlds, maxinteriors, maxplayers));
         }
 
