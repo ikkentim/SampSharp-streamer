@@ -19,7 +19,7 @@ namespace TestMode
         protected override void OnInitialized(EventArgs e)
         {
             SetGameModeText("sa-mp# testmode");
-            UsePlayerPedAnims();
+            UsePlayerPedAnimations();
 
             Debug.WriteLine("Loading player classes...");
             AddPlayerClass(65, new Vector(5), 0);

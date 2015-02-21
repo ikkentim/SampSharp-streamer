@@ -84,7 +84,7 @@ namespace SampSharp.Streamer.World
             Color materialcolor = new Color())
         {
             StreamerNative.SetDynamicObjectMaterial(Id, materialindex, modelid, txdname, texturename,
-                Color.GetColorFromValue(materialcolor, ColorFormat.ARGB));
+                Color.FromInteger(materialcolor, ColorFormat.ARGB));
         }
 
         public void SetMaterialText(int materialindex, string text,
@@ -93,8 +93,8 @@ namespace SampSharp.Streamer.World
             ObjectMaterialTextAlign textalignment = ObjectMaterialTextAlign.Center)
         {
             StreamerNative.SetDynamicObjectMaterialText(Id, materialindex, text, materialsize, fontface, fontsize, bold,
-                Color.GetColorFromValue(fontcolor, ColorFormat.ARGB),
-                Color.GetColorFromValue(backcolor, ColorFormat.ARGB), textalignment);
+                Color.FromInteger(fontcolor, ColorFormat.ARGB),
+                Color.FromInteger(backcolor, ColorFormat.ARGB), textalignment);
         }
 
         public event EventHandler<EventArgs> Moved;
@@ -116,7 +116,7 @@ namespace SampSharp.Streamer.World
             StreamerNative.GetDynamicObjectMaterial(Id, materialindex, out modelid, out txdname, out texturename,
                 out holderMaterialColor, 64, 64);
 
-            materialColor = Color.GetColorFromValue(holderMaterialColor, ColorFormat.ARGB);
+            materialColor = Color.FromInteger(holderMaterialColor, ColorFormat.ARGB);
         }
 
         public void GetMaterialText(int materialindex, out string text, out ObjectMaterialSize materialSize,
@@ -127,13 +127,13 @@ namespace SampSharp.Streamer.World
             StreamerNative.GetDynamicObjectMaterialText(Id, materialindex, out text, out materialSize, out fontface,
                 out fontsize, out bold, out holderFontColor, out holderBackColor, out textalignment, 1024, 64);
 
-            fontcolor = Color.GetColorFromValue(holderFontColor, ColorFormat.ARGB);
-            backcolor = Color.GetColorFromValue(holderBackColor, ColorFormat.ARGB);
+            fontcolor = Color.FromInteger(holderFontColor, ColorFormat.ARGB);
+            backcolor = Color.FromInteger(holderBackColor, ColorFormat.ARGB);
         }
 
         public virtual void Edit(GtaPlayer player)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             Native.EditPlayerObject(player.Id, Id);
         }
@@ -150,7 +150,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void AttachTo(GtaVehicle vehicle, Vector offset, Vector rotation)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (vehicle == null)
                 throw new ArgumentNullException("vehicle");
@@ -166,7 +166,7 @@ namespace SampSharp.Streamer.World
                 throw new ArgumentNullException("player");
             }
 
-            CheckDisposed();
+            AssertNotDisposed();
 
             StreamerNative.AttachCameraToDynamicObject(player.Id, Id);
         }

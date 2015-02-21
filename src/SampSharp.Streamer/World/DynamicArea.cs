@@ -164,7 +164,7 @@ namespace SampSharp.Streamer.World
 
         public void AttachTo(IGameObject obj)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (obj == null)
             {
@@ -198,7 +198,7 @@ namespace SampSharp.Streamer.World
 
         public void AttachTo(GtaPlayer player)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (player == null)
             {
@@ -210,7 +210,7 @@ namespace SampSharp.Streamer.World
 
         public void AttachTo(GtaVehicle vehicle)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (vehicle == null)
             {
@@ -222,7 +222,7 @@ namespace SampSharp.Streamer.World
 
         public bool IsInArea(GtaPlayer player, bool recheck = false)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (player == null)
             {
@@ -234,7 +234,7 @@ namespace SampSharp.Streamer.World
 
         public bool IsInArea(IWorldObject obj)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (obj == null)
             {
@@ -246,14 +246,14 @@ namespace SampSharp.Streamer.World
 
         public bool IsInArea(Vector point)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             return StreamerNative.IsPointInDynamicArea(Id, point.X, point.Y, point.Z);
         }
 
         public bool IsAnyPlayerInArea(bool recheck = false)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             return StreamerNative.IsAnyPlayerInDynamicArea(Id, recheck);
         }
@@ -298,7 +298,7 @@ namespace SampSharp.Streamer.World
 
         public void ToggleForPlayer(GtaPlayer player, bool toggle)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (player == null)
             {

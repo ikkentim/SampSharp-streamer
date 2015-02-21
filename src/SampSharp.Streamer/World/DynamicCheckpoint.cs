@@ -51,7 +51,7 @@ namespace SampSharp.Streamer.World
 
         public void ToggleForPlayer(GtaPlayer player, bool toggle)
         {
-            CheckDisposed();
+            AssertNotDisposed();
 
             if (player == null)
             {
