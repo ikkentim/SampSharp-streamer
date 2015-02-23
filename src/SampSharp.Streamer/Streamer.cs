@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Natives;
 using SampSharp.GameMode.World;
@@ -10,6 +11,12 @@ namespace SampSharp.Streamer
 {
     public partial class Streamer
     {
+        public static bool IsToggleErrorCallback
+        {
+            get { return StreamerNative.IsToggleErrorCallback(); }
+            set { StreamerNative.ToggleErrorCallback(value); }
+        }
+
         public static int TickRate
         {
             get { return StreamerNative.GetTickRate(); }
@@ -53,6 +60,7 @@ namespace SampSharp.Streamer
         {
             var streamer = new Streamer();
             Native.RegisterExtension(streamer);
+
             var controller = new StreamerController();
 
             controller.RegisterStreamerEvents(streamer);

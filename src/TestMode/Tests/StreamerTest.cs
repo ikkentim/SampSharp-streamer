@@ -2,7 +2,6 @@
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
-using SampSharp.GameMode.SAMP.Commands;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer;
 using SampSharp.Streamer.World;
@@ -62,7 +61,7 @@ namespace TestMode.Tests
 
             new DynamicTextLabel("[I am maroon]", Color.Maroon, pickup.Position + new Vector(0, 0, 1), 100.0f);
 
-            var obj = new DynamicObject(12991, new Vector(15));
+            var obj = new DynamicObject(12991, new Vector(10, 10, 3));
             var offset = Vector.One;
             obj.SetMaterialText(1, "Test", ObjectMaterialSize.X512X512, "Arial", 30, false, Color.Black, Color.White);
             obj.Move(obj.Position + -offset, 0.6f, obj.Rotation + new Vector(0, 0, 25));

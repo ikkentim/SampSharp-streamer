@@ -64,5 +64,15 @@ namespace SampSharp.Streamer.Natives
         {
             return Native.CallNative("Streamer_SetCellSize", __arglist(size));
         }
+
+        public static int ToggleErrorCallback(bool toggle)
+        {
+            return Native.CallNative("Streamer_ToggleErrorCallback", __arglist(toggle));
+        }
+
+        public static bool IsToggleErrorCallback()
+        {
+            return Native.CallNativeAsBool("IsToggleErrorCallback");
+        }
     }
 }

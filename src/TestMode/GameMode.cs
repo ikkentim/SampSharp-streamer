@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
+using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.World;
 using TestMode.Tests;
 
@@ -21,8 +22,7 @@ namespace TestMode
             SetGameModeText("sa-mp# testmode");
             UsePlayerPedAnimations();
 
-            Debug.WriteLine("Loading player classes...");
-            AddPlayerClass(65, new Vector(5), 0);
+            AddPlayerClass(65, new Vector(5), 0, Weapon.AK47, 500);
 
             foreach (ITest test in _tests)
             {

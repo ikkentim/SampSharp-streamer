@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
@@ -11,34 +12,34 @@ namespace SampSharp.Streamer
     {
         internal void OnDynamicObjectMoved(int objectid)
         {
-            OnDynamicObjectMovedFix(DynamicObject.FindOrCreate(objectid), EventArgs.Empty);
+            OnDynamicObjectMoved(DynamicObject.FindOrCreate(objectid), EventArgs.Empty);
         }
 
         internal void OnPlayerEditDynamicObject(int playerid, int objectid, int response, float x, float y, float z,
             float rx, float ry, float rz)
         {
-            OnPlayerEditDynamicObjectFix(DynamicObject.FindOrCreate(objectid),
+            OnPlayerEditDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerEditEventArgs(GtaPlayer.FindOrCreate(playerid),
                     (EditObjectResponse) response, new Vector(x, y, z), new Vector(rx, ry, rz)));
         }
 
         internal void OnPlayerSelectDynamicObject(int playerid, int objectid, int modelid, float x, float y, float z)
         {
-            OnPlayerSelectDynamicObjectFix(DynamicObject.FindOrCreate(objectid),
+            OnPlayerSelectDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerSelectEventArgs(GtaPlayer.FindOrCreate(playerid), modelid,
                     new Vector(x, y, z)));
         }
 
         internal void OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
         {
-            OnPlayerShootDynamicObjectFix(DynamicObject.FindOrCreate(objectid),
+            OnPlayerShootDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerShootEventArgs(GtaPlayer.FindOrCreate(playerid), (Weapon) weaponid,
                     new Vector(x, y, z)));
         }
 
         internal void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)
         {
-            OnPlayerPickUpDynamicPickupFix(DynamicPickup.FindOrCreate(pickupid),
+            OnPlayerPickUpDynamicPickup(DynamicPickup.FindOrCreate(pickupid),
                 new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
         }
 
@@ -68,13 +69,13 @@ namespace SampSharp.Streamer
 
         internal void OnPlayerEnterDynamicArea(int playerid, int areaid)
         {
-            OnPlayerEnterDynamicAreaFix(DynamicArea.FindOrCreate(areaid),
+            OnPlayerEnterDynamicArea(DynamicArea.FindOrCreate(areaid),
                 new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerLeaveDynamicArea(int playerid, int areaid)
         {
-            OnPlayerLeaveDynamicAreaFix(DynamicArea.FindOrCreate(areaid),
+            OnPlayerLeaveDynamicArea(DynamicArea.FindOrCreate(areaid),
                 new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
         }
     }
