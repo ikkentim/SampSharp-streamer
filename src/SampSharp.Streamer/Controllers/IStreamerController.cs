@@ -19,6 +19,6 @@ namespace SampSharp.Streamer.Controllers
 {
     public interface IStreamerController : IController
     {
-        void RegisterStreamerEvents(Streamer streamer);
+        void RegisterStreamerEvents(IStreamer streamer);
     }
 }

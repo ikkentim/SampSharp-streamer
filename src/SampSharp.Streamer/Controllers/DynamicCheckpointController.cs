@@ -22,7 +22,7 @@ namespace SampSharp.Streamer.Controllers
     {
         #region Implementation of IStreamerController
 
-        public void RegisterStreamerEvents(Streamer streamer)
+        public void RegisterStreamerEvents(IStreamer streamer)
         {
             streamer.PlayerEnterDynamicCheckpoint += (sender, args) =>
             {

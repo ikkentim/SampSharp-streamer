@@ -35,73 +35,73 @@ namespace SampSharp.Streamer
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
         public event EventHandler<ErrorEventArgs> Error;
 
-        private void OnDynamicObjectMoved(DynamicObject @object, EventArgs e)
+        protected virtual void OnDynamicObjectMoved(DynamicObject @object, EventArgs e)
         {
             if (DynamicObjectMoved != null)
                 DynamicObjectMoved(@object, e);
         }
 
-        private void OnPlayerEditDynamicObject(DynamicObject @object, PlayerEditEventArgs e)
+        protected virtual void OnPlayerEditDynamicObject(DynamicObject @object, PlayerEditEventArgs e)
         {
             if (PlayerEditDynamicObject != null)
                 PlayerEditDynamicObject(@object, e);
         }
 
-        private void OnPlayerSelectDynamicObject(DynamicObject @object, PlayerSelectEventArgs e)
+        protected virtual void OnPlayerSelectDynamicObject(DynamicObject @object, PlayerSelectEventArgs e)
         {
             if (PlayerSelectDynamicObject != null)
                 PlayerSelectDynamicObject(@object, e);
         }
 
-        private void OnPlayerShootDynamicObject(DynamicObject @object, PlayerShootEventArgs e)
+        protected virtual void OnPlayerShootDynamicObject(DynamicObject @object, PlayerShootEventArgs e)
         {
             if (PlayerShootDynamicObject != null)
                 PlayerShootDynamicObject(@object, e);
         }
 
-        private void OnPlayerPickUpDynamicPickup(DynamicPickup pickup, PlayerEventArgs e)
+        protected virtual void OnPlayerPickUpDynamicPickup(DynamicPickup pickup, PlayerEventArgs e)
         {
             if (PlayerPickUpDynamicPickup != null)
                 PlayerPickUpDynamicPickup(pickup, e);
         }
 
-        private void OnPlayerEnterDynamicCheckpoint(DynamicCheckpoint checkpoint, PlayerEventArgs e)
+        protected virtual void OnPlayerEnterDynamicCheckpoint(DynamicCheckpoint checkpoint, PlayerEventArgs e)
         {
             if (PlayerEnterDynamicCheckpoint != null)
                 PlayerEnterDynamicCheckpoint(checkpoint, e);
         }
 
-        private void OnPlayerLeaveDynamicCheckpoint(DynamicCheckpoint checkpoint, PlayerEventArgs e)
+        protected virtual void OnPlayerLeaveDynamicCheckpoint(DynamicCheckpoint checkpoint, PlayerEventArgs e)
         {
             if (PlayerLeaveDynamicCheckpoint != null)
                 PlayerLeaveDynamicCheckpoint(checkpoint, e);
         }
 
-        private void OnPlayerEnterDynamicRaceCheckpoint(DynamicRaceCheckpoint checkpoint, PlayerEventArgs e)
+        protected virtual void OnPlayerEnterDynamicRaceCheckpoint(DynamicRaceCheckpoint checkpoint, PlayerEventArgs e)
         {
             if (PlayerEnterDynamicRaceCheckpoint != null)
                 PlayerEnterDynamicRaceCheckpoint(checkpoint, e);
         }
 
-        private void OnPlayerLeaveDynamicRaceCheckpoint(DynamicRaceCheckpoint checkpoint, PlayerEventArgs e)
+        protected virtual void OnPlayerLeaveDynamicRaceCheckpoint(DynamicRaceCheckpoint checkpoint, PlayerEventArgs e)
         {
             if (PlayerLeaveDynamicRaceCheckpoint != null)
                 PlayerLeaveDynamicRaceCheckpoint(checkpoint, e);
         }
 
-        private void OnPlayerEnterDynamicArea(DynamicArea area, PlayerEventArgs e)
+        protected virtual void OnPlayerEnterDynamicArea(DynamicArea area, PlayerEventArgs e)
         {
             if (PlayerEnterDynamicArea != null)
                 PlayerEnterDynamicArea(area, e);
         }
 
-        private void OnPlayerLeaveDynamicArea(DynamicArea area, PlayerEventArgs e)
+        protected virtual void OnPlayerLeaveDynamicArea(DynamicArea area, PlayerEventArgs e)
         {
             if (PlayerLeaveDynamicArea != null)
                 PlayerLeaveDynamicArea(area, e);
         }
 
-        private void OnError(ErrorEventArgs e)
+        protected virtual void OnError(ErrorEventArgs e)
         {
             if (Error != null)
                 Error(this, e);

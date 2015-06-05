@@ -13,11 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using SampSharp.GameMode;
+using SampSharp.GameMode.Events;
+using SampSharp.Streamer.Events;
 
 namespace SampSharp.Streamer
 {
     public interface IStreamer : IService
     {
+        event EventHandler<EventArgs> DynamicObjectMoved;
+        event EventHandler<PlayerEditEventArgs> PlayerEditDynamicObject;
+        event EventHandler<PlayerSelectEventArgs> PlayerSelectDynamicObject;
+        event EventHandler<PlayerShootEventArgs> PlayerShootDynamicObject;
+        event EventHandler<PlayerEventArgs> PlayerPickUpDynamicPickup;
+        event EventHandler<PlayerEventArgs> PlayerEnterDynamicCheckpoint;
+        event EventHandler<PlayerEventArgs> PlayerLeaveDynamicCheckpoint;
+        event EventHandler<PlayerEventArgs> PlayerEnterDynamicRaceCheckpoint;
+        event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
+        event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
+        event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
+        event EventHandler<ErrorEventArgs> Error;
     }
 }
