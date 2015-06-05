@@ -18,8 +18,6 @@ namespace SampSharp.Streamer.Events
 
         public GtaPlayer Player { get; private set; }
 
-        public EditObjectResponse EditObjectResponse { get; private set; }
-
         public EditObjectResponse Response { get; set; }
 
         public Vector Rotation { get; private set; }
