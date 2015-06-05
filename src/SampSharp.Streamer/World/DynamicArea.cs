@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
@@ -247,7 +248,7 @@ namespace SampSharp.Streamer.World
         public IEnumerable<Vector> GetPoints()
         {
             float[] points;
-            StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount());
+            StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount() * 2);
 
             if (points == null) yield break;
 

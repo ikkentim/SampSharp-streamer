@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Definitions;
@@ -25,11 +26,13 @@ namespace TestMode.Tests
                     Vector.One + new Vector(10, -10),
                     Vector.One + new Vector(10, 10),
                     Vector.One + new Vector(-10, 10)
-                }, -5, 10);
+                }, -100.0f, 100.0f);
 
             area.Enter += (sender, args) => args.Player.SendClientMessage("Entered polygon");
             area.Leave += (sender, args) => args.Player.SendClientMessage("Left polygon");
-            Console.WriteLine("area.IsValid = {0}, area.Position = {1}", area.IsValid, area.Position);
+
+            Console.WriteLine("area.IsValid = {0}, area.Position = {1}, Points = {2}", area.IsValid, area.Position,
+                string.Join(", ", area.GetPoints()));
 
             var area2 = DynamicArea.CreateRectangle(0, 0, 20, 20);
             area2.Enter += (sender, args) => args.Player.SendClientMessage("Entered Rectangle");

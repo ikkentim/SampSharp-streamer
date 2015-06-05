@@ -55,7 +55,7 @@ namespace SampSharp.Streamer.Natives
 
         public static int GetDynamicPolygonPoints(int areaid, out float[] points, int maxlength)
         {
-            return Native.CallNative("GetDynamicPolygonPoints", __arglist(areaid, out points, maxlength));
+            return Native.CallNative("GetDynamicPolygonPoints", new []{2}, __arglist(areaid, out points, maxlength));
         }
 
         public static int GetDynamicPolygonNumberPoints(int areaid)
