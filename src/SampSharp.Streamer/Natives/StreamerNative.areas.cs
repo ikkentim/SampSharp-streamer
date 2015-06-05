@@ -113,6 +113,16 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNativeAsBool("IsPointInAnyDynamicArea", __arglist(x, y, z));
         }
 
+        public static int GetDynamicAreasForPoint(float x, float y, float z, out int[] areas, int maxareas)
+        {
+            return Native.CallNative("GetDynamicAreasForPoint", __arglist(x, y, z, out areas, maxareas));
+        }
+
+        public static int GetNumberDynamicAreasForPoint(float x, float y, float z)
+        {
+            return Native.CallNative("GetNumberDynamicAreasForPoint", __arglist(x, y, z));
+        }
+
         public static int AttachDynamicAreaToObject(int areaid, int objectid,
             StreamerObjectType type = StreamerObjectType.Dynamic, int playerid = GtaPlayer.InvalidId)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
@@ -10,9 +11,9 @@ namespace TestMode.Tests
 {
     public class StreamerTest : ITest, IControllerTest
     {
-        public void LoadControllers(ControllerCollection controllers)
+        public void LoadControllers(BaseMode gameMode, ControllerCollection controllers)
         {
-            Streamer.Load(controllers);
+            Streamer.Load(gameMode, controllers);
         }
 
         public void Start(GameMode gameMode)

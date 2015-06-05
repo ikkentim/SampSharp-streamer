@@ -72,7 +72,7 @@ namespace SampSharp.Streamer.Natives
 
         public static bool IsToggleErrorCallback()
         {
-            return Native.CallNativeAsBool("IsToggleErrorCallback");
+            return Native.CallNativeAsBool("Streamer_IsToggleErrorCallback");
         }
     }
 }

@@ -29,21 +29,9 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNative("SetDynamicObjectPos", __arglist(objectid, x, y, z));
         }
 
-        public static int SetDynamicObjectPos(int objectid, Vector position)
-        {
-            return SetDynamicObjectPos(objectid, position.X, position.Y, position.Z);
-        }
-
         public static int GetDynamicObjectPos(int objectid, out float x, out float y, out float z)
         {
             return Native.CallNative("GetDynamicObjectPos", __arglist(objectid, out x, out y, out z));
-        }
-
-        public static Vector GetDynamicObjectPos(int objectid)
-        {
-            float x, y, z;
-            GetDynamicObjectPos(objectid, out x, out y, out z);
-            return new Vector(x, y, z);
         }
 
         public static int SetDynamicObjectRot(int objectid, float rx, float ry, float rz)
@@ -51,38 +39,20 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNative("SetDynamicObjectRot", __arglist(objectid, rx, ry, rz));
         }
 
-        public static int SetDynamicObjectRot(int objectid, Vector rotation)
-        {
-            return SetDynamicObjectRot(objectid, rotation.X, rotation.Y, rotation.Z);
-        }
-
         public static int GetDynamicObjectRot(int objectid, out float rx, out float ry, out float rz)
         {
             return Native.CallNative("GetDynamicObjectRot", __arglist(objectid, out rx, out ry, out rz));
         }
 
-        public static Vector GetDynamicObjectRot(int objectid)
+        public static int SetDynamicObjectNoCameraCol(int objectid)
         {
-            float x, y, z;
-            GetDynamicObjectRot(objectid, out x, out y, out z);
-            return new Vector(x, y, z);
+            return Native.CallNative("SetDynamicObjectNoCameraCol", __arglist(objectid));
         }
 
         public static int MoveDynamicObject(int objectid, float x, float y, float z, float speed, float rx = -1000.0f,
             float ry = -1000.0f, float rz = -1000.0f)
         {
             return Native.CallNative("MoveDynamicObject", __arglist(objectid, x, y, z, speed, rx, ry, rz));
-        }
-
-        public static int MoveDynamicObject(int objectid, Vector position, float speed, Vector rotation)
-        {
-            return MoveDynamicObject(objectid, position.X, position.Y, position.Z, speed, rotation.X, rotation.Y,
-                rotation.Z);
-        }
-
-        public static int MoveDynamicObject(int objectid, Vector position, float speed)
-        {
-            return MoveDynamicObject(objectid, position.X, position.Y, position.Z, speed);
         }
 
         public static int StopDynamicObject(int objectid)
@@ -100,13 +70,6 @@ namespace SampSharp.Streamer.Natives
             return Native.CallNative("AttachCameraToDynamicObject", __arglist(playerid, objectid));
         }
 
-        public static int AttachDynamicObjectToVehicle(int objectid, int vehicleid, float offsetx, float offsety,
-            float offsetz, float rx, float ry, float rz)
-        {
-            return Native.CallNative("AttachDynamicObjectToVehicle",
-                __arglist(objectid, vehicleid, offsetx, offsety, offsetz, rx, ry, rz));
-        }
-
         public static int AttachDynamicObjectToObject(int objectid, int attachtoid, float offsetx, float offsety,
             float offsetz, float rx, float ry, float rz, bool syncrotation = true)
         {
@@ -121,20 +84,30 @@ namespace SampSharp.Streamer.Natives
                 __arglist(objectid, playerid, offsetx, offsety, offsetz, rx, ry, rz));
         }
 
+        public static int AttachDynamicObjectToVehicle(int objectid, int vehicleid, float offsetx, float offsety,
+            float offsetz, float rx, float ry, float rz)
+        {
+            return Native.CallNative("AttachDynamicObjectToVehicle",
+                __arglist(objectid, vehicleid, offsetx, offsety, offsetz, rx, ry, rz));
+        }
+
         public static int EditDynamicObject(int playerid, int objectid)
         {
             return Native.CallNative("EditDynamicObject", __arglist(playerid, objectid));
         }
 
+        public static bool IsDynamicObjectMaterialUsed(int objectid, int materialindex)
+        {
+            return Native.CallNativeAsBool("IsDynamicObjectMaterialUsed", __arglist(objectid, materialindex));
+        }
+
         public static int GetDynamicObjectMaterial(int objectid, int materialindex, out int modelid, out string txdname,
             out string texturename, out int materialcolor, int maxtxdname, int maxtexturename)
         {
-            int response = Native.CallNative("GetDynamicObjectMaterial", new[] {6, 7},
+            return Native.CallNative("GetDynamicObjectMaterial", new[] {6, 7},
                 __arglist(
-                    objectid, materialindex, out modelid, out txdname, out texturename, out materialcolor,
-                    maxtxdname,
+                    objectid, materialindex, out modelid, out txdname, out texturename, out materialcolor, maxtxdname,
                     maxtexturename));
-            return response;
         }
 
         public static int SetDynamicObjectMaterial(int objectid, int materialindex, int modelid, string txdname,
@@ -144,6 +117,11 @@ namespace SampSharp.Streamer.Natives
                 __arglist(
                     objectid, materialindex, modelid, txdname, texturename,
                     materialcolor));
+        }
+
+        public static bool IsDynamicObjectMaterialTextUsed(int objectid, int materialindex)
+        {
+            return Native.CallNativeAsBool("IsDynamicObjectMaterialTextUsed", __arglist(objectid, materialindex));
         }
 
         public static int GetDynamicObjectMaterialText(int objectid, int materialindex, out string text,

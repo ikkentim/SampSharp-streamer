@@ -62,18 +62,26 @@ namespace SampSharp.Streamer.World
 
         public Vector Rotation
         {
-            get { return StreamerNative.GetDynamicObjectRot(Id); }
-            set { StreamerNative.SetDynamicObjectRot(Id, value); }
+            get
+            {
+                float x, y, z;
+                StreamerNative.GetDynamicObjectRot(Id, out x, out y, out z);
+                return new Vector(x, y, z);
+            }
+            set
+            {
+                StreamerNative.SetDynamicObjectRot(Id, value.X, value.Y, value.Z);
+            }
         }
 
         public int Move(Vector position, float speed, Vector rotation)
         {
-            return StreamerNative.MoveDynamicObject(Id, position, speed, rotation);
+            return StreamerNative.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed, rotation.X, rotation.Y, rotation.Z);
         }
 
         public int Move(Vector position, float speed)
         {
-            return StreamerNative.MoveDynamicObject(Id, position, speed);
+            return StreamerNative.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed);
         }
 
         public void Stop()
@@ -132,6 +140,16 @@ namespace SampSharp.Streamer.World
             backcolor = Color.FromInteger(holderBackColor, ColorFormat.ARGB);
         }
 
+        public bool IsMaterialUsed(int materialindex)
+        {
+            return StreamerNative.IsDynamicObjectMaterialUsed(Id, materialindex);
+        }
+
+        public bool IsMaterialTextUsed(int materialindex)
+        {
+            return StreamerNative.IsDynamicObjectMaterialTextUsed(Id, materialindex);
+        }
+
         public virtual void Edit(GtaPlayer player)
         {
             AssertNotDisposed();
@@ -158,6 +176,13 @@ namespace SampSharp.Streamer.World
 
             StreamerNative.AttachDynamicObjectToVehicle(Id, vehicle.Id, offset.X, offset.Y, offset.Z, rotation.X,
                 rotation.Y, rotation.Z);
+        }
+
+        public virtual void SetNoCameraCollision()
+        {
+            AssertNotDisposed();
+
+            StreamerNative.SetDynamicObjectNoCameraCol(Id);
         }
 
         public virtual void AttachCameraToObject(GtaPlayer player)

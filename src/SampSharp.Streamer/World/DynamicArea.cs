@@ -244,6 +244,38 @@ namespace SampSharp.Streamer.World
             return StreamerNative.IsPointInDynamicArea(Id, obj.Position.X, obj.Position.Y, obj.Position.Z);
         }
 
+        public IEnumerable<Vector> GetPoints()
+        {
+            float[] points;
+            StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount());
+
+            if (points == null) yield break;
+
+            for (var i = 0; i < points.Length - 1; i += 2)
+                yield return new Vector(points[i], points[i + 1]);
+        }
+
+        public int GetPointsCount()
+        {
+            return StreamerNative.GetDynamicPolygonNumberPoints(Id);
+        }
+
+        public static IEnumerable<DynamicArea> GetAreasForPoint(Vector point)
+        {
+            int[] areas;
+            StreamerNative.GetDynamicAreasForPoint(point.X, point.Y, point.Z, out areas, GetAreasForPointCount(point));
+
+            if (areas == null) yield break;
+
+            foreach (var areaid in areas)
+                yield return FindOrCreate(areaid);
+        }
+
+        public static int GetAreasForPointCount(Vector point)
+        {
+            return StreamerNative.GetNumberDynamicAreasForPoint(point.X, point.Y, point.Z);
+        }
+
         public bool IsInArea(Vector point)
         {
             AssertNotDisposed();

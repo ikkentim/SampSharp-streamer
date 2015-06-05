@@ -4,6 +4,7 @@ using System.Linq;
 using SampSharp.GameMode.Pools;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
+using SampSharp.Streamer.Natives;
 
 namespace SampSharp.Streamer.World
 {
@@ -107,6 +108,12 @@ namespace SampSharp.Streamer.World
                 SetFloat(StreamerDataType.Y, value.Y);
                 SetFloat(StreamerDataType.Z, value.Z);
             }
+        }
+
+        public virtual bool IsStatic
+        {
+            get { return StreamerNative.IsToggleStaticItem(StreamType, Id); }
+            set { StreamerNative.ToggleStaticItem(StreamType, Id, value); }
         }
 
         public virtual bool IsVisibleForPlayer(GtaPlayer player)

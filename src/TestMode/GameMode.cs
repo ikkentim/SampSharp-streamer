@@ -40,7 +40,7 @@ namespace TestMode
             base.LoadControllers(controllers);
 
             foreach (IControllerTest test in _tests.OfType<IControllerTest>())
-                test.LoadControllers(controllers);
+                test.LoadControllers(this, controllers);
         }
     }
 }

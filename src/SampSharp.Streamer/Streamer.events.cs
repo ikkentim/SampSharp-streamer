@@ -18,6 +18,7 @@ namespace SampSharp.Streamer
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
         public event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
+        public event EventHandler<ErrorEventArgs> Error;
 
         private void OnDynamicObjectMoved(DynamicObject @object, EventArgs e)
         {
@@ -84,6 +85,12 @@ namespace SampSharp.Streamer
         {
             if (PlayerLeaveDynamicArea != null)
                 PlayerLeaveDynamicArea(area, e);
+        }
+
+        private void OnError(ErrorEventArgs e)
+        {
+            if (Error != null)
+                Error(this, e);
         }
     }
 }

@@ -12,6 +12,16 @@ namespace SampSharp.Streamer.Natives
                 __arglist(x, y, z, (int) type, id, out distance, dimensions));
         }
 
+        public static int ToggleStaticItem(StreamType type, int id, bool toggle)
+        {
+            return Native.CallNative("Streamer_ToggleStaticItem", __arglist((int)type, id, toggle));
+        }
+
+        public static bool IsToggleStaticItem(StreamType type, int id)
+        {
+            return Native.CallNativeAsBool("Streamer_IsToggleStaticItem", __arglist((int)type, id));
+        }
+
         public static int GetItemInternalID(int playerid, StreamType type, int streamerid)
         {
             return Native.CallNative("Streamer_GetItemInternalID", __arglist(playerid, (int) type, streamerid));

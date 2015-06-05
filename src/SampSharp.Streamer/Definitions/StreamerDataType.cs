@@ -42,6 +42,7 @@
         Size,
         StreamDistance,
         Style,
+        SyncRotation,
         TestLOS,
         Type,
         WorldId,

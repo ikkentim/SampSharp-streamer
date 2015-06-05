@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Natives;
 using SampSharp.GameMode.World;
@@ -9,8 +9,23 @@ using SampSharp.Streamer.Natives;
 
 namespace SampSharp.Streamer
 {
-    public partial class Streamer
+    public partial class Streamer : IStreamer
     {
+        public const int InvalidId = 0;
+
+        private static readonly OptionItemTypeCollection OptionItemTypeCollectionBackingField = new OptionItemTypeCollection();
+
+        #region Constructors
+
+        public Streamer(BaseMode gameMode)
+        {
+            GameMode = gameMode;
+        }
+
+        #endregion
+
+        #region Properties of Streamer
+
         public static bool IsToggleErrorCallback
         {
             get { return StreamerNative.IsToggleErrorCallback(); }
@@ -47,22 +62,47 @@ namespace SampSharp.Streamer
 
         public static OptionItemTypeCollection ItemType
         {
-            get { return new OptionItemTypeCollection(); }
+            get { return OptionItemTypeCollectionBackingField; }
         }
+
+        public static bool IsErrorCallbackEnabled
+        {
+            get { return StreamerNative.IsToggleErrorCallback(); }
+            set { StreamerNative.ToggleErrorCallback(value); }
+        }
+
+        #endregion
+
+        #region Implementation of IService
+
+        /// <summary>
+        ///     Gets the game mode.
+        /// </summary>
+        public BaseMode GameMode { get; private set; }
+
+        #endregion
 
         public static void ProcessActiveItems()
         {
             StreamerNative.ProcessActiveItems();
         }
 
-
-        public static Streamer Load(ControllerCollection controllers)
+        public static IStreamer Load(BaseMode gameMode, ControllerCollection controllers)
         {
-            var streamer = new Streamer();
+            // Check whether the streamer service was already loaded.
+            var existing = gameMode.Services.GetService<IStreamer>();
+            if (existing != null)
+                return existing;
+
+            // Create and add the steamer service to the service provider.
+            var streamer = new Streamer(gameMode);
+            gameMode.Services.AddService<IStreamer>(streamer);
+
+            // Register the streamer as a gamemode extension
             Native.RegisterExtension(streamer);
 
+            // Load the steamer controller.
             var controller = new StreamerController();
-
             controller.RegisterStreamerEvents(streamer);
             controllers.Add(controller);
 
@@ -72,11 +112,33 @@ namespace SampSharp.Streamer
         public static void ToggleIdleUpdate(GtaPlayer player, bool toggle)
         {
             if (player == null)
-            {
                 throw new ArgumentNullException("player");
-            }
 
             StreamerNative.ToggleIdleUpdate(player.Id, toggle);
+        }
+
+        public static bool IsToggleIdleUpdate(GtaPlayer player)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+           return StreamerNative.IsToggleIdleUpdate(player.Id);
+        }
+
+        public static void ToggleCameraUpdate(GtaPlayer player, bool toggle)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            StreamerNative.ToggleCameraUpdate(player.Id, toggle);
+        }
+
+        public static bool IsToggleCameraUpdate(GtaPlayer player)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            return StreamerNative.IsToggleCameraUpdate(player.Id);
         }
 
         public static void Update(GtaPlayer player)
@@ -101,7 +163,7 @@ namespace SampSharp.Streamer
 
         #region Subclasses
 
-        public class OptionItemType
+        public sealed class OptionItemType
         {
             public int VisibleItems
             {
@@ -115,7 +177,12 @@ namespace SampSharp.Streamer
                 set { StreamerNative.SetMaxItems(StreamType, value); }
             }
 
-            public StreamType StreamType { get; set; }
+            public OptionItemType(StreamType streamType)
+            {
+                StreamType = streamType;
+            }
+
+            public StreamType StreamType { get; private set; }
 
             public int GetInteger(int id, StreamerDataType data)
             {
@@ -179,11 +246,11 @@ namespace SampSharp.Streamer
             }
         }
 
-        public class OptionItemTypeCollection
+        public sealed class OptionItemTypeCollection
         {
-            public OptionItemType this[StreamType t]
+            public OptionItemType this[StreamType type]
             {
-                get { return new OptionItemType {StreamType = t}; }
+                get { return new OptionItemType(type); }
             }
         }
 

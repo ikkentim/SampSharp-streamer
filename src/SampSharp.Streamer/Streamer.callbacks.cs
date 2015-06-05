@@ -78,5 +78,10 @@ namespace SampSharp.Streamer
             OnPlayerLeaveDynamicArea(DynamicArea.FindOrCreate(areaid),
                 new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
         }
+
+        internal void Streamer_OnPluginError(string error)
+        {
+            OnError(new ErrorEventArgs(error));
+        }
     }
 }

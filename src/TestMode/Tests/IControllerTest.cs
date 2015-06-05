@@ -1,9 +1,10 @@
-﻿using SampSharp.GameMode.Controllers;
+﻿using SampSharp.GameMode;
+using SampSharp.GameMode.Controllers;
 
 namespace TestMode.Tests
 {
     public interface IControllerTest
     {
-        void LoadControllers(ControllerCollection controllers);
+        void LoadControllers(BaseMode gameMode, ControllerCollection controllers);
     }
 }
