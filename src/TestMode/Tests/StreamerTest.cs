@@ -6,6 +6,7 @@ using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer;
+using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.World;
 
 namespace TestMode.Tests
@@ -72,6 +73,10 @@ namespace TestMode.Tests
             obj.Moved += (sender, args) => obj.Move(obj.Position + (offset = -offset), 0.6f, obj.Rotation + new Vector(0, 0, 25));
 
 
+            Console.WriteLine("Test error handling...");
+            Streamer.IsErrorCallbackEnabled = true;
+            Streamer.PrintStackTraceOnError = true;
+            Streamer.ItemType[StreamType.MapIcon].GetArray(9999, StreamerDataType.Color, 1);
 
         }
     }

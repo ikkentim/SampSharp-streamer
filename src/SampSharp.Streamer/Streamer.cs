@@ -195,6 +195,7 @@ namespace SampSharp.Streamer
             set { StreamerNative.ToggleErrorCallback(value); }
         }
 
+        public static bool PrintStackTraceOnError { get; set; }
         #endregion
 
         #region Subclasses

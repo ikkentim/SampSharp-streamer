@@ -15,6 +15,7 @@
 
 using System;
 using SampSharp.GameMode.Events;
+using SampSharp.GameMode.Natives;
 using SampSharp.Streamer.Events;
 using SampSharp.Streamer.World;
 
@@ -103,6 +104,13 @@ namespace SampSharp.Streamer
 
         protected virtual void OnError(ErrorEventArgs e)
         {
+            if (PrintStackTraceOnError)
+            {
+                Console.WriteLine("[Streamer] {0}", e.Error);
+                Console.WriteLine("Stack trace:");
+                Console.WriteLine(Environment.StackTrace);
+            }
+
             if (Error != null)
                 Error(this, e);
         }
