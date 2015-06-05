@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DynamicCheckpointController.cs" />
+    <Compile Include="Controllers\DynamicMapIconController.cs" />
+    <Compile Include="Controllers\DynamicObjectController.cs" />
+    <Compile Include="Controllers\DynamicPickupController.cs" />
+    <Compile Include="Controllers\DynamicRaceCheckpointController.cs" />
+    <Compile Include="Controllers\DynamicTextLabelController.cs" />
+    <Compile Include="Controllers\IStreamerController.cs" />
     <Compile Include="Definitions\AreaType.cs" />
     <Compile Include="Definitions\StreamerObjectType.cs" />
     <Compile Include="Definitions\StreamerDataType.cs" />
@@ -66,7 +73,7 @@
     <Compile Include="Natives\StreamerNative.settings.cs" />
     <Compile Include="Natives\StreamerNative.updates.cs" />
     <Compile Include="Streamer.cs" />
-    <Compile Include="Controllers\StreamerController.cs" />
+    <Compile Include="Controllers\DynamicAreaController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streamer.events.cs">
       <DependentUpon>Streamer.cs</DependentUpon>

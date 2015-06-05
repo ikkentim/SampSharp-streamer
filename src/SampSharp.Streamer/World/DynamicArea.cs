@@ -1,6 +1,20 @@
-﻿using System;
+﻿// SampSharp.Streamer
+// Copyright 2015 Tim Potze
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
@@ -15,140 +29,6 @@ namespace SampSharp.Streamer.World
         {
             Id = id;
         }
-
-        #region Factories
-
-        public static DynamicArea CreateCircle(float x, float y, float size, int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCircle(x, y, size, worldid, interiorid,
-                    player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreateCircleEx(float x, float y, float size, int[] worlds = null,
-            int[] interiors = null,
-            GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCircleEx(x, y, size, worlds, interiors,
-                    players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreateCube(float minx, float miny, float minz, float maxx, float maxy, float maxz,
-            int worldid = -1, int interiorid = -1, GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCube(minx, miny, minz, maxx, maxy, maxz, worldid, interiorid,
-                    player == null ? -1 : player.Id));
-        }
-
-
-        public static DynamicArea CreateCube(Vector min, Vector max, int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCube(min.X, min.Y, min.Z, max.X, max.Y, max.Z, worldid,
-                    interiorid, player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreateCubeEx(float minx, float miny, float minz, float maxx, float maxy, float maxz,
-            int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCubeEx(minx, miny, minz, maxx, maxy, maxz, worlds,
-                    interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreateCubeEx(Vector min, Vector max, int[] worlds = null, int[] interiors = null,
-            GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicCubeEx(min.X, min.Y, min.Z, max.X, max.Y, max.Z, worlds,
-                    interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity,
-            float maxz = float.PositiveInfinity, int worlid = -1, int interiorid = -1, GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygon(points, minz, maxz, points.Length, worlid, interiorid,
-                    player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreatePolygon(Vector[] points, float minz, float maxz, int worlid = -1,
-            int interiorid = -1, GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygon(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
-                    minz, maxz, points.Length * 2, worlid, interiorid, player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreatePolygon(Vector[] points, int worlid = -1, int interiorid = -1,
-            GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygon(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
-                    points.Min(p => p.Z), points.Max(p => p.Z), points.Length * 2, worlid, interiorid, player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreatePolygonEx(float[] points, float minz = float.NegativeInfinity,
-            float maxz = float.PositiveInfinity, int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points, minz, maxz, points.Length, worlds, interiors,
-                    players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreatePolygonEx(Vector[] points, float minz = float.NegativeInfinity,
-            float maxz = float.PositiveInfinity, int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
-                    minz, maxz, points.Length * 2, worlds, interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreatePolygonEx(Vector[] points, int[] worlds = null, int[] interiors = null,
-            GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
-                    points.Min(p => p.Z), points.Max(p => p.Z), points.Length * 2, worlds, interiors,
-                    players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreateRectangle(float minx, float miny, float maxx, float maxy, int worldid = -1,
-            int interiorid = -1, GtaPlayer player = null)
-        {
-            return FindOrCreate(StreamerNative.CreateDynamicRectangle(minx, miny, maxx, maxy, worldid, interiorid,
-                player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreateRectangleEx(float minx, float miny, float maxx, float maxy, int[] worlds = null,
-            int[] interiors = null, GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicRectangleEx(minx, miny, maxx, maxy, worlds, interiors,
-                    players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        public static DynamicArea CreateSphere(Vector pos, float size, int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicSphere(pos.X, pos.Y, pos.Z, size, worldid, interiorid,
-                    player == null ? -1 : player.Id));
-        }
-
-        public static DynamicArea CreateSphereEx(Vector pos, float size, int[] worlds = null, int[] interiors = null,
-            GtaPlayer[] players = null)
-        {
-            return
-                FindOrCreate(StreamerNative.CreateDynamicSphereEx(pos.X, pos.Y, pos.Z, size, worlds, interiors,
-                    players == null ? null : players.Select(p => p.Id).ToArray()));
-        }
-
-        #endregion
 
         public bool IsValid
         {
@@ -248,7 +128,7 @@ namespace SampSharp.Streamer.World
         public IEnumerable<Vector> GetPoints()
         {
             float[] points;
-            StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount() * 2);
+            StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount()*2);
 
             if (points == null) yield break;
 
@@ -369,5 +249,141 @@ namespace SampSharp.Streamer.World
             if (Leave != null)
                 Leave(this, e);
         }
+
+        #region Factories
+
+        public static DynamicArea CreateCircle(float x, float y, float size, int worldid = -1, int interiorid = -1,
+            GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCircle(x, y, size, worldid, interiorid,
+                    player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreateCircleEx(float x, float y, float size, int[] worlds = null,
+            int[] interiors = null,
+            GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCircleEx(x, y, size, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreateCube(float minx, float miny, float minz, float maxx, float maxy, float maxz,
+            int worldid = -1, int interiorid = -1, GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCube(minx, miny, minz, maxx, maxy, maxz, worldid, interiorid,
+                    player == null ? -1 : player.Id));
+        }
+
+
+        public static DynamicArea CreateCube(Vector min, Vector max, int worldid = -1, int interiorid = -1,
+            GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCube(min.X, min.Y, min.Z, max.X, max.Y, max.Z, worldid,
+                    interiorid, player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreateCubeEx(float minx, float miny, float minz, float maxx, float maxy, float maxz,
+            int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCubeEx(minx, miny, minz, maxx, maxy, maxz, worlds,
+                    interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreateCubeEx(Vector min, Vector max, int[] worlds = null, int[] interiors = null,
+            GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicCubeEx(min.X, min.Y, min.Z, max.X, max.Y, max.Z, worlds,
+                    interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity,
+            float maxz = float.PositiveInfinity, int worlid = -1, int interiorid = -1, GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygon(points, minz, maxz, points.Length, worlid, interiorid,
+                    player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreatePolygon(Vector[] points, float minz, float maxz, int worlid = -1,
+            int interiorid = -1, GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygon(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
+                    minz, maxz, points.Length*2, worlid, interiorid, player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreatePolygon(Vector[] points, int worlid = -1, int interiorid = -1,
+            GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygon(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
+                    points.Min(p => p.Z), points.Max(p => p.Z), points.Length*2, worlid, interiorid,
+                    player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreatePolygonEx(float[] points, float minz = float.NegativeInfinity,
+            float maxz = float.PositiveInfinity, int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points, minz, maxz, points.Length, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreatePolygonEx(Vector[] points, float minz = float.NegativeInfinity,
+            float maxz = float.PositiveInfinity, int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
+                    minz, maxz, points.Length*2, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreatePolygonEx(Vector[] points, int[] worlds = null, int[] interiors = null,
+            GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicPolygonEx(points.SelectMany(p => new[] {p.X, p.Y}).ToArray(),
+                    points.Min(p => p.Z), points.Max(p => p.Z), points.Length*2, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreateRectangle(float minx, float miny, float maxx, float maxy, int worldid = -1,
+            int interiorid = -1, GtaPlayer player = null)
+        {
+            return FindOrCreate(StreamerNative.CreateDynamicRectangle(minx, miny, maxx, maxy, worldid, interiorid,
+                player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreateRectangleEx(float minx, float miny, float maxx, float maxy, int[] worlds = null,
+            int[] interiors = null, GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicRectangleEx(minx, miny, maxx, maxy, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        public static DynamicArea CreateSphere(Vector pos, float size, int worldid = -1, int interiorid = -1,
+            GtaPlayer player = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicSphere(pos.X, pos.Y, pos.Z, size, worldid, interiorid,
+                    player == null ? -1 : player.Id));
+        }
+
+        public static DynamicArea CreateSphereEx(Vector pos, float size, int[] worlds = null, int[] interiors = null,
+            GtaPlayer[] players = null)
+        {
+            return
+                FindOrCreate(StreamerNative.CreateDynamicSphereEx(pos.X, pos.Y, pos.Z, size, worlds, interiors,
+                    players == null ? null : players.Select(p => p.Id).ToArray()));
+        }
+
+        #endregion
     }
 }

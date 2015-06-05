@@ -13,12 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace SampSharp.Streamer.Definitions
+using SampSharp.GameMode.Controllers;
+using SampSharp.Streamer.World;
+
+namespace SampSharp.Streamer.Controllers
 {
-    public enum StreamerObjectType
+    public class DynamicTextLabelController : ITypeProvider
     {
-        Global = 0,
-        Player = 1,
-        Dynamic = 2
+        #region Implementation of ITypeProvider
+
+        /// <summary>
+        ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
+        /// </summary>
+        public void RegisterTypes()
+        {
+            DynamicTextLabel.Register<DynamicTextLabel>();
+        }
+
+        #endregion
     }
 }

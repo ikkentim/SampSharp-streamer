@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace SampSharp.Streamer.Definitions
+using SampSharp.GameMode.Controllers;
+
+namespace SampSharp.Streamer.Controllers
 {
-    public enum StreamerObjectType
+    public interface IStreamerController : IController
     {
-        Global = 0,
-        Player = 1,
-        Dynamic = 2
+        void RegisterStreamerEvents(Streamer streamer);
     }
 }

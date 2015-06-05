@@ -1,4 +1,19 @@
-﻿using System;
+﻿// SampSharp.Streamer
+// Copyright 2015 Tim Potze
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Natives;
@@ -13,7 +28,8 @@ namespace SampSharp.Streamer
     {
         public const int InvalidId = 0;
 
-        private static readonly OptionItemTypeCollection OptionItemTypeCollectionBackingField = new OptionItemTypeCollection();
+        private static readonly OptionItemTypeCollection OptionItemTypeCollectionBackingField =
+            new OptionItemTypeCollection();
 
         #region Constructors
 
@@ -23,6 +39,114 @@ namespace SampSharp.Streamer
         }
 
         #endregion
+
+        #region Implementation of IService
+
+        /// <summary>
+        ///     Gets the game mode.
+        /// </summary>
+        public BaseMode GameMode { get; private set; }
+
+        #endregion
+
+        public static void ProcessActiveItems()
+        {
+            StreamerNative.ProcessActiveItems();
+        }
+
+        public static IStreamer Load(BaseMode gameMode, ControllerCollection controllers)
+        {
+            // Check whether the streamer service was already loaded.
+            var existing = gameMode.Services.GetService<IStreamer>();
+            if (existing != null)
+                return existing;
+
+            // Create and add the steamer service to the service provider.
+            var streamer = new Streamer(gameMode);
+            gameMode.Services.AddService<IStreamer>(streamer);
+
+            // Register the streamer as a gamemode extension
+            Native.RegisterExtension(streamer);
+
+            // Load the steamer controllers.
+            var types = new[]
+            {
+                typeof (DynamicAreaController),
+                typeof (DynamicCheckpointController),
+                typeof (DynamicMapIconController),
+                typeof (DynamicObjectController),
+                typeof (DynamicPickupController),
+                typeof (DynamicRaceCheckpointController),
+                typeof (DynamicTextLabelController)
+            };
+
+            foreach (var type in types)
+            {
+                var instance = Activator.CreateInstance(type);
+                var streamerController = instance as IStreamerController;
+
+                if (streamerController != null)
+                    streamerController.RegisterStreamerEvents(streamer);
+
+                var controller = instance as IController;
+
+                controllers.Add(controller);
+            }
+
+            return streamer;
+        }
+
+        public static void ToggleIdleUpdate(GtaPlayer player, bool toggle)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            StreamerNative.ToggleIdleUpdate(player.Id, toggle);
+        }
+
+        public static bool IsToggleIdleUpdate(GtaPlayer player)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            return StreamerNative.IsToggleIdleUpdate(player.Id);
+        }
+
+        public static void ToggleCameraUpdate(GtaPlayer player, bool toggle)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            StreamerNative.ToggleCameraUpdate(player.Id, toggle);
+        }
+
+        public static bool IsToggleCameraUpdate(GtaPlayer player)
+        {
+            if (player == null)
+                throw new ArgumentNullException("player");
+
+            return StreamerNative.IsToggleCameraUpdate(player.Id);
+        }
+
+        public static void Update(GtaPlayer player)
+        {
+            if (player == null)
+            {
+                throw new ArgumentNullException("player");
+            }
+
+            StreamerNative.Update(player.Id);
+        }
+
+        public static void Update(GtaPlayer player, Vector position, int worldid = -1, int interiorid = -1)
+        {
+            if (player == null)
+            {
+                throw new ArgumentNullException("player");
+            }
+
+            StreamerNative.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid);
+        }
 
         #region Properties of Streamer
 
@@ -73,98 +197,15 @@ namespace SampSharp.Streamer
 
         #endregion
 
-        #region Implementation of IService
-
-        /// <summary>
-        ///     Gets the game mode.
-        /// </summary>
-        public BaseMode GameMode { get; private set; }
-
-        #endregion
-
-        public static void ProcessActiveItems()
-        {
-            StreamerNative.ProcessActiveItems();
-        }
-
-        public static IStreamer Load(BaseMode gameMode, ControllerCollection controllers)
-        {
-            // Check whether the streamer service was already loaded.
-            var existing = gameMode.Services.GetService<IStreamer>();
-            if (existing != null)
-                return existing;
-
-            // Create and add the steamer service to the service provider.
-            var streamer = new Streamer(gameMode);
-            gameMode.Services.AddService<IStreamer>(streamer);
-
-            // Register the streamer as a gamemode extension
-            Native.RegisterExtension(streamer);
-
-            // Load the steamer controller.
-            var controller = new StreamerController();
-            controller.RegisterStreamerEvents(streamer);
-            controllers.Add(controller);
-
-            return streamer;
-        }
-
-        public static void ToggleIdleUpdate(GtaPlayer player, bool toggle)
-        {
-            if (player == null)
-                throw new ArgumentNullException("player");
-
-            StreamerNative.ToggleIdleUpdate(player.Id, toggle);
-        }
-
-        public static bool IsToggleIdleUpdate(GtaPlayer player)
-        {
-            if (player == null)
-                throw new ArgumentNullException("player");
-
-           return StreamerNative.IsToggleIdleUpdate(player.Id);
-        }
-
-        public static void ToggleCameraUpdate(GtaPlayer player, bool toggle)
-        {
-            if (player == null)
-                throw new ArgumentNullException("player");
-
-            StreamerNative.ToggleCameraUpdate(player.Id, toggle);
-        }
-
-        public static bool IsToggleCameraUpdate(GtaPlayer player)
-        {
-            if (player == null)
-                throw new ArgumentNullException("player");
-
-            return StreamerNative.IsToggleCameraUpdate(player.Id);
-        }
-
-        public static void Update(GtaPlayer player)
-        {
-            if (player == null)
-            {
-                throw new ArgumentNullException("player");
-            }
-
-            StreamerNative.Update(player.Id);
-        }
-
-        public static void Update(GtaPlayer player, Vector position, int worldid = -1, int interiorid = -1)
-        {
-            if (player == null)
-            {
-                throw new ArgumentNullException("player");
-            }
-
-            StreamerNative.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid);
-        }
-
         #region Subclasses
 
         public sealed class OptionItemType
         {
+            public OptionItemType(StreamType streamType)
+            {
+                StreamType = streamType;
+            }
+
             public int VisibleItems
             {
                 get { return StreamerNative.GetVisibleItems(StreamType); }
@@ -175,11 +216,6 @@ namespace SampSharp.Streamer
             {
                 get { return StreamerNative.GetMaxItems(StreamType); }
                 set { StreamerNative.SetMaxItems(StreamType, value); }
-            }
-
-            public OptionItemType(StreamType streamType)
-            {
-                StreamType = streamType;
             }
 
             public StreamType StreamType { get; private set; }
