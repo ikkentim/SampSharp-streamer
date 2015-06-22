@@ -20,6 +20,7 @@ using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -125,7 +126,7 @@ namespace SampSharp.Streamer.World
             return StreamerNative.IsPointInDynamicArea(Id, obj.Position.X, obj.Position.Y, obj.Position.Z);
         }
 
-        public IEnumerable<Vector> GetPoints()
+        public IEnumerable<Vector3> GetPoints()
         {
             float[] points;
             StreamerNative.GetDynamicPolygonPoints(Id, out points, GetPointsCount()*2);
@@ -133,7 +134,7 @@ namespace SampSharp.Streamer.World
             if (points == null) yield break;
 
             for (var i = 0; i < points.Length - 1; i += 2)
-                yield return new Vector(points[i], points[i + 1]);
+                yield return new Vector3(points[i], points[i + 1]);
         }
 
         public int GetPointsCount()
@@ -141,7 +142,7 @@ namespace SampSharp.Streamer.World
             return StreamerNative.GetDynamicPolygonNumberPoints(Id);
         }
 
-        public static IEnumerable<DynamicArea> GetAreasForPoint(Vector point)
+        public static IEnumerable<DynamicArea> GetAreasForPoint(Vector3 point)
         {
             int[] areas;
             StreamerNative.GetDynamicAreasForPoint(point.X, point.Y, point.Z, out areas, GetAreasForPointCount(point));
@@ -152,12 +153,12 @@ namespace SampSharp.Streamer.World
                 yield return FindOrCreate(areaid);
         }
 
-        public static int GetAreasForPointCount(Vector point)
+        public static int GetAreasForPointCount(Vector3 point)
         {
             return StreamerNative.GetNumberDynamicAreasForPoint(point.X, point.Y, point.Z);
         }
 
-        public bool IsInArea(Vector point)
+        public bool IsInArea(Vector3 point)
         {
             AssertNotDisposed();
 
@@ -278,7 +279,7 @@ namespace SampSharp.Streamer.World
         }
 
 
-        public static DynamicArea CreateCube(Vector min, Vector max, int worldid = -1, int interiorid = -1,
+        public static DynamicArea CreateCube(Vector3 min, Vector3 max, int worldid = -1, int interiorid = -1,
             GtaPlayer player = null)
         {
             return
@@ -294,7 +295,7 @@ namespace SampSharp.Streamer.World
                     interiors, players == null ? null : players.Select(p => p.Id).ToArray()));
         }
 
-        public static DynamicArea CreateCubeEx(Vector min, Vector max, int[] worlds = null, int[] interiors = null,
+        public static DynamicArea CreateCubeEx(Vector3 min, Vector3 max, int[] worlds = null, int[] interiors = null,
             GtaPlayer[] players = null)
         {
             return
@@ -310,7 +311,7 @@ namespace SampSharp.Streamer.World
                     player == null ? -1 : player.Id));
         }
 
-        public static DynamicArea CreatePolygon(Vector[] points, float minz, float maxz, int worlid = -1,
+        public static DynamicArea CreatePolygon(Vector3[] points, float minz, float maxz, int worlid = -1,
             int interiorid = -1, GtaPlayer player = null)
         {
             return
@@ -318,7 +319,7 @@ namespace SampSharp.Streamer.World
                     minz, maxz, points.Length*2, worlid, interiorid, player == null ? -1 : player.Id));
         }
 
-        public static DynamicArea CreatePolygon(Vector[] points, int worlid = -1, int interiorid = -1,
+        public static DynamicArea CreatePolygon(Vector3[] points, int worlid = -1, int interiorid = -1,
             GtaPlayer player = null)
         {
             return
@@ -335,7 +336,7 @@ namespace SampSharp.Streamer.World
                     players == null ? null : players.Select(p => p.Id).ToArray()));
         }
 
-        public static DynamicArea CreatePolygonEx(Vector[] points, float minz = float.NegativeInfinity,
+        public static DynamicArea CreatePolygonEx(Vector3[] points, float minz = float.NegativeInfinity,
             float maxz = float.PositiveInfinity, int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)
         {
             return
@@ -344,7 +345,7 @@ namespace SampSharp.Streamer.World
                     players == null ? null : players.Select(p => p.Id).ToArray()));
         }
 
-        public static DynamicArea CreatePolygonEx(Vector[] points, int[] worlds = null, int[] interiors = null,
+        public static DynamicArea CreatePolygonEx(Vector3[] points, int[] worlds = null, int[] interiors = null,
             GtaPlayer[] players = null)
         {
             return
@@ -368,7 +369,7 @@ namespace SampSharp.Streamer.World
                     players == null ? null : players.Select(p => p.Id).ToArray()));
         }
 
-        public static DynamicArea CreateSphere(Vector pos, float size, int worldid = -1, int interiorid = -1,
+        public static DynamicArea CreateSphere(Vector3 pos, float size, int worldid = -1, int interiorid = -1,
             GtaPlayer player = null)
         {
             return
@@ -376,7 +377,7 @@ namespace SampSharp.Streamer.World
                     player == null ? -1 : player.Id));
         }
 
-        public static DynamicArea CreateSphereEx(Vector pos, float size, int[] worlds = null, int[] interiors = null,
+        public static DynamicArea CreateSphereEx(Vector3 pos, float size, int[] worlds = null, int[] interiors = null,
             GtaPlayer[] players = null)
         {
             return

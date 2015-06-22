@@ -19,6 +19,7 @@ using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Events;
 using SampSharp.Streamer.World;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer
 {
@@ -34,21 +35,21 @@ namespace SampSharp.Streamer
         {
             OnPlayerEditDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerEditEventArgs(GtaPlayer.FindOrCreate(playerid),
-                    (EditObjectResponse) response, new Vector(x, y, z), new Vector(rx, ry, rz)));
+                    (EditObjectResponse) response, new Vector3(x, y, z), new Vector3(rx, ry, rz)));
         }
 
         internal void OnPlayerSelectDynamicObject(int playerid, int objectid, int modelid, float x, float y, float z)
         {
             OnPlayerSelectDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerSelectEventArgs(GtaPlayer.FindOrCreate(playerid), modelid,
-                    new Vector(x, y, z)));
+                    new Vector3(x, y, z)));
         }
 
         internal void OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
         {
             OnPlayerShootDynamicObject(DynamicObject.FindOrCreate(objectid),
                 new PlayerShootEventArgs(GtaPlayer.FindOrCreate(playerid), (Weapon) weaponid,
-                    new Vector(x, y, z)));
+                    new Vector3(x, y, z)));
         }
 
         internal void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)

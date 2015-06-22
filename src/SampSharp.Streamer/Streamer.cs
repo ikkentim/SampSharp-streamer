@@ -138,7 +138,7 @@ namespace SampSharp.Streamer
             StreamerNative.Update(player.Id);
         }
 
-        public static void Update(GtaPlayer player, Vector position, int worldid = -1, int interiorid = -1)
+        public static void Update(GtaPlayer player, Vector3 position, int worldid = -1, int interiorid = -1)
         {
             if (player == null)
             {

@@ -19,6 +19,7 @@ using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -29,14 +30,14 @@ namespace SampSharp.Streamer.World
             Id = id;
         }
 
-        public DynamicCheckpoint(Vector position, float size = 1.0f, int worldid = -1, int interiorid = -1,
+        public DynamicCheckpoint(Vector3 position, float size = 1.0f, int worldid = -1, int interiorid = -1,
             GtaPlayer player = null, float streamdistance = 100.0f)
         {
             Id = StreamerNative.CreateDynamicCP(position.X, position.Y, position.Z, size, worldid, interiorid,
                 player == null ? -1 : player.Id, streamdistance);
         }
 
-        public DynamicCheckpoint(Vector position, float size, float streamdistance, int[] worlds = null,
+        public DynamicCheckpoint(Vector3 position, float size, float streamdistance, int[] worlds = null,
             int[] interiors = null,
             GtaPlayer[] players = null)
         {

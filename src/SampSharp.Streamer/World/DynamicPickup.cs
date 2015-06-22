@@ -19,6 +19,7 @@ using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -29,14 +30,14 @@ namespace SampSharp.Streamer.World
             Id = id;
         }
 
-        public DynamicPickup(int modelid, int type, Vector position, int worldid = -1, int interiorid = -1,
+        public DynamicPickup(int modelid, int type, Vector3 position, int worldid = -1, int interiorid = -1,
             GtaPlayer player = null, float streamdistance = 100.0f)
         {
             Id = StreamerNative.CreateDynamicPickup(modelid, type, position.X, position.Y, position.Z, worldid,
                 interiorid, player == null ? -1 : player.Id, streamdistance);
         }
 
-        public DynamicPickup(int modelid, int type, Vector position, float streamdistance, int[] worlds = null,
+        public DynamicPickup(int modelid, int type, Vector3 position, float streamdistance, int[] worlds = null,
             int[] interiors = null, GtaPlayer[] players = null)
         {
             Id = StreamerNative.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance,
