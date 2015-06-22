@@ -16,12 +16,13 @@
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.Events
 {
     public class PlayerShootEventArgs : PlayerEventArgs
     {
-        public PlayerShootEventArgs(GtaPlayer player, Weapon weapon, Vector position)
+        public PlayerShootEventArgs(GtaPlayer player, Weapon weapon, Vector3 position)
             : base(player)
         {
             Weapon = weapon;
@@ -29,6 +30,6 @@ namespace SampSharp.Streamer.Events
         }
 
         public Weapon Weapon { get; private set; }
-        public Vector Position { get; private set; }
+        public Vector3 Position { get; private set; }
     }
 }

@@ -20,6 +20,7 @@ using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -30,7 +31,7 @@ namespace SampSharp.Streamer.World
             Id = id;
         }
 
-        public DynamicRaceCheckpoint(CheckpointType type, Vector position, Vector nextPosition,
+        public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
             float size = 3.0f, int worldid = -1,
             int interiorid = -1, GtaPlayer player = null, float streamdistance = 100.0f)
         {
@@ -39,7 +40,7 @@ namespace SampSharp.Streamer.World
                 streamdistance);
         }
 
-        public DynamicRaceCheckpoint(CheckpointType type, Vector position, Vector nextPosition,
+        public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
             float size, float streamdistance, int[] worlds = null, int[] interiors = null,
             GtaPlayer[] players = null)
         {
@@ -64,7 +65,7 @@ namespace SampSharp.Streamer.World
             set { SetFloat(StreamerDataType.Size, value); }
         }
 
-        public virtual Vector NextPosition
+        public virtual Vector3 NextPosition
         {
             get
             {
@@ -72,7 +73,7 @@ namespace SampSharp.Streamer.World
                 float y = GetFloat(StreamerDataType.NextY);
                 float z = GetFloat(StreamerDataType.NextZ);
 
-                return new Vector(x, y, z);
+                return new Vector3(x, y, z);
             }
             set
             {

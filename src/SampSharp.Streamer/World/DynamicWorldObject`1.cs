@@ -20,6 +20,7 @@ using SampSharp.GameMode.Pools;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -115,11 +116,11 @@ namespace SampSharp.Streamer.World
 
         public int Id { get; protected set; }
 
-        public virtual Vector Position
+        public virtual Vector3 Position
         {
             get
             {
-                return new Vector(GetFloat(StreamerDataType.X),
+                return new Vector3(GetFloat(StreamerDataType.X),
                     GetFloat(StreamerDataType.Y),
                     GetFloat(StreamerDataType.Z));
             }

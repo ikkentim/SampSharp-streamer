@@ -22,6 +22,7 @@ using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Events;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -32,14 +33,14 @@ namespace SampSharp.Streamer.World
             Id = id;
         }
 
-        public DynamicObject(int modelid, Vector position, Vector rotation = new Vector(), int worldid = -1,
+        public DynamicObject(int modelid, Vector3 position, Vector3 rotation = new Vector3(), int worldid = -1,
             int interiorid = -1, GtaPlayer player = null, float streamdistance = 200.0f, float drawdistance = 0.0f)
         {
             Id = StreamerNative.CreateDynamicObject(modelid, position.X, position.Y, position.Z, rotation.X, rotation.Y,
                 rotation.Z, worldid, interiorid, player == null ? -1 : player.Id, streamdistance, drawdistance);
         }
 
-        public DynamicObject(int modelid, Vector position, Vector rotation, float streamdistance, int[] worlds = null,
+        public DynamicObject(int modelid, Vector3 position, Vector3 rotation, float streamdistance, int[] worlds = null,
             int[] interiors = null, GtaPlayer[] players = null, float drawdistance = 0.0f)
         {
             Id = StreamerNative.CreateDynamicObjectEx(modelid, position.X, position.Y, position.Z, rotation.X,
@@ -74,24 +75,24 @@ namespace SampSharp.Streamer.World
             set { SetFloat(StreamerDataType.DrawDistance, value); }
         }
 
-        public Vector Rotation
+        public Vector3 Rotation
         {
             get
             {
                 float x, y, z;
                 StreamerNative.GetDynamicObjectRot(Id, out x, out y, out z);
-                return new Vector(x, y, z);
+                return new Vector3(x, y, z);
             }
             set { StreamerNative.SetDynamicObjectRot(Id, value.X, value.Y, value.Z); }
         }
 
-        public int Move(Vector position, float speed, Vector rotation)
+        public int Move(Vector3 position, float speed, Vector3 rotation)
         {
             return StreamerNative.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed, rotation.X,
                 rotation.Y, rotation.Z);
         }
 
-        public int Move(Vector position, float speed)
+        public int Move(Vector3 position, float speed)
         {
             return StreamerNative.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed);
         }
@@ -179,7 +180,7 @@ namespace SampSharp.Streamer.World
             Native.SelectObject(player.Id);
         }
 
-        public virtual void AttachTo(GtaVehicle vehicle, Vector offset, Vector rotation)
+        public virtual void AttachTo(GtaVehicle vehicle, Vector3 offset, Vector3 rotation)
         {
             AssertNotDisposed();
 

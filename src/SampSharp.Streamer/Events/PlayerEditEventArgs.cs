@@ -16,14 +16,15 @@
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.Events
 {
     public class PlayerEditEventArgs : PositionEventArgs
     {
         public PlayerEditEventArgs(GtaPlayer player, EditObjectResponse response,
-            Vector position,
-            Vector rotation)
+            Vector3 position,
+            Vector3 rotation)
             : base(position)
         {
             Player = player;
@@ -33,6 +34,6 @@ namespace SampSharp.Streamer.Events
 
         public GtaPlayer Player { get; private set; }
         public EditObjectResponse Response { get; set; }
-        public Vector Rotation { get; private set; }
+        public Vector3 Rotation { get; private set; }
     }
 }

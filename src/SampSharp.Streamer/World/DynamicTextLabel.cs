@@ -18,6 +18,7 @@ using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Natives;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
@@ -28,7 +29,7 @@ namespace SampSharp.Streamer.World
             Id = id;
         }
 
-        public DynamicTextLabel(string text, Color color, Vector position, float drawdistance,
+        public DynamicTextLabel(string text, Color color, Vector3 position, float drawdistance,
             GtaPlayer attachedPlayer = null, GtaVehicle attachedVehicle = null, bool testLOS = false, int worldid = -1,
             int interiorid = -1, GtaPlayer player = null, float streamdistance = 100.0f)
         {
@@ -38,7 +39,7 @@ namespace SampSharp.Streamer.World
                 player == null ? -1 : player.Id, streamdistance);
         }
 
-        public DynamicTextLabel(string text, Color color, Vector position,
+        public DynamicTextLabel(string text, Color color, Vector3 position,
             float drawdistance, float streamdistance, GtaPlayer attachedPlayer = null, GtaVehicle attachedVehicle = null,
             bool testLOS = false,
             int[] worlds = null, int[] interiors = null, GtaPlayer[] players = null)

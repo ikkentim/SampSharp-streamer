@@ -15,12 +15,13 @@
 
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
+using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.Events
 {
     public class PlayerSelectEventArgs : PlayerEventArgs
     {
-        public PlayerSelectEventArgs(GtaPlayer player, int modelid, Vector position)
+        public PlayerSelectEventArgs(GtaPlayer player, int modelid, Vector3 position)
             : base(player)
         {
             ModelId = modelid;
@@ -28,6 +29,6 @@ namespace SampSharp.Streamer.Events
         }
 
         public int ModelId { get; private set; }
-        public Vector Position { get; private set; }
+        public Vector3 Position { get; private set; }
     }
 }
