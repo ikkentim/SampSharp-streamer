@@ -22,7 +22,7 @@ namespace TestMode
             SetGameModeText("sa-mp# testmode");
             UsePlayerPedAnimations();
 
-            AddPlayerClass(65, new Vector(5), 0, Weapon.AK47, 500);
+            AddPlayerClass(65, new Vector3(5), 0, Weapon.AK47, 500);
 
             foreach (ITest test in _tests)
             {
