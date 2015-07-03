@@ -1,6 +1,4 @@
-Streamer wrapper for SA-MP#
+Streamer wrapper for SampSharp
 =====================
 
-Streamer wrapper for SA-MP#
-
-[![Analytics](https://ga-beacon.appspot.com/UA-58691640-2/SampSharp-streamer/readme?pixel)](https://github.com/igrigorik/ga-beacon)
+A wrapper of the popular SA-MP streamer plugin for SampSharp.
