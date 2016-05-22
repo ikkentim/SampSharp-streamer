@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,39 +15,32 @@
 
 using System;
 using System.Linq;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
-    public class DynamicPickup : DynamicWorldObject<DynamicPickup>
+    public partial class DynamicPickup : DynamicWorldObject<DynamicPickup>
     {
-        public DynamicPickup(int id)
-        {
-            Id = id;
-        }
-
         public DynamicPickup(int modelid, int type, Vector3 position, int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null, float streamdistance = 100.0f)
+            BasePlayer player = null, float streamdistance = 100.0f)
         {
-            Id = StreamerNative.CreateDynamicPickup(modelid, type, position.X, position.Y, position.Z, worldid,
-                interiorid, player == null ? -1 : player.Id, streamdistance);
+            Id = Internal.CreateDynamicPickup(modelid, type, position.X, position.Y, position.Z, worldid,
+                interiorid, player?.Id ?? -1, streamdistance);
         }
 
         public DynamicPickup(int modelid, int type, Vector3 position, float streamdistance, int[] worlds = null,
-            int[] interiors = null, GtaPlayer[] players = null)
+            int[] interiors = null, BasePlayer[] players = null)
         {
-            Id = StreamerNative.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance,
-                worlds, interiors, players == null ? null : players.Select(p => p.Id).ToArray());
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            Id = Internal.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length);
         }
 
-        public override StreamType StreamType
-        {
-            get { return StreamType.Pickup; }
-        }
+        public override StreamType StreamType => StreamType.Pickup;
 
         public virtual int Type
         {
@@ -61,10 +54,7 @@ namespace SampSharp.Streamer.World
             set { SetInteger(StreamerDataType.ModelId, value); }
         }
 
-        public virtual bool IsValid
-        {
-            get { return StreamerNative.IsValidDynamicPickup(Id); }
-        }
+        public virtual bool IsValid => Internal.IsValidDynamicPickup(Id);
 
         public event EventHandler<PlayerEventArgs> PickedUp;
 
@@ -72,13 +62,12 @@ namespace SampSharp.Streamer.World
         {
             base.Dispose(disposing);
 
-            StreamerNative.DestroyDynamicPickup(Id);
+            Internal.DestroyDynamicPickup(Id);
         }
 
         public virtual void OnPickedUp(PlayerEventArgs e)
         {
-            if (PickedUp != null)
-                PickedUp(this, e);
+            PickedUp?.Invoke(this, e);
         }
     }
 }

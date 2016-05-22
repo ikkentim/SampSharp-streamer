@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,49 +15,40 @@
 
 using System;
 using System.Linq;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
-    public class DynamicRaceCheckpoint : DynamicWorldObject<DynamicRaceCheckpoint>
+    public partial class DynamicRaceCheckpoint : DynamicWorldObject<DynamicRaceCheckpoint>
     {
-        public DynamicRaceCheckpoint(int id)
-        {
-            Id = id;
-        }
-
         public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
             float size = 3.0f, int worldid = -1,
-            int interiorid = -1, GtaPlayer player = null, float streamdistance = 100.0f)
+            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f)
         {
-            Id = StreamerNative.CreateDynamicRaceCP(type, position.X, position.Y, position.Z, nextPosition.X,
-                nextPosition.Y, nextPosition.Z, size, worldid, interiorid, player == null ? -1 : player.Id,
+            Id = Internal.CreateDynamicRaceCP((int) type, position.X, position.Y, position.Z, nextPosition.X,
+                nextPosition.Y, nextPosition.Z, size, worldid, interiorid, player?.Id ?? -1,
                 streamdistance);
         }
 
         public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
             float size, float streamdistance, int[] worlds = null, int[] interiors = null,
-            GtaPlayer[] players = null)
+            BasePlayer[] players = null)
         {
-            Id = StreamerNative.CreateDynamicRaceCPEx(type, position.X, position.Y, position.Z, nextPosition.X,
-                nextPosition.Y, nextPosition.Z, size, streamdistance, worlds, interiors,
-                players == null ? null : players.Select(p => p.Id).ToArray());
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            Id = Internal.CreateDynamicRaceCPEx((int) type, position.X, position.Y, position.Z, nextPosition.X,
+                nextPosition.Y, nextPosition.Z, size, streamdistance, worlds, interiors, pl, worlds.Length,
+                interiors.Length, pl.Length);
         }
 
-        public bool IsValid
-        {
-            get { return StreamerNative.IsValidDynamicRaceCP(Id); }
-        }
+        public bool IsValid => Internal.IsValidDynamicRaceCP(Id);
 
-        public override StreamType StreamType
-        {
-            get { return StreamType.RaceCheckpoint; }
-        }
+        public override StreamType StreamType => StreamType.RaceCheckpoint;
 
         public float Size
         {
@@ -69,9 +60,9 @@ namespace SampSharp.Streamer.World
         {
             get
             {
-                float x = GetFloat(StreamerDataType.NextX);
-                float y = GetFloat(StreamerDataType.NextY);
-                float z = GetFloat(StreamerDataType.NextZ);
+                var x = GetFloat(StreamerDataType.NextX);
+                var y = GetFloat(StreamerDataType.NextY);
+                var z = GetFloat(StreamerDataType.NextZ);
 
                 return new Vector3(x, y, z);
             }
@@ -84,43 +75,44 @@ namespace SampSharp.Streamer.World
         }
 
         public event EventHandler<PlayerEventArgs> Enter;
+
         public event EventHandler<PlayerEventArgs> Leave;
 
-        public void ToggleForPlayer(GtaPlayer player, bool toggle)
+        public void ToggleForPlayer(BasePlayer player, bool toggle)
         {
             AssertNotDisposed();
 
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.TogglePlayerDynamicRaceCP(player.Id, Id, toggle);
+            Internal.TogglePlayerDynamicRaceCP(player.Id, Id, toggle);
         }
 
-        public bool IsPlayerInCheckpoint(GtaPlayer player)
+        public bool IsPlayerInCheckpoint(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            return StreamerNative.IsPlayerInDynamicRaceCP(player.Id, Id);
+            return Internal.IsPlayerInDynamicRaceCP(player.Id, Id);
         }
 
-        public static void ToggleAllForPlayer(GtaPlayer player, bool toggle)
+        public static void ToggleAllForPlayer(BasePlayer player, bool toggle)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.TogglePlayerAllDynamicRaceCPs(player.Id, toggle);
+            Internal.TogglePlayerAllDynamicRaceCPs(player.Id, toggle);
         }
 
-        public static DynamicRaceCheckpoint GetPlayerVisibleDynamicCheckpoint(GtaPlayer player)
+        public static DynamicRaceCheckpoint GetPlayerVisibleDynamicCheckpoint(BasePlayer player)
         {
-            int id = StreamerNative.GetPlayerVisibleDynamicRaceCP(player.Id);
+            var id = Internal.GetPlayerVisibleDynamicRaceCP(player.Id);
 
             return id < 0 ? null : FindOrCreate(id);
         }
@@ -129,19 +121,17 @@ namespace SampSharp.Streamer.World
         {
             base.Dispose(disposing);
 
-            StreamerNative.DestroyDynamicRaceCP(Id);
+            Internal.DestroyDynamicRaceCP(Id);
         }
 
         public virtual void OnEnter(PlayerEventArgs e)
         {
-            if (Enter != null)
-                Enter(this, e);
+            Enter?.Invoke(this, e);
         }
 
         public virtual void OnLeave(PlayerEventArgs e)
         {
-            if (Leave != null)
-                Leave(this, e);
+            Leave?.Invoke(this, e);
         }
     }
 }

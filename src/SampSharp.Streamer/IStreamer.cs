@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,16 +23,27 @@ namespace SampSharp.Streamer
     public interface IStreamer : IService
     {
         event EventHandler<EventArgs> DynamicObjectMoved;
+
         event EventHandler<PlayerEditEventArgs> PlayerEditDynamicObject;
+
         event EventHandler<PlayerSelectEventArgs> PlayerSelectDynamicObject;
+
         event EventHandler<PlayerShootEventArgs> PlayerShootDynamicObject;
+
         event EventHandler<PlayerEventArgs> PlayerPickUpDynamicPickup;
+
         event EventHandler<PlayerEventArgs> PlayerEnterDynamicCheckpoint;
+
         event EventHandler<PlayerEventArgs> PlayerLeaveDynamicCheckpoint;
+
         event EventHandler<PlayerEventArgs> PlayerEnterDynamicRaceCheckpoint;
+
         event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
+
         event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
+
         event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
+
         event EventHandler<ErrorEventArgs> Error;
     }
 }

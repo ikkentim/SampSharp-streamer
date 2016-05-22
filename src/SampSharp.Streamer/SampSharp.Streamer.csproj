@@ -33,8 +33,8 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SampSharp.GameMode, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SampSharp.GameMode.0.6.0.0\lib\net45\SampSharp.GameMode.dll</HintPath>
+    <Reference Include="SampSharp.GameMode, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SampSharp.GameMode.0.6.2.0\lib\net45\SampSharp.GameMode.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -62,22 +62,18 @@
     <Compile Include="Events\PlayerSelectEventArgs.cs" />
     <Compile Include="Events\PlayerShootEventArgs.cs" />
     <Compile Include="IStreamer.cs" />
-    <Compile Include="Natives\StreamerNative.areas.cs" />
-    <Compile Include="Natives\StreamerNative.checkpoints.cs" />
-    <Compile Include="Natives\StreamerNative.data-manipulation.cs" />
-    <Compile Include="Natives\StreamerNative.map-icons.cs" />
-    <Compile Include="Natives\StreamerNative.miscellaneous.cs" />
-    <Compile Include="Natives\StreamerNative.objects.cs" />
-    <Compile Include="Natives\StreamerNative.pickups.cs" />
-    <Compile Include="Natives\StreamerNative.race-checkpoints.cs" />
-    <Compile Include="Natives\StreamerNative.settings.cs" />
-    <Compile Include="Natives\StreamerNative.updates.cs" />
     <Compile Include="Streamer.cs" />
     <Compile Include="Controllers\DynamicAreaController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streamer.events.cs">
       <DependentUpon>Streamer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Streamer.Internal.cs" />
+    <Compile Include="World\DynamicCheckpoint.Internal.cs" />
+    <Compile Include="World\DynamicMapIcon.Internal.cs" />
+    <Compile Include="World\DynamicObject.Internal.cs" />
+    <Compile Include="World\DynamicPickup.Internal.cs" />
+    <Compile Include="World\DynamicRaceCheckpoint.Internal.cs" />
     <Compile Include="World\DynamicTextLabel.cs" />
     <Compile Include="World\DynamicArea.cs" />
     <Compile Include="World\DynamicCheckpoint.cs" />
@@ -85,18 +81,17 @@
     <Compile Include="World\DynamicObject.cs" />
     <Compile Include="World\DynamicPickup.cs" />
     <Compile Include="World\DynamicRaceCheckpoint.cs" />
+    <Compile Include="World\DynamicTextLabel.Internal.cs" />
     <Compile Include="World\DynamicWorldObject`1.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Natives\StreamerNative.3d-text-labels.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Natives\StreamerNative.extended.cs" />
+    <Compile Include="World\DynamicWorldObject`1.Internal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Streamer.callbacks.cs">
       <DependentUpon>Streamer.cs</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="World\DynamicArea.Internal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

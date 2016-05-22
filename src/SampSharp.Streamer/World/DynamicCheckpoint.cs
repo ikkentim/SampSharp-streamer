@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,46 +15,36 @@
 
 using System;
 using System.Linq;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
-    public class DynamicCheckpoint : DynamicWorldObject<DynamicCheckpoint>
+    public partial class DynamicCheckpoint : DynamicWorldObject<DynamicCheckpoint>
     {
-        public DynamicCheckpoint(int id)
-        {
-            Id = id;
-        }
-
         public DynamicCheckpoint(Vector3 position, float size = 1.0f, int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null, float streamdistance = 100.0f)
+            BasePlayer player = null, float streamdistance = 100.0f)
         {
-            Id = StreamerNative.CreateDynamicCP(position.X, position.Y, position.Z, size, worldid, interiorid,
-                player == null ? -1 : player.Id, streamdistance);
+            Id = Internal.CreateDynamicCP(position.X, position.Y, position.Z, size, worldid, interiorid,
+                player?.Id ?? -1, streamdistance);
         }
 
         public DynamicCheckpoint(Vector3 position, float size, float streamdistance, int[] worlds = null,
             int[] interiors = null,
-            GtaPlayer[] players = null)
+            BasePlayer[] players = null)
         {
-            Id = StreamerNative.CreateDynamicCPEx(position.X, position.Y, position.Z, size, streamdistance, worlds,
-                interiors,
-                players == null ? null : players.Select(p => p.Id).ToArray());
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            Id = Internal.CreateDynamicCPEx(position.X, position.Y, position.Z, size, streamdistance, worlds, interiors,
+                pl, worlds.Length, interiors.Length, pl.Length);
         }
 
-        public bool IsValid
-        {
-            get { return StreamerNative.IsValidDynamicCP(Id); }
-        }
+        public bool IsValid => Internal.IsValidDynamicCP(Id);
 
-        public override StreamType StreamType
-        {
-            get { return StreamType.Checkpoint; }
-        }
+        public override StreamType StreamType => StreamType.Checkpoint;
 
         public float Size
         {
@@ -63,43 +53,44 @@ namespace SampSharp.Streamer.World
         }
 
         public event EventHandler<PlayerEventArgs> Enter;
+
         public event EventHandler<PlayerEventArgs> Leave;
 
-        public void ToggleForPlayer(GtaPlayer player, bool toggle)
+        public void ToggleForPlayer(BasePlayer player, bool toggle)
         {
             AssertNotDisposed();
 
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.TogglePlayerDynamicCP(player.Id, Id, toggle);
+            Internal.TogglePlayerDynamicCP(player.Id, Id, toggle);
         }
 
-        public bool IsPlayerInCheckpoint(GtaPlayer player)
+        public bool IsPlayerInCheckpoint(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            return StreamerNative.IsPlayerInDynamicCP(player.Id, Id);
+            return Internal.IsPlayerInDynamicCP(player.Id, Id);
         }
 
-        public static void ToggleAllForPlayer(GtaPlayer player, bool toggle)
+        public static void ToggleAllForPlayer(BasePlayer player, bool toggle)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.TogglePlayerAllDynamicCPs(player.Id, toggle);
+            Internal.TogglePlayerAllDynamicCPs(player.Id, toggle);
         }
 
-        public static DynamicCheckpoint GetPlayerVisibleDynamicCheckpoint(GtaPlayer player)
+        public static DynamicCheckpoint GetPlayerVisibleDynamicCheckpoint(BasePlayer player)
         {
-            int id = StreamerNative.GetPlayerVisibleDynamicCP(player.Id);
+            int id = Internal.GetPlayerVisibleDynamicCP(player.Id);
 
             return id < 0 ? null : FindOrCreate(id);
         }
@@ -108,19 +99,17 @@ namespace SampSharp.Streamer.World
         {
             base.Dispose(disposing);
 
-            StreamerNative.DestroyDynamicCP(Id);
+            Internal.DestroyDynamicCP(Id);
         }
 
         public virtual void OnEnter(PlayerEventArgs e)
         {
-            if (Enter != null)
-                Enter(this, e);
+            Enter?.Invoke(this, e);
         }
 
         public virtual void OnLeave(PlayerEventArgs e)
         {
-            if (Leave != null)
-                Leave(this, e);
+            Leave?.Invoke(this, e);
         }
     }
 }

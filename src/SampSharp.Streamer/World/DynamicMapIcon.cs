@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,36 +13,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
-    public class DynamicMapIcon : DynamicWorldObject<DynamicMapIcon>
+    public partial class DynamicMapIcon : DynamicWorldObject<DynamicMapIcon>
     {
-        public DynamicMapIcon(int id)
-        {
-            Id = id;
-        }
-
         public DynamicMapIcon(Vector3 position, int type, MapIconType mapIconType = MapIconType.Local, int worldid = -1,
             int interiorid = -1,
-            GtaPlayer player = null, float streamDistance = 100.0f)
+            BasePlayer player = null, float streamDistance = 100.0f)
         {
-            Id = StreamerNative.CreateDynamicMapIcon(position.X, position.Y, position.Z, type, 0, worldid, interiorid,
-                player == null ? -1 : player.Id, streamDistance, mapIconType);
+            Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, type, 0, worldid, interiorid,
+                player?.Id ?? -1, streamDistance, (int) mapIconType);
         }
 
         public DynamicMapIcon(Vector3 position, Color color, MapIconType mapIconType = MapIconType.Local,
             int worldid = -1, int interiorid = -1,
-            GtaPlayer player = null, float streamDistance = 100.0f)
+            BasePlayer player = null, float streamDistance = 100.0f)
         {
-            Id = StreamerNative.CreateDynamicMapIcon(position.X, position.Y, position.Z, 0, color, worldid, interiorid,
-                player == null ? -1 : player.Id, streamDistance, mapIconType);
+            Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, 0, color, worldid, interiorid,
+                player?.Id ?? -1, streamDistance, (int) mapIconType);
         }
 
         public int Type
@@ -57,19 +51,13 @@ namespace SampSharp.Streamer.World
             set { SetInteger(StreamerDataType.Color, value); }
         }
 
-        public bool IsValid
-        {
-            get { return StreamerNative.IsValidDynamicMapIcon(Id); }
-        }
+        public bool IsValid => Internal.IsValidDynamicMapIcon(Id);
 
-        public override StreamType StreamType
-        {
-            get { return StreamType.MapIcon; }
-        }
+        public override StreamType StreamType => StreamType.MapIcon;
 
         protected override void Dispose(bool disposing)
         {
-            StreamerNative.DestroyDynamicMapIcon(Id);
+            Internal.DestroyDynamicMapIcon(Id);
 
             base.Dispose(disposing);
         }

@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
 // limitations under the License.
 
 using System;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Events;
 using SampSharp.Streamer.World;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer
 {
@@ -27,71 +27,117 @@ namespace SampSharp.Streamer
     {
         internal void OnDynamicObjectMoved(int objectid)
         {
-            OnDynamicObjectMoved(DynamicObject.FindOrCreate(objectid), EventArgs.Empty);
+            var @object = DynamicObject.Find(objectid);
+
+            if (@object == null)
+                return;
+
+            OnDynamicObjectMoved(@object, EventArgs.Empty);
         }
 
         internal void OnPlayerEditDynamicObject(int playerid, int objectid, int response, float x, float y, float z,
             float rx, float ry, float rz)
         {
-            OnPlayerEditDynamicObject(DynamicObject.FindOrCreate(objectid),
-                new PlayerEditEventArgs(GtaPlayer.FindOrCreate(playerid),
+            var @object = DynamicObject.Find(objectid);
+
+            if (@object == null)
+                return;
+
+            OnPlayerEditDynamicObject(DynamicObject.Find(objectid),
+                new PlayerEditEventArgs(BasePlayer.FindOrCreate(playerid),
                     (EditObjectResponse) response, new Vector3(x, y, z), new Vector3(rx, ry, rz)));
         }
 
         internal void OnPlayerSelectDynamicObject(int playerid, int objectid, int modelid, float x, float y, float z)
         {
-            OnPlayerSelectDynamicObject(DynamicObject.FindOrCreate(objectid),
-                new PlayerSelectEventArgs(GtaPlayer.FindOrCreate(playerid), modelid,
-                    new Vector3(x, y, z)));
+            var @object = DynamicObject.Find(objectid);
+
+            if (@object == null)
+                return;
+
+            OnPlayerSelectDynamicObject(@object,
+                new PlayerSelectEventArgs(BasePlayer.FindOrCreate(playerid), modelid, new Vector3(x, y, z)));
         }
 
         internal void OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
         {
-            OnPlayerShootDynamicObject(DynamicObject.FindOrCreate(objectid),
-                new PlayerShootEventArgs(GtaPlayer.FindOrCreate(playerid), (Weapon) weaponid,
-                    new Vector3(x, y, z)));
+            var @object = DynamicObject.Find(objectid);
+
+            if (@object == null)
+                return;
+            
+            OnPlayerShootDynamicObject(@object,
+                new PlayerShootEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, new Vector3(x, y, z)));
         }
 
         internal void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)
         {
-            OnPlayerPickUpDynamicPickup(DynamicPickup.FindOrCreate(pickupid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var pickup = DynamicPickup.Find(pickupid);
+
+            if (pickup == null)
+                return;
+
+            OnPlayerPickUpDynamicPickup(pickup, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerEnterDynamicCP(int playerid, int checkpointid)
         {
-            OnPlayerEnterDynamicCheckpoint(DynamicCheckpoint.FindOrCreate(checkpointid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var checkpoint = DynamicCheckpoint.Find(checkpointid);
+
+            if (checkpoint == null)
+                return;
+
+            OnPlayerEnterDynamicCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerLeaveDynamicCP(int playerid, int checkpointid)
         {
-            OnPlayerLeaveDynamicCheckpoint(DynamicCheckpoint.FindOrCreate(checkpointid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var checkpoint = DynamicCheckpoint.Find(checkpointid);
+
+            if (checkpoint == null)
+                return;
+
+            OnPlayerLeaveDynamicCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerEnterDynamicRaceCP(int playerid, int checkpointid)
         {
-            OnPlayerEnterDynamicRaceCheckpoint(DynamicRaceCheckpoint.FindOrCreate(checkpointid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var checkpoint = DynamicRaceCheckpoint.Find(checkpointid);
+
+            if (checkpoint == null)
+                return;
+
+            OnPlayerEnterDynamicRaceCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerLeaveDynamicRaceCP(int playerid, int checkpointid)
         {
-            OnPlayerLeaveDynamicRaceCheckpoint(DynamicRaceCheckpoint.FindOrCreate(checkpointid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var checkpoint = DynamicRaceCheckpoint.Find(checkpointid);
+
+            if (checkpoint == null)
+                return;
+
+            OnPlayerLeaveDynamicRaceCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerEnterDynamicArea(int playerid, int areaid)
         {
-            OnPlayerEnterDynamicArea(DynamicArea.FindOrCreate(areaid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var area = DynamicArea.Find(areaid);
+
+            if (area == null)
+                return;
+
+            OnPlayerEnterDynamicArea(area, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void OnPlayerLeaveDynamicArea(int playerid, int areaid)
         {
-            OnPlayerLeaveDynamicArea(DynamicArea.FindOrCreate(areaid),
-                new PlayerEventArgs(GtaPlayer.FindOrCreate(playerid)));
+            var area = DynamicArea.Find(areaid);
+
+            if (area == null)
+                return;
+
+            OnPlayerLeaveDynamicArea(area, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
         internal void Streamer_OnPluginError(string error)

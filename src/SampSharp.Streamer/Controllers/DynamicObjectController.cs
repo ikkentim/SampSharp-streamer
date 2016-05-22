@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,26 +27,22 @@ namespace SampSharp.Streamer.Controllers
             streamer.DynamicObjectMoved += (sender, args) =>
             {
                 var @object = sender as DynamicObject;
-                if (@object != null)
-                    @object.OnMoved(args);
+                @object?.OnMoved(args);
             };
             streamer.PlayerEditDynamicObject += (sender, args) =>
             {
                 var @object = sender as DynamicObject;
-                if (@object != null)
-                    @object.OnEdited(args);
+                @object?.OnEdited(args);
             };
             streamer.PlayerSelectDynamicObject += (sender, args) =>
             {
                 var @object = sender as DynamicObject;
-                if (@object != null)
-                    @object.OnSelected(args);
+                @object?.OnSelected(args);
             };
             streamer.PlayerShootDynamicObject += (sender, args) =>
             {
                 var @object = sender as DynamicObject;
-                if (@object != null)
-                    @object.OnShot(args);
+                @object?.OnShot(args);
             };
         }
 

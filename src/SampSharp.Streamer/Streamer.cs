@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,31 +15,20 @@
 
 using System;
 using SampSharp.GameMode;
-using SampSharp.GameMode.Controllers;
-using SampSharp.GameMode.Natives;
+using SampSharp.GameMode.API;
 using SampSharp.GameMode.World;
+using SampSharp.GameMode.Controllers;
+using SampSharp.Streamer;
 using SampSharp.Streamer.Controllers;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
 
+[assembly: SampSharpExtension(typeof(Streamer))]
 namespace SampSharp.Streamer
 {
-    public partial class Streamer : IStreamer
+    public partial class Streamer : Extension, IStreamer
     {
         public const int InvalidId = 0;
-
-        private static readonly OptionItemTypeCollection OptionItemTypeCollectionBackingField =
-            new OptionItemTypeCollection();
-
-        #region Constructors
-
-        public Streamer(BaseMode gameMode)
-        {
-            GameMode = gameMode;
-        }
-
-        #endregion
-
+        
         #region Implementation of IService
 
         /// <summary>
@@ -49,25 +38,28 @@ namespace SampSharp.Streamer
 
         #endregion
 
-        public static void ProcessActiveItems()
+        #region Overrides of Extension
+
+        /// <summary>
+        ///     Loads services provided by this extensions.
+        /// </summary>
+        /// <param name="gameMode">The game mode.</param>
+        public override void LoadServices(BaseMode gameMode)
         {
-            StreamerNative.ProcessActiveItems();
+            // Add the steamer service to the service provider.
+            GameMode = gameMode;
+            gameMode.Services.AddService<IStreamer>(this);
+
+            base.LoadServices(gameMode);
         }
 
-        public static IStreamer Load(BaseMode gameMode, ControllerCollection controllers)
+        /// <summary>
+        ///     Loads controllers provided by this extensions.
+        /// </summary>
+        /// <param name="gameMode">The game mode.</param>
+        /// <param name="controllerCollection">The controller collection.</param>
+        public override void LoadControllers(BaseMode gameMode, ControllerCollection controllerCollection)
         {
-            // Check whether the streamer service was already loaded.
-            var existing = gameMode.Services.GetService<IStreamer>();
-            if (existing != null)
-                return existing;
-
-            // Create and add the steamer service to the service provider.
-            var streamer = new Streamer(gameMode);
-            gameMode.Services.AddService<IStreamer>(streamer);
-
-            // Register the streamer as a gamemode extension
-            Native.RegisterExtension(streamer);
-
             // Load the steamer controllers.
             var types = new[]
             {
@@ -85,81 +77,87 @@ namespace SampSharp.Streamer
                 var instance = Activator.CreateInstance(type);
                 var streamerController = instance as IStreamerController;
 
-                if (streamerController != null)
-                    streamerController.RegisterStreamerEvents(streamer);
+                streamerController?.RegisterStreamerEvents(gameMode.Services.GetService<IStreamer>());
 
                 var controller = instance as IController;
 
-                controllers.Add(controller);
+                controllerCollection.Add(controller);
             }
 
-            return streamer;
+            base.LoadControllers(gameMode, controllerCollection);
         }
 
-        public static void ToggleIdleUpdate(GtaPlayer player, bool toggle)
+        #endregion
+
+        public static void ProcessActiveItems()
+        {
+            Internal.ProcessActiveItems();
+        }
+
+        public static void ToggleIdleUpdate(BasePlayer player, bool toggle)
         {
             if (player == null)
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
 
-            StreamerNative.ToggleIdleUpdate(player.Id, toggle);
+            Internal.ToggleIdleUpdate(player.Id, toggle);
         }
 
-        public static bool IsToggleIdleUpdate(GtaPlayer player)
+        public static bool IsToggleIdleUpdate(BasePlayer player)
         {
             if (player == null)
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
 
-            return StreamerNative.IsToggleIdleUpdate(player.Id);
+            return Internal.IsToggleIdleUpdate(player.Id);
         }
 
-        public static void ToggleCameraUpdate(GtaPlayer player, bool toggle)
+        public static void ToggleCameraUpdate(BasePlayer player, bool toggle)
         {
             if (player == null)
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
 
-            StreamerNative.ToggleCameraUpdate(player.Id, toggle);
+            Internal.ToggleCameraUpdate(player.Id, toggle);
         }
 
-        public static bool IsToggleCameraUpdate(GtaPlayer player)
+        public static bool IsToggleCameraUpdate(BasePlayer player)
         {
             if (player == null)
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
 
-            return StreamerNative.IsToggleCameraUpdate(player.Id);
+            return Internal.IsToggleCameraUpdate(player.Id);
         }
 
-        public static void Update(GtaPlayer player)
+        public static void Update(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.Update(player.Id);
+            Internal.Update(player.Id, -1);
         }
 
-        public static void Update(GtaPlayer player, Vector3 position, int worldid = -1, int interiorid = -1)
+        public static void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
-            StreamerNative.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid);
+            Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1);
         }
 
         #region Properties of Streamer
 
         public static bool IsToggleErrorCallback
         {
-            get { return StreamerNative.IsToggleErrorCallback(); }
-            set { StreamerNative.ToggleErrorCallback(value); }
+            get { return Internal.IsToggleErrorCallback(); }
+            set { Internal.ToggleErrorCallback(value); }
         }
 
         public static int TickRate
         {
-            get { return StreamerNative.GetTickRate(); }
-            set { StreamerNative.SetTickRate(value); }
+            get { return Internal.GetTickRate(); }
+            set { Internal.SetTickRate(value); }
         }
 
         public static float CellDistance
@@ -167,10 +165,10 @@ namespace SampSharp.Streamer
             get
             {
                 float value;
-                StreamerNative.GetCellDistance(out value);
+                Internal.GetCellDistance(out value);
                 return value;
             }
-            set { StreamerNative.SetCellDistance(value); }
+            set { Internal.SetCellDistance(value); }
         }
 
         public static float CellSize
@@ -178,24 +176,22 @@ namespace SampSharp.Streamer
             get
             {
                 float value;
-                StreamerNative.GetCellSize(out value);
+                Internal.GetCellSize(out value);
                 return value;
             }
-            set { StreamerNative.SetCellSize(value); }
+            set { Internal.SetCellSize(value); }
         }
 
-        public static OptionItemTypeCollection ItemType
-        {
-            get { return OptionItemTypeCollectionBackingField; }
-        }
+        public static OptionItemTypeCollection ItemType { get; } = new OptionItemTypeCollection();
 
         public static bool IsErrorCallbackEnabled
         {
-            get { return StreamerNative.IsToggleErrorCallback(); }
-            set { StreamerNative.ToggleErrorCallback(value); }
+            get { return Internal.IsToggleErrorCallback(); }
+            set { Internal.ToggleErrorCallback(value); }
         }
 
         public static bool PrintStackTraceOnError { get; set; }
+
         #endregion
 
         #region Subclasses
@@ -209,27 +205,27 @@ namespace SampSharp.Streamer
 
             public int VisibleItems
             {
-                get { return StreamerNative.GetVisibleItems(StreamType); }
-                set { StreamerNative.SetVisibleItems(StreamType, value); }
+                get { return Internal.GetVisibleItems((int) StreamType, -1); }
+                set { Internal.SetVisibleItems((int) StreamType, value, -1); }
             }
 
             public int MaxItems
             {
-                get { return StreamerNative.GetMaxItems(StreamType); }
-                set { StreamerNative.SetMaxItems(StreamType, value); }
+                get { return Internal.GetMaxItems((int) StreamType); }
+                set { Internal.SetMaxItems((int) StreamType, value); }
             }
 
-            public StreamType StreamType { get; private set; }
+            public StreamType StreamType { get; }
 
             public int GetInteger(int id, StreamerDataType data)
             {
-                return StreamerNative.GetIntData(StreamType, id, data);
+                return Internal.GetIntData((int) StreamType, id, (int) data);
             }
 
             public float GetFloat(int id, StreamerDataType data)
             {
                 float value;
-                StreamerNative.GetFloatData(StreamType, id, data, out value);
+                Internal.GetFloatData((int) StreamType, id, (int) data, out value);
 
                 return value;
             }
@@ -237,58 +233,67 @@ namespace SampSharp.Streamer
             public int[] GetArray(int id, StreamerDataType data, int maxlength)
             {
                 int[] value;
-                StreamerNative.GetArrayData(StreamType, id, data, out value, maxlength);
+                Internal.GetArrayData((int) StreamType, id, (int) data, out value, maxlength);
 
                 return value;
             }
 
             public void AppendToArray(int id, StreamerDataType data, int value)
             {
-                StreamerNative.AppendArrayData(StreamType, id, data, value);
+                Internal.AppendArrayData((int) StreamType, id, (int) data, value);
             }
 
             public void RemoveArrayData(int id, StreamerDataType data, int value)
             {
-                StreamerNative.RemoveArrayData(StreamType, id, data, value);
+                Internal.RemoveArrayData((int) StreamType, id, (int) data, value);
             }
 
             public bool IsInArray(int id, StreamerDataType data, int value)
             {
-                return StreamerNative.IsInArrayData(StreamType, id, data, value);
+                return Internal.IsInArrayData((int) StreamType, id, (int) data, value);
             }
 
             public void SetInteger(int id, StreamerDataType data, int value)
             {
-                StreamerNative.SetIntData(StreamType, id, data, value);
+                Internal.SetIntData((int) StreamType, id, (int) data, value);
             }
 
             public void SetFloat(int id, StreamerDataType data, float value)
             {
-                StreamerNative.SetFloatData(StreamType, id, data, value);
+                Internal.SetFloatData((int) StreamType, id, (int) data, value);
             }
 
             public void SetArray(int id, StreamerDataType data, int[] value)
             {
-                StreamerNative.SetArrayData(StreamType, id, data, value);
+                Internal.SetArrayData((int) StreamType, id, (int) data, value, value.Length);
             }
 
-            public void ToggleUpdate(GtaPlayer player, bool toggle)
+            public void ToggleUpdate(BasePlayer player, bool toggle)
             {
                 if (player == null)
                 {
-                    throw new ArgumentNullException("player");
+                    throw new ArgumentNullException(nameof(player));
                 }
 
-                StreamerNative.ToggleItemUpdate(player.Id, StreamType, toggle);
+                Internal.ToggleItemUpdate(player.Id, (int) StreamType, toggle);
+            }
+
+            public int GetVisibleItems(BasePlayer player)
+            {
+                if (player == null) throw new ArgumentNullException(nameof(player));
+                return Internal.GetVisibleItems((int) StreamType, player.Id);
+            }
+
+            public void SetVisibleItems(BasePlayer player, int items)
+            {
+                if (player == null) throw new ArgumentNullException(nameof(player));
+                Internal.SetVisibleItems((int) StreamType, items, player.Id);
             }
         }
 
         public sealed class OptionItemTypeCollection
         {
-            public OptionItemType this[StreamType type]
-            {
-                get { return new OptionItemType(type); }
-            }
+            public OptionItemType this[StreamType type] => new OptionItemType(type);
         }
 
         #endregion

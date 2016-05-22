@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,14 +27,12 @@ namespace SampSharp.Streamer.Controllers
             streamer.PlayerEnterDynamicRaceCheckpoint += (sender, args) =>
             {
                 var checkpoint = sender as DynamicRaceCheckpoint;
-                if (checkpoint != null)
-                    checkpoint.OnEnter(args);
+                checkpoint?.OnEnter(args);
             };
             streamer.PlayerLeaveDynamicRaceCheckpoint += (sender, args) =>
             {
                 var checkpoint = sender as DynamicRaceCheckpoint;
-                if (checkpoint != null)
-                    checkpoint.OnLeave(args);
+                checkpoint?.OnLeave(args);
             };
         }
 

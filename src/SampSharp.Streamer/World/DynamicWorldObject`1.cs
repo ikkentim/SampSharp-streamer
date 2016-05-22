@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SampSharp.GameMode;
 using SampSharp.GameMode.Pools;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
-using SampSharp.Streamer.Natives;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.World
 {
-    public abstract class DynamicWorldObject<T> : IdentifiedPool<T>, IIdentifiable, IWorldObject
+    public abstract partial class DynamicWorldObject<T> : IdentifiedPool<T>, IIdentifiable, IWorldObject
         where T : DynamicWorldObject<T>
     {
         public abstract StreamType StreamType { get; }
@@ -69,27 +68,27 @@ namespace SampSharp.Streamer.World
             }
         }
 
-        public virtual GtaPlayer Player
+        public virtual BasePlayer Player
         {
-            get { return GtaPlayer.FindOrCreate(GetInteger(StreamerDataType.PlayerId)); }
+            get { return BasePlayer.FindOrCreate(GetInteger(StreamerDataType.PlayerId)); }
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 SetInteger(StreamerDataType.PlayerId, value.Id);
             }
         }
 
-        public virtual IEnumerable<GtaPlayer> Players
+        public virtual IEnumerable<BasePlayer> Players
         {
             get
             {
                 return
                     GetArray(StreamerDataType.PlayerId, 1024)
                         .Where(v => v != int.MinValue)
-                        .Select(GtaPlayer.FindOrCreate);
+                        .Select(BasePlayer.FindOrCreate);
             }
             set
             {
@@ -98,7 +97,7 @@ namespace SampSharp.Streamer.World
                     SetArray(StreamerDataType.PlayerId, new[] {-1});
                     return;
                 }
-                SetArray(StreamerDataType.PlayerId, value.Select(p => p == null ? -1 : p.Id).ToArray());
+                SetArray(StreamerDataType.PlayerId, value.Select(p => p?.Id ?? -1).ToArray());
             }
         }
 
@@ -110,12 +109,10 @@ namespace SampSharp.Streamer.World
 
         public virtual bool IsStatic
         {
-            get { return StreamerNative.IsToggleStaticItem(StreamType, Id); }
-            set { StreamerNative.ToggleStaticItem(StreamType, Id, value); }
+            get { return WorldInternal.IsToggleStaticItem((int) StreamType, Id); }
+            set { WorldInternal.ToggleStaticItem((int) StreamType, Id, value); }
         }
-
-        public int Id { get; protected set; }
-
+        
         public virtual Vector3 Position
         {
             get
@@ -132,31 +129,31 @@ namespace SampSharp.Streamer.World
             }
         }
 
-        public virtual bool IsVisibleForPlayer(GtaPlayer player)
+        public virtual bool IsVisibleForPlayer(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
             return IsInArray(StreamerDataType.PlayerId, player.Id);
         }
 
-        public virtual void ShowForPlayer(GtaPlayer player)
+        public virtual void ShowForPlayer(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
             AppendToArray(StreamerDataType.PlayerId, player.Id);
         }
 
-        public virtual void HideForPlayer(GtaPlayer player)
+        public virtual void HideForPlayer(BasePlayer player)
         {
             if (player == null)
             {
-                throw new ArgumentNullException("player");
+                throw new ArgumentNullException(nameof(player));
             }
 
             RemoveArrayData(StreamerDataType.PlayerId, player.Id);
@@ -192,7 +189,7 @@ namespace SampSharp.Streamer.World
             RemoveArrayData(StreamerDataType.InteriorId, interiorid);
         }
 
-        public void ToggleUpdate(GtaPlayer player, bool toggle)
+        public void ToggleUpdate(BasePlayer player, bool toggle)
         {
             Streamer.ItemType[StreamType].ToggleUpdate(player, toggle);
         }
@@ -240,6 +237,78 @@ namespace SampSharp.Streamer.World
         protected void SetArray(StreamerDataType data, int[] value)
         {
             Streamer.ItemType[StreamType].SetArray(Id, data, value);
+        }
+
+        protected static T CreateWorldsInteriorsPlayers(int[] worlds, int[] interiors, BasePlayer[] players,
+            Func<int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return FindOrCreate(func(worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1>(T1 arg1, int[] worlds, int[] interiors, BasePlayer[] players,
+            Func<T1, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return FindOrCreate(func(arg1, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1, T2>(T1 arg1, T2 arg2, int[] worlds, int[] interiors,
+            BasePlayer[] players, Func<T1, T2, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return FindOrCreate(func(arg1, arg2, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3, int[] worlds,
+            int[] interiors, BasePlayer[] players, Func<T1, T2, T3, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return
+                FindOrCreate(func(arg1, arg2, arg3, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, int[] worlds,
+            int[] interiors, BasePlayer[] players, Func<T1, T2, T3, T4, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return
+                FindOrCreate(func(arg1, arg2, arg3, arg4, worlds, interiors, pl, worlds.Length, interiors.Length,
+                    pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1, T2, T3, T4, T5>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5,
+            int[] worlds, int[] interiors, BasePlayer[] players,
+            Func<T1, T2, T3, T4, T5, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return
+                FindOrCreate(func(arg1, arg2, arg3, arg4, arg5, worlds, interiors, pl, worlds.Length, interiors.Length,
+                    pl.Length));
+        }
+
+        protected static T CreateWorldsInteriorsPlayers<T1, T2, T3, T4, T5, T6>(T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+            T5 arg5, T6 arg6, int[] worlds, int[] interiors, BasePlayer[] players,
+            Func<T1, T2, T3, T4, T5, T6, int[], int[], int[], int, int, int, int> func)
+        {
+            if (worlds == null) worlds = new[] {-1};
+            if (interiors == null) interiors = new[] {-1};
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            return
+                FindOrCreate(func(arg1, arg2, arg3, arg4, arg5, arg6, worlds, interiors, pl, worlds.Length,
+                    interiors.Length, pl.Length));
         }
     }
 }

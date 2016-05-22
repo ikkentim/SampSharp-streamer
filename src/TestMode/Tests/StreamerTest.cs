@@ -11,15 +11,13 @@ using SampSharp.Streamer.World;
 
 namespace TestMode.Tests
 {
-    public class StreamerTest : ITest, IControllerTest
+    public class StreamerTest : ITest
     {
-        public void LoadControllers(BaseMode gameMode, ControllerCollection controllers)
-        {
-            Streamer.Load(gameMode, controllers);
-        }
-
         public void Start(GameMode gameMode)
         {
+            var str = gameMode.Services.GetService<IStreamer>();
+            Streamer.PrintStackTraceOnError = true;
+            
             DynamicArea area =
                 DynamicArea.CreatePolygon(new[]
                 {
@@ -28,7 +26,7 @@ namespace TestMode.Tests
                     Vector3.One + new Vector3(10, 10),
                     Vector3.One + new Vector3(-10, 10)
                 }, -100.0f, 100.0f);
-
+            
             area.Enter += (sender, args) => args.Player.SendClientMessage("Entered polygon");
             area.Leave += (sender, args) => args.Player.SendClientMessage("Left polygon");
 
@@ -70,13 +68,18 @@ namespace TestMode.Tests
             var offset = Vector3.One;
             obj.SetMaterialText(1, "Test", ObjectMaterialSize.X512X512, "Arial", 30, false, Color.Black, Color.White);
             obj.Move(obj.Position + -offset, 0.6f, obj.Rotation + new Vector3(0, 0, 25));
-            obj.Moved += (sender, args) => obj.Move(obj.Position + (offset = -offset), 0.6f, obj.Rotation + new Vector3(0, 0, 25));
+            obj.Moved += (sender, args) =>
+            {
+                Console.WriteLine("moved");
+                obj.Move(obj.Position + (offset = -offset), 0.6f, obj.Rotation + new Vector3(0, 0, 25));
+            };
 
 
             Console.WriteLine("Test error handling...");
             Streamer.IsErrorCallbackEnabled = true;
             Streamer.PrintStackTraceOnError = true;
             Streamer.ItemType[StreamType.MapIcon].GetArray(9999, StreamerDataType.Color, 1);
+            Console.WriteLine("Messages should have appeared above.");
 
         }
     }

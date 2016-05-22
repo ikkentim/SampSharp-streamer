@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.Events
 {
     public class PlayerEditEventArgs : PositionEventArgs
     {
-        public PlayerEditEventArgs(GtaPlayer player, EditObjectResponse response,
+        public PlayerEditEventArgs(BasePlayer player, EditObjectResponse response,
             Vector3 position,
             Vector3 rotation)
             : base(position)
@@ -32,8 +32,10 @@ namespace SampSharp.Streamer.Events
             Rotation = rotation;
         }
 
-        public GtaPlayer Player { get; private set; }
+        public BasePlayer Player { get; private set; }
+
         public EditObjectResponse Response { get; set; }
+
         public Vector3 Rotation { get; private set; }
     }
 }

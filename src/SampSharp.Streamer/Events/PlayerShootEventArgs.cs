@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2015 Tim Potze
+// Copyright 2016 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
-using SampSharp.GameMode;
 
 namespace SampSharp.Streamer.Events
 {
     public class PlayerShootEventArgs : PlayerEventArgs
     {
-        public PlayerShootEventArgs(GtaPlayer player, Weapon weapon, Vector3 position)
+        public PlayerShootEventArgs(BasePlayer player, Weapon weapon, Vector3 position)
             : base(player)
         {
             Weapon = weapon;
@@ -30,6 +30,7 @@ namespace SampSharp.Streamer.Events
         }
 
         public Weapon Weapon { get; private set; }
+
         public Vector3 Position { get; private set; }
     }
 }
