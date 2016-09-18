@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SampSharp.GameMode, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SampSharp.GameMode.0.6.2.0\lib\net45\SampSharp.GameMode.dll</HintPath>
+    <Reference Include="SampSharp.GameMode, Version=0.7.6104.38929, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SampSharp.GameMode.0.7.6104.38929-alpha1\lib\net45\SampSharp.GameMode.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
