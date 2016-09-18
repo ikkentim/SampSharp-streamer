@@ -94,7 +94,7 @@ namespace SampSharp.Streamer.World
             Color materialcolor = new Color())
         {
             Internal.SetDynamicObjectMaterial(Id, materialindex, modelid, txdname, texturename,
-                Color.FromInteger(materialcolor, ColorFormat.ARGB));
+                materialcolor.ToInteger(ColorFormat.ARGB));
         }
 
         public void SetMaterialText(int materialindex, string text,
@@ -103,8 +103,8 @@ namespace SampSharp.Streamer.World
             ObjectMaterialTextAlign textalignment = ObjectMaterialTextAlign.Center)
         {
             Internal.SetDynamicObjectMaterialText(Id, materialindex, text, (int) materialsize, fontface, fontsize, bold,
-                Color.FromInteger(fontcolor, ColorFormat.ARGB),
-                Color.FromInteger(backcolor, ColorFormat.ARGB), (int) textalignment);
+                fontcolor.ToInteger(ColorFormat.ARGB),
+                backcolor.ToInteger(ColorFormat.ARGB), (int) textalignment);
         }
 
         public event EventHandler<EventArgs> Moved;
