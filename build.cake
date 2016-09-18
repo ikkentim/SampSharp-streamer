@@ -19,7 +19,7 @@ var build = new SaBuild(
     "ikkentim",                             // github username
     "SampSharp-streamer",                   // github repository
     EnvironmentVariable("LAGET_KEY"),       // nuget key
-    "http://timpotze.nl/upload",            // nuget source
+    "http://nuget.timpotze.nl/upload",      // nuget source
     EnvironmentVariable("GITHUB_USERNAME"), // github release username
     EnvironmentVariable("GITHUB_PASSWORD"), // github release password
     new[] {                                 // nuget sources
