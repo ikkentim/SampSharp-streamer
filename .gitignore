@@ -183,3 +183,7 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 *.GhostDoc.xml
+
+# Cake
+tools/
+
