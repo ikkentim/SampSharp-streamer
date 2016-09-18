@@ -21,7 +21,10 @@ var build = new SaBuild(
     EnvironmentVariable("LAGET_KEY"),       // nuget key
     "http://timpotze.nl/upload",            // nuget source
     EnvironmentVariable("GITHUB_USERNAME"), // github release username
-    EnvironmentVariable("GITHUB_PASSWORD")  // github release password
+    EnvironmentVariable("GITHUB_PASSWORD"), // github release password
+    new[] {                                 // nuget sources
+        "http://nuget.timpotze.nl/api/v2/"
+    }
 );
    
 //////////////////////////////////////////////////////////////////////
