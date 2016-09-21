@@ -27,10 +27,10 @@ namespace SampSharp.Streamer.World
     public partial class DynamicObject : DynamicWorldObject<DynamicObject>, IGameObject
     {
         public DynamicObject(int modelid, Vector3 position, Vector3 rotation = new Vector3(), int worldid = -1,
-            int interiorid = -1, BasePlayer player = null, float streamdistance = 200.0f, float drawdistance = 0.0f)
+            int interiorid = -1, BasePlayer player = null, float streamdistance = 200.0f, float drawdistance = 0.0f, int areaid = -1, int priority = 0)
         {
             Id = Internal.CreateDynamicObject(modelid, position.X, position.Y, position.Z, rotation.X, rotation.Y,
-                rotation.Z, worldid, interiorid, player?.Id ?? -1, streamdistance, drawdistance);
+                rotation.Z, worldid, interiorid, player?.Id ?? -1, streamdistance, drawdistance, areaid, priority);
         }
 
         public DynamicObject(int modelid, Vector3 position, Vector3 rotation, float streamdistance, int[] worlds = null,
