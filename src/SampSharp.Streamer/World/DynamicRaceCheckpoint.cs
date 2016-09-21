@@ -26,22 +26,22 @@ namespace SampSharp.Streamer.World
     public partial class DynamicRaceCheckpoint : DynamicWorldObject<DynamicRaceCheckpoint>
     {
         public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
-            float size = 3.0f, int worldid = -1,
-            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f)
+            float size = 3.0f, int worldid = -1, int interiorid = -1, BasePlayer player = null,
+            float streamdistance = 100.0f, int areaid = -1, int priority = 0)
         {
-            Id = Internal.CreateDynamicRaceCP((int) type, position.X, position.Y, position.Z, nextPosition.X,
+            Id = Internal.CreateDynamicRaceCP((int)type, position.X, position.Y, position.Z, nextPosition.X,
                 nextPosition.Y, nextPosition.Z, size, worldid, interiorid, player?.Id ?? -1,
-                streamdistance);
+                streamdistance, areaid, priority);
         }
 
         public DynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition,
             float size, float streamdistance, int[] worlds = null, int[] interiors = null,
             BasePlayer[] players = null)
         {
-            if (worlds == null) worlds = new[] {-1};
-            if (interiors == null) interiors = new[] {-1};
-            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
-            Id = Internal.CreateDynamicRaceCPEx((int) type, position.X, position.Y, position.Z, nextPosition.X,
+            if (worlds == null) worlds = new[] { -1 };
+            if (interiors == null) interiors = new[] { -1 };
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
+            Id = Internal.CreateDynamicRaceCPEx((int)type, position.X, position.Y, position.Z, nextPosition.X,
                 nextPosition.Y, nextPosition.Z, size, streamdistance, worlds, interiors, pl, worlds.Length,
                 interiors.Length, pl.Length);
         }

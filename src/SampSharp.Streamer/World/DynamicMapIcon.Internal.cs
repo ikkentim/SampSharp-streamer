@@ -30,7 +30,7 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicMapIcon(float x, float y, float z, int type, int color, int worldid,
-                int interiorid, int playerid, float streamdistance, int style)
+                int interiorid, int playerid, float streamdistance, int style, int areaid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
