@@ -25,10 +25,10 @@ namespace SampSharp.Streamer.World
     public partial class DynamicPickup : DynamicWorldObject<DynamicPickup>
     {
         public DynamicPickup(int modelid, int type, Vector3 position, int worldid = -1, int interiorid = -1,
-            BasePlayer player = null, float streamdistance = 100.0f)
+            BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
         {
             Id = Internal.CreateDynamicPickup(modelid, type, position.X, position.Y, position.Z, worldid,
-                interiorid, player?.Id ?? -1, streamdistance);
+                interiorid, player?.Id ?? -1, streamdistance, areaid, priority);
         }
 
         public DynamicPickup(int modelid, int type, Vector3 position, float streamdistance, int[] worlds = null,

@@ -17,6 +17,7 @@ namespace SampSharp.Streamer.Definitions
 {
     public enum StreamerDataType
     {
+        AreaId,
         AttachedObject,
         AttachedPlayer,
         AttachedVehicle,
@@ -51,6 +52,7 @@ namespace SampSharp.Streamer.Definitions
         NextY,
         NextZ,
         PlayerId,
+        Priority,
         RotationX,
         RotationY,
         RotationZ,

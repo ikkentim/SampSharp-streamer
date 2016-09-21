@@ -65,7 +65,7 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod(Function = "Streamer_UpdateEx")]
-            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorid, int type)
+            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorid, int type, int compensatedtime)
             {
                 throw new NativeNotImplementedException();
             }
