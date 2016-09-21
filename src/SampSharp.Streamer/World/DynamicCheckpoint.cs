@@ -25,19 +25,19 @@ namespace SampSharp.Streamer.World
     public partial class DynamicCheckpoint : DynamicWorldObject<DynamicCheckpoint>
     {
         public DynamicCheckpoint(Vector3 position, float size = 1.0f, int worldid = -1, int interiorid = -1,
-            BasePlayer player = null, float streamdistance = 100.0f)
+            BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
         {
             Id = Internal.CreateDynamicCP(position.X, position.Y, position.Z, size, worldid, interiorid,
-                player?.Id ?? -1, streamdistance);
+                player?.Id ?? -1, streamdistance, areaid, priority);
         }
 
         public DynamicCheckpoint(Vector3 position, float size, float streamdistance, int[] worlds = null,
             int[] interiors = null,
             BasePlayer[] players = null)
         {
-            if (worlds == null) worlds = new[] {-1};
-            if (interiors == null) interiors = new[] {-1};
-            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            if (worlds == null) worlds = new[] { -1 };
+            if (interiors == null) interiors = new[] { -1 };
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
             Id = Internal.CreateDynamicCPEx(position.X, position.Y, position.Z, size, streamdistance, worlds, interiors,
                 pl, worlds.Length, interiors.Length, pl.Length);
         }

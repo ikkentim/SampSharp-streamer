@@ -32,7 +32,7 @@ namespace SampSharp.Streamer.World
             [NativeMethod]
             public virtual int CreateDynamic3DTextLabel(string text, int color, float x, float y, float z,
                 float drawdistance, int attachedplayer, int attachedvehicle, bool testlos, int worldid, int interiorid,
-                int playerid, float streamdistance)
+                int playerid, float streamdistance, int areaid, int priority)
             {
                 throw new NativeNotImplementedException();
             }

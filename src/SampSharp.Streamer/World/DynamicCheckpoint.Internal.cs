@@ -30,7 +30,7 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicCP(float x, float y, float z, float size, int worldid, int interiorid,
-                int playerid, float streamdistance)
+                int playerid, float streamdistance, int areaid, int priority)
             {
                 throw new NativeNotImplementedException();
             }

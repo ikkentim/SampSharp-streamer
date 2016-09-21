@@ -25,11 +25,11 @@ namespace SampSharp.Streamer.World
     {
         public DynamicTextLabel(string text, Color color, Vector3 position, float drawdistance,
             BasePlayer attachedPlayer = null, BaseVehicle attachedVehicle = null, bool testLOS = false, int worldid = -1,
-            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f)
+            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
         {
             Id = Internal.CreateDynamic3DTextLabel(text, color, position.X, position.Y, position.Z, drawdistance,
                 attachedPlayer?.Id ?? BasePlayer.InvalidId, attachedVehicle?.Id ?? BaseVehicle.InvalidId, testLOS,
-                worldid, interiorid, player?.Id ?? -1, streamdistance);
+                worldid, interiorid, player?.Id ?? -1, streamdistance, areaid, priority);
         }
 
         public DynamicTextLabel(string text, Color color, Vector3 position,
