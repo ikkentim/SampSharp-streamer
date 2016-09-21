@@ -136,14 +136,14 @@ namespace SampSharp.Streamer
             Internal.Update(player.Id, -1);
         }
 
-        public static void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1)
+        public static void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1, int compensatedtime = -1)
         {
             if (player == null)
             {
                 throw new ArgumentNullException(nameof(player));
             }
 
-            Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1);
+            Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1, compensatedtime);
         }
 
         #region Properties of Streamer

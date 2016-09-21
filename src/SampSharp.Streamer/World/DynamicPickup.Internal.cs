@@ -30,7 +30,7 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicPickup(int modelid, int type, float x, float y, float z, int worldid,
-                int interiorid, int playerid, float streamdistance)
+                int interiorid, int playerid, float streamdistance, int areaid, int priority)
             {
                 throw new NativeNotImplementedException();
             }

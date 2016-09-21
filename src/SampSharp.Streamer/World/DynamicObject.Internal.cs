@@ -30,7 +30,7 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicObject(int modelid, float x, float y, float z, float rx, float ry, float rz,
-                int worldid, int interiorid, int playerid, float streamdistance, float drawdistance)
+                int worldid, int interiorid, int playerid, float streamdistance, float drawdistance, int areaid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
