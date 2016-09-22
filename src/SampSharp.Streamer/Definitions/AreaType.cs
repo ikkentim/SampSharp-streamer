@@ -18,9 +18,9 @@ namespace SampSharp.Streamer.Definitions
     public enum AreaType
     {
         Circle = 0,
-		Cylinder = 1,
+        Cylinder = 1,
         Sphere = 2,
-		Rectangle = 3,
+        Rectangle = 3,
         Cuboid = 4,
         Polygon = 5
     }
