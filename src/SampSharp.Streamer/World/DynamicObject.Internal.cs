@@ -30,24 +30,23 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicObject(int modelid, float x, float y, float z, float rx, float ry, float rz,
-                int worldid, int interiorid, int playerid, float streamdistance, float drawdistance, int areaid, int priority)
+                int worldid, int interiorid, int playerid, float streamdistance, float drawdistance, int areaid,
+                int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
-            [NativeMethod]
+            [NativeMethod(14, 15, 16, 17)]
             public virtual int CreateDynamicObjectEx(int modelid, float x, float y, float z, float rx, float ry,
-                float rz,
-                float drawdistance, float streamdistance, int[] worlds, int[] interiors, int[] players, int maxworlds,
-                int maxinteriors, int maxplayers)
+                float rz, float drawdistance, float streamdistance, int[] worlds, int[] interiors, int[] players,
+                int[] areas, int priority, int maxworlds, int maxinteriors, int maxplayers, int maxareas)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int MoveDynamicObject(int objectid, float x, float y, float z, float speed, float rx,
-                float ry,
-                float rz)
+                float ry, float rz)
             {
                 throw new NativeNotImplementedException();
             }
@@ -182,6 +181,12 @@ namespace SampSharp.Streamer.World
 
             [NativeMethod]
             public virtual bool SelectObject(int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public bool GetDynamicObjectNoCameraCol(int id)
             {
                 throw new NativeNotImplementedException();
             }

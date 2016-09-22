@@ -27,21 +27,22 @@ namespace SampSharp.Streamer.World
     public partial class DynamicObject : DynamicWorldObject<DynamicObject>, IGameObject
     {
         public DynamicObject(int modelid, Vector3 position, Vector3 rotation = new Vector3(), int worldid = -1,
-            int interiorid = -1, BasePlayer player = null, float streamdistance = 200.0f, float drawdistance = 0.0f, int areaid = -1, int priority = 0)
+            int interiorid = -1, BasePlayer player = null, float streamdistance = 200.0f, float drawdistance = 0.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicObject(modelid, position.X, position.Y, position.Z, rotation.X, rotation.Y,
-                rotation.Z, worldid, interiorid, player?.Id ?? -1, streamdistance, drawdistance, areaid, priority);
+                rotation.Z, worldid, interiorid, player?.Id ?? -1, streamdistance, drawdistance, area?.Id ?? -1, priority);
         }
 
         public DynamicObject(int modelid, Vector3 position, Vector3 rotation, float streamdistance, int[] worlds = null,
-            int[] interiors = null, BasePlayer[] players = null, float drawdistance = 0.0f)
+            int[] interiors = null, BasePlayer[] players = null, float drawdistance = 0.0f, DynamicArea[] areas = null, int priority = 0)
         {
             if (worlds == null) worlds = new[] {-1};
             if (interiors == null) interiors = new[] {-1};
             var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1};
             Id = Internal.CreateDynamicObjectEx(modelid, position.X, position.Y, position.Z, rotation.X, rotation.Y,
-                rotation.Z, drawdistance, streamdistance, worlds, interiors, pl, worlds.Length, interiors.Length,
-                pl.Length);
+                rotation.Z, drawdistance, streamdistance, worlds, interiors, pl, ar, priority, worlds.Length, interiors.Length,
+                pl.Length, ar.Length);
         }
 
         public override StreamType StreamType => StreamType.Object;
@@ -193,7 +194,14 @@ namespace SampSharp.Streamer.World
             Internal.SetDynamicObjectNoCameraCol(Id);
         }
 
-        public virtual void AttachCameraToObject(BasePlayer player)
+	    public virtual bool GetNoCameraCollision()
+	    {
+		    AssertNotDisposed();
+
+		    return Internal.GetDynamicObjectNoCameraCol(Id);
+	    }
+
+	    public virtual void AttachCameraToObject(BasePlayer player)
         {
             if (player == null)
             {
@@ -203,6 +211,13 @@ namespace SampSharp.Streamer.World
             AssertNotDisposed();
 
             Internal.AttachCameraToDynamicObject(player.Id, Id);
+        }
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicObject[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int)StreamType.Object, toggle, ids,
+                ids.Length);
         }
 
         public virtual void OnMoved(EventArgs e)

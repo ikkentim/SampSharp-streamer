@@ -29,6 +29,8 @@ namespace SampSharp.Streamer.Events
             Position = position;
         }
 
+        public bool PreventDamage { get; set; }
+
         public Weapon Weapon { get; private set; }
 
         public Vector3 Position { get; private set; }

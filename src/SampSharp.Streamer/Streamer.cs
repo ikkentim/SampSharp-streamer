@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using System;
+using System.Linq;
 using SampSharp.GameMode;
 using SampSharp.GameMode.API;
 using SampSharp.GameMode.World;
@@ -146,6 +147,25 @@ namespace SampSharp.Streamer
             Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1, compensatedtime);
         }
 
+        public static void SetPriority(params StreamType[] types)
+        {
+            if (types == null) throw new ArgumentNullException(nameof(types));
+            Internal.SetTypePriority(types.Select(t => (int) t).ToArray(), types.Length);
+        }
+
+        public static StreamType[] GetPriority()
+        {
+            var types = new int[(int)StreamType.Area + 1];
+            Internal.GetTypePriority(types, types.Length);
+            return types.Select(t => (StreamType) t).ToArray();
+        }
+
+        public static float GetLastUpdateTime()
+        {
+            float time;
+            Internal.GetLastUpdateTime(out time);
+            return time;
+        }
         #region Properties of Streamer
 
         public static bool IsToggleErrorCallback
@@ -214,7 +234,7 @@ namespace SampSharp.Streamer
                 get { return Internal.GetMaxItems((int) StreamType); }
                 set { Internal.SetMaxItems((int) StreamType, value); }
             }
-
+            
             public StreamType StreamType { get; }
 
             public int GetInteger(int id, StreamerDataType data)

@@ -43,13 +43,12 @@ namespace TestMode.Tests
             icon.Position = new Vector3(50, 50, 5);
             Console.WriteLine(icon.Position);
 
-
             var pickup = new DynamicPickup(1274, 23, new Vector3(0, 0, 3), 100f,
                 new[] {11, 22, 33, 44, 0, 55, 66, 77, 88, 99}); //Dollar icon
             pickup.PickedUp += (sender, args) => args.Player.SendClientMessage(Color.White, "Picked Up");
-
+            
             var pickup2 = new DynamicPickup(1274, 23, Vector3.One, 42);
-
+            
             Console.WriteLine("World: {0}", string.Join(",", pickup.Worlds));
             Console.WriteLine("World: {0}", string.Join(",", pickup2.Worlds));
 

@@ -148,6 +148,30 @@ namespace SampSharp.Streamer.World
             }
 
             [NativeMethod]
+            public virtual bool IsLineInDynamicArea(int id, float x1, float y1, float z1, float x2, float y2, float z2)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual bool IsLineInAnyDynamicArea(float x1, float y1, float z1, float x2, float y2, float z2)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual int GetDynamicAreasForLine(float x1, float y1, float z1, float x2, float y2, float z2, out int[] areas, int maxareas)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual int GetNumberDynamicAreasForLine(float x1, float y1, float z1, float x2, float y2, float z2)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
             public virtual int GetDynamicAreasForPoint(float x, float y, float z, out int[] areas, int maxareas)
             {
                 throw new NativeNotImplementedException();
@@ -160,19 +184,19 @@ namespace SampSharp.Streamer.World
             }
 
             [NativeMethod]
-            public virtual int AttachDynamicAreaToObject(int areaid, int objectid, int type, int playerid)
+            public virtual int AttachDynamicAreaToObject(int areaid, int objectid, int type, int playerid, float offsetX, float offsetY, float offsetZ)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
-            public virtual int AttachDynamicAreaToPlayer(int areaid, int playerid)
+            public virtual int AttachDynamicAreaToPlayer(int areaid, int playerid, float offsetX, float offsetY, float offsetZ)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
-            public virtual int AttachDynamicAreaToVehicle(int areaid, int vehicleid)
+            public virtual int AttachDynamicAreaToVehicle(int areaid, int vehicleid, float offsetX, float offsetY, float offsetZ)
             {
                 throw new NativeNotImplementedException();
             }

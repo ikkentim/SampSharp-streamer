@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Linq;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
@@ -25,18 +26,18 @@ namespace SampSharp.Streamer.World
     {
         public DynamicMapIcon(Vector3 position, int type, MapIconType mapIconType = MapIconType.Local, int worldid = -1,
             int interiorid = -1,
-            BasePlayer player = null, float streamDistance = 100.0f, int areaid = -1, int priority = 0)
+            BasePlayer player = null, float streamDistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, type, 0, worldid, interiorid,
-                player?.Id ?? -1, streamDistance, (int)mapIconType, areaid, priority);
+                player?.Id ?? -1, streamDistance, (int)mapIconType, area?.Id ?? -1, priority);
         }
 
         public DynamicMapIcon(Vector3 position, Color color, MapIconType mapIconType = MapIconType.Local,
             int worldid = -1, int interiorid = -1,
-            BasePlayer player = null, float streamDistance = 100.0f, int areaid = -1, int priority = 0)
+            BasePlayer player = null, float streamDistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, 0, color, worldid, interiorid,
-                player?.Id ?? -1, streamDistance, (int)mapIconType, areaid, priority);
+                player?.Id ?? -1, streamDistance, (int)mapIconType, area?.Id ?? -1, priority);
         }
 
         public int Type
@@ -54,6 +55,13 @@ namespace SampSharp.Streamer.World
         public bool IsValid => Internal.IsValidDynamicMapIcon(Id);
 
         public override StreamType StreamType => StreamType.MapIcon;
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicMapIcon[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int)StreamType.MapIcon, toggle, ids,
+                ids.Length);
+        }
 
         protected override void Dispose(bool disposing)
         {

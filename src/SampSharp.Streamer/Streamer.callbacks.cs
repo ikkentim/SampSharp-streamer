@@ -59,15 +59,17 @@ namespace SampSharp.Streamer
                 new PlayerSelectEventArgs(BasePlayer.FindOrCreate(playerid), modelid, new Vector3(x, y, z)));
         }
 
-        internal void OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
+        internal bool OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
         {
             var @object = DynamicObject.Find(objectid);
 
             if (@object == null)
-                return;
-            
-            OnPlayerShootDynamicObject(@object,
-                new PlayerShootEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, new Vector3(x, y, z)));
+                return false;
+
+	        var args = new PlayerShootEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, new Vector3(x, y, z));
+            OnPlayerShootDynamicObject(@object, args);
+			
+	        return !args.PreventDamage;
         }
 
         internal void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)

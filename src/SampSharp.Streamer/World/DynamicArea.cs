@@ -33,7 +33,7 @@ namespace SampSharp.Streamer.World
 
         public event EventHandler<PlayerEventArgs> Leave;
 
-        public void AttachTo(IGameObject obj)
+        public void AttachTo(IGameObject obj, Vector3 offset = default(Vector3))
         {
             AssertNotDisposed();
 
@@ -64,10 +64,10 @@ namespace SampSharp.Streamer.World
                 type = StreamerObjectType.Dynamic;
             }
 
-            Internal.AttachDynamicAreaToObject(Id, objectid, (int) type, playerid);
+            Internal.AttachDynamicAreaToObject(Id, objectid, (int) type, playerid, offset.X, offset.Y, offset.Z);
         }
 
-        public void AttachTo(BasePlayer player)
+        public void AttachTo(BasePlayer player, Vector3 offset = default(Vector3))
         {
             AssertNotDisposed();
 
@@ -76,10 +76,10 @@ namespace SampSharp.Streamer.World
                 throw new ArgumentNullException(nameof(player));
             }
 
-            Internal.AttachDynamicAreaToPlayer(Id, player.Id);
+            Internal.AttachDynamicAreaToPlayer(Id, player.Id, offset.X, offset.Y, offset.Z);
         }
 
-        public void AttachTo(BaseVehicle vehicle)
+        public void AttachTo(BaseVehicle vehicle, Vector3 offset = default(Vector3))
         {
             AssertNotDisposed();
 
@@ -88,7 +88,7 @@ namespace SampSharp.Streamer.World
                 throw new ArgumentNullException(nameof(vehicle));
             }
 
-            Internal.AttachDynamicAreaToVehicle(Id, vehicle.Id);
+            Internal.AttachDynamicAreaToVehicle(Id, vehicle.Id, offset.X, offset.Y, offset.Z);
         }
 
         public bool IsInArea(BasePlayer player, bool recheck = false)
@@ -114,9 +114,23 @@ namespace SampSharp.Streamer.World
 
             return Internal.IsPointInDynamicArea(Id, obj.Position.X, obj.Position.Y, obj.Position.Z);
         }
+        
+        public bool IsLineInArea(Vector3 from, Vector3 to)
+        {
+            AssertNotDisposed();
+
+            return Internal.IsLineInDynamicArea(Id, from.X, from.Y, from.Z, to.X, to.Y, to.Z);
+        }
+        
+        public static bool IsLineInAnyArea(Vector3 from, Vector3 to)
+        {
+            return Internal.IsLineInAnyDynamicArea(from.X, from.Y, from.Z, to.X, to.Y, to.Z);
+        }
 
         public IEnumerable<Vector3> GetPoints()
         {
+            AssertNotDisposed();
+
             float[] points;
             Internal.GetDynamicPolygonPoints(Id, out points, GetPointsCount()*2);
 
@@ -128,6 +142,8 @@ namespace SampSharp.Streamer.World
 
         public int GetPointsCount()
         {
+            AssertNotDisposed();
+
             return Internal.GetDynamicPolygonNumberPoints(Id);
         }
 
@@ -139,12 +155,42 @@ namespace SampSharp.Streamer.World
             if (areas == null) yield break;
 
             foreach (var areaid in areas)
-                yield return FindOrCreate(areaid);
+            {
+                var area = Find(areaid);
+
+                if (area != null)
+                {
+                    yield return area;
+                }
+            }
         }
 
         public static int GetAreasForPointCount(Vector3 point)
         {
             return Internal.GetNumberDynamicAreasForPoint(point.X, point.Y, point.Z);
+        }
+
+        public static IEnumerable<DynamicArea> GetAreasForLine(Vector3 from, Vector3 to)
+        {
+            int[] areas;
+            Internal.GetDynamicAreasForLine(from.X, from.Y, from.Z, to.X, to.Y, to.Z, out areas, GeAreasForLineCount(from, to));
+
+            if (areas == null) yield break;
+
+            foreach (var areaid in areas)
+            {
+                var area = Find(areaid);
+
+                if (area != null)
+                {
+                    yield return area;
+                }
+            }
+        }
+
+        public static int GeAreasForLineCount(Vector3 from, Vector3 to)
+        {
+            return Internal.GetNumberDynamicAreasForLine(from.X, from.Y, from.Z, to.X, to.Y, to.Z);
         }
 
         public bool IsInArea(Vector3 point)
@@ -154,9 +200,15 @@ namespace SampSharp.Streamer.World
             return Internal.IsPointInDynamicArea(Id, point.X, point.Y, point.Z);
         }
 
+        public static bool IsInAnyArea(Vector3 point)
+        {
+            return Internal.IsPointInAnyDynamicArea(point.X, point.Y, point.Z);
+        }
+
         public bool IsAnyPlayerInArea(bool recheck = false)
         {
             AssertNotDisposed();
+
             return Internal.IsAnyPlayerInDynamicArea(Id, recheck);
         }
 
@@ -225,6 +277,13 @@ namespace SampSharp.Streamer.World
             base.Dispose(disposing);
 
             Internal.DestroyDynamicArea(Id);
+        }
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicArea[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int)StreamType.Area, toggle, ids,
+                ids.Length);
         }
 
         public virtual void OnEnter(PlayerEventArgs e)

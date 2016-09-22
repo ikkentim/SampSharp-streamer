@@ -30,14 +30,44 @@ namespace SampSharp.Streamer.World
 
     public class DynamicWorldObjectInternal
     {
-        [NativeMethod(Function = "Streamer_IsToggleStaticItem")]
-        public virtual bool IsToggleStaticItem(int type, int id)
+        [NativeMethod(Function = "Streamer_IsToggleItemStatic")]
+        public virtual bool IsToggleItemStatic(int type, int id)
         {
             throw new NativeNotImplementedException();
         }
 
-        [NativeMethod(Function = "Streamer_ToggleStaticItem")]
-        public virtual bool ToggleStaticItem(int type, int id, bool toggle)
+        [NativeMethod(Function = "Streamer_ToggleItemStatic")]
+        public virtual bool ToggleItemStatic(int type, int id, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+        [NativeMethod(Function = "Streamer_IsToggleItem")]
+        public virtual bool IsToggleItem(int playerid, int type, int id)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_ToggleItem")]
+        public virtual bool ToggleItem(int playerid, int type, int id, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+
+        [NativeMethod(Function = "Streamer_ToggleAllItems")]
+        public virtual bool ToggleAllItems(int playerid, int type, bool toggle, int[] exceptions, int maxexceptions)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_ToggleItemAntiAreas")]
+        public virtual bool ToggleItemAntiAreas(int type, int id, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_IsToggleItemAntiAreas")]
+        public virtual bool IsToggleItemAntiAreas(int type, int id)
         {
             throw new NativeNotImplementedException();
         }

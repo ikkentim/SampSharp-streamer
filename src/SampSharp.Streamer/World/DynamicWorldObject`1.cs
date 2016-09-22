@@ -54,6 +54,12 @@ namespace SampSharp.Streamer.World
             set { SetInteger(StreamerDataType.WorldId, value); }
         }
 
+        public virtual int Priority
+        {
+            get { return GetInteger(StreamerDataType.Priority); }
+            set { SetInteger(StreamerDataType.Priority, value); }
+        }
+
         public virtual IEnumerable<int> Worlds
         {
             get { return GetArray(StreamerDataType.WorldId, 1024).Where(v => v != int.MinValue); }
@@ -79,6 +85,12 @@ namespace SampSharp.Streamer.World
                 }
                 SetInteger(StreamerDataType.PlayerId, value.Id);
             }
+        }
+
+        public virtual DynamicArea Area
+        {
+            get { return DynamicArea.Find(GetInteger(StreamerDataType.AreaId)); }
+            set { SetInteger(StreamerDataType.AreaId, value?.Id ?? -1); }
         }
 
         public virtual IEnumerable<BasePlayer> Players
@@ -109,10 +121,16 @@ namespace SampSharp.Streamer.World
 
         public virtual bool IsStatic
         {
-            get { return WorldInternal.IsToggleStaticItem((int) StreamType, Id); }
-            set { WorldInternal.ToggleStaticItem((int) StreamType, Id, value); }
+            get { return WorldInternal.IsToggleItemStatic((int) StreamType, Id); }
+            set { WorldInternal.ToggleItemStatic((int) StreamType, Id, value); }
         }
-        
+
+        public virtual bool IsAntiAreas
+        {
+            get { return WorldInternal.IsToggleItemAntiAreas((int) StreamType, Id); }
+            set { WorldInternal.ToggleItemAntiAreas((int) StreamType, Id, value); }
+        }
+
         public virtual Vector3 Position
         {
             get
@@ -159,6 +177,16 @@ namespace SampSharp.Streamer.World
             RemoveArrayData(StreamerDataType.PlayerId, player.Id);
         }
 
+        public virtual void ToggleItem(BasePlayer player, bool toggle)
+        {
+            WorldInternal.ToggleItem(player?.Id ?? -1, (int) StreamType, Id, toggle);
+        }
+
+        public virtual bool IsToggleItem(BasePlayer player)
+        {
+            return WorldInternal.IsToggleItem(player?.Id ?? -1, (int)StreamType, Id);
+        }
+        
         public virtual bool IsVisibleInWorld(int worldid)
         {
             return IsInArray(StreamerDataType.WorldId, worldid);

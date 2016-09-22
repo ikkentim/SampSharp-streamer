@@ -25,25 +25,27 @@ namespace SampSharp.Streamer.World
     {
         public DynamicTextLabel(string text, Color color, Vector3 position, float drawdistance,
             BasePlayer attachedPlayer = null, BaseVehicle attachedVehicle = null, bool testLOS = false, int worldid = -1,
-            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
+            int interiorid = -1, BasePlayer player = null, float streamdistance = 100.0f, DynamicArea area = null,
+            int priority = 0)
         {
             Id = Internal.CreateDynamic3DTextLabel(text, color, position.X, position.Y, position.Z, drawdistance,
                 attachedPlayer?.Id ?? BasePlayer.InvalidId, attachedVehicle?.Id ?? BaseVehicle.InvalidId, testLOS,
-                worldid, interiorid, player?.Id ?? -1, streamdistance, areaid, priority);
+                worldid, interiorid, player?.Id ?? -1, streamdistance, area?.Id ?? -1, priority);
         }
 
-        public DynamicTextLabel(string text, Color color, Vector3 position,
-            float drawdistance, float streamdistance, BasePlayer attachedPlayer = null,
-            BaseVehicle attachedVehicle = null,
-            bool testLOS = false,
-            int[] worlds = null, int[] interiors = null, BasePlayer[] players = null)
+        public DynamicTextLabel(string text, Color color, Vector3 position, float drawdistance, float streamdistance,
+            BasePlayer attachedPlayer = null, BaseVehicle attachedVehicle = null, bool testLOS = false,
+            int[] worlds = null, int[] interiors = null, BasePlayer[] players = null, DynamicArea[] areas = null,
+            int priority = 0)
         {
-            if (worlds == null) worlds = new[] {-1};
-            if (interiors == null) interiors = new[] {-1};
-            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
+            if (worlds == null) worlds = new[] { -1 };
+            if (interiors == null) interiors = new[] { -1 };
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
+            var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
             Id = Internal.CreateDynamic3DTextLabelEx(text, color, position.X, position.Y, position.Z, drawdistance,
                 attachedPlayer?.Id ?? BasePlayer.InvalidId, attachedVehicle?.Id ?? BaseVehicle.InvalidId, testLOS,
-                streamdistance, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length);
+                streamdistance, worlds, interiors, pl, ar, priority, worlds.Length, interiors.Length, pl.Length,
+                ar.Length);
         }
 
         public override StreamType StreamType => StreamType.TextLabel;
@@ -78,6 +80,13 @@ namespace SampSharp.Streamer.World
         }
 
         public bool IsValid => Internal.IsValidDynamic3DTextLabel(Id);
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicTextLabel[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int) StreamType.TextLabel, toggle, ids,
+                ids.Length);
+        }
 
         protected override void Dispose(bool disposing)
         {

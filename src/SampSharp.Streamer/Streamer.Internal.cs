@@ -219,6 +219,24 @@ namespace SampSharp.Streamer
             {
                 throw new NativeNotImplementedException();
             }
+
+            [NativeMethod(Function = "Streamer_SetTypePriority")]
+            public virtual int SetTypePriority(int[] types, int maxtypes)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetTypePriority")]
+            public virtual int GetTypePriority(int[] types, int maxtypes)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetLastUpdateTime")]
+            public virtual int GetLastUpdateTime(out float time)
+            {
+                throw new NativeNotImplementedException();
+            }
         }
     }
 }

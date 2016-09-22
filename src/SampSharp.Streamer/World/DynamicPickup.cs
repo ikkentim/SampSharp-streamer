@@ -25,19 +25,22 @@ namespace SampSharp.Streamer.World
     public partial class DynamicPickup : DynamicWorldObject<DynamicPickup>
     {
         public DynamicPickup(int modelid, int type, Vector3 position, int worldid = -1, int interiorid = -1,
-            BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
+            BasePlayer player = null, float streamdistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicPickup(modelid, type, position.X, position.Y, position.Z, worldid,
-                interiorid, player?.Id ?? -1, streamdistance, areaid, priority);
+                interiorid, player?.Id ?? -1, streamdistance, area?.Id ?? -1, priority);
         }
 
         public DynamicPickup(int modelid, int type, Vector3 position, float streamdistance, int[] worlds = null,
-            int[] interiors = null, BasePlayer[] players = null)
+            int[] interiors = null, BasePlayer[] players = null, DynamicArea[] areas = null, int priority = 0)
         {
-            if (worlds == null) worlds = new[] {-1};
-            if (interiors == null) interiors = new[] {-1};
-            var pl = players?.Select(p => p.Id).ToArray() ?? new[] {-1};
-            Id = Internal.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance, worlds, interiors, pl, worlds.Length, interiors.Length, pl.Length);
+            if (worlds == null) worlds = new[] { -1 };
+            if (interiors == null) interiors = new[] { -1 };
+            var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
+            var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
+            
+            Id = Internal.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance,
+                worlds, interiors, pl, ar, priority, worlds.Length, interiors.Length, pl.Length, ar.Length);
         }
 
         public override StreamType StreamType => StreamType.Pickup;
@@ -57,6 +60,13 @@ namespace SampSharp.Streamer.World
         public virtual bool IsValid => Internal.IsValidDynamicPickup(Id);
 
         public event EventHandler<PlayerEventArgs> PickedUp;
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicPickup[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int) StreamType.Pickup, toggle, ids,
+                ids.Length);
+        }
 
         protected override void Dispose(bool disposing)
         {

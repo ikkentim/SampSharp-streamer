@@ -35,9 +35,10 @@ namespace SampSharp.Streamer.World
                 throw new NativeNotImplementedException();
             }
 
-            [NativeMethod]
+            [NativeMethod(10, 11, 12, 13)]
             public virtual int CreateDynamicCPEx(float x, float y, float z, float size, float streamdistance,
-                int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] worlds, int[] interiors, int[] players, int[] areas, int priority, int maxworlds, int maxinteriors,
+                int maxplayers, int maxareas)
             {
                 throw new NativeNotImplementedException();
             }

@@ -25,21 +25,22 @@ namespace SampSharp.Streamer.World
     public partial class DynamicCheckpoint : DynamicWorldObject<DynamicCheckpoint>
     {
         public DynamicCheckpoint(Vector3 position, float size = 1.0f, int worldid = -1, int interiorid = -1,
-            BasePlayer player = null, float streamdistance = 100.0f, int areaid = -1, int priority = 0)
+            BasePlayer player = null, float streamdistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicCP(position.X, position.Y, position.Z, size, worldid, interiorid,
-                player?.Id ?? -1, streamdistance, areaid, priority);
+                player?.Id ?? -1, streamdistance, area?.Id ?? -1, priority);
         }
 
         public DynamicCheckpoint(Vector3 position, float size, float streamdistance, int[] worlds = null,
-            int[] interiors = null,
-            BasePlayer[] players = null)
+            int[] interiors = null, BasePlayer[] players = null, DynamicArea[] areas = null, int priority = 0)
         {
             if (worlds == null) worlds = new[] { -1 };
             if (interiors == null) interiors = new[] { -1 };
             var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
+            var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
+
             Id = Internal.CreateDynamicCPEx(position.X, position.Y, position.Z, size, streamdistance, worlds, interiors,
-                pl, worlds.Length, interiors.Length, pl.Length);
+                pl, ar, priority, worlds.Length, interiors.Length, pl.Length, ar.Length);
         }
 
         public bool IsValid => Internal.IsValidDynamicCP(Id);
@@ -61,9 +62,7 @@ namespace SampSharp.Streamer.World
             AssertNotDisposed();
 
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             Internal.TogglePlayerDynamicCP(player.Id, Id, toggle);
         }
@@ -71,9 +70,7 @@ namespace SampSharp.Streamer.World
         public bool IsPlayerInCheckpoint(BasePlayer player)
         {
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             return Internal.IsPlayerInDynamicCP(player.Id, Id);
         }
@@ -81,18 +78,23 @@ namespace SampSharp.Streamer.World
         public static void ToggleAllForPlayer(BasePlayer player, bool toggle)
         {
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             Internal.TogglePlayerAllDynamicCPs(player.Id, toggle);
         }
 
         public static DynamicCheckpoint GetPlayerVisibleDynamicCheckpoint(BasePlayer player)
         {
-            int id = Internal.GetPlayerVisibleDynamicCP(player.Id);
+            var id = Internal.GetPlayerVisibleDynamicCP(player.Id);
 
             return id < 0 ? null : FindOrCreate(id);
+        }
+
+        public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicCheckpoint[] exceptions)
+        {
+            var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int) StreamType.Checkpoint, toggle, ids,
+                ids.Length);
         }
 
         protected override void Dispose(bool disposing)

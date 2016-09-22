@@ -34,9 +34,11 @@ namespace SampSharp.Streamer.World
             {
                 throw new NativeNotImplementedException();
             }
-            
-            [NativeMethod]
-            public virtual int CreateDynamicPickupEx(int modelid, int type, float x, float y, float z, float streamdistance, int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+
+            [NativeMethod(11, 12, 13, 14)]
+            public virtual int CreateDynamicPickupEx(int modelid, int type, float x, float y, float z,
+                float streamdistance, int[] worlds, int[] interiors, int[] players, int[] areas, int priority,
+                int maxworlds, int maxinteriors, int maxplayers, int maxareas)
             {
                 throw new NativeNotImplementedException();
             }

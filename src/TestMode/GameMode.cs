@@ -24,16 +24,6 @@ using TestMode.Tests;
 
 namespace TestMode
 {
-    public class TestTest
-    {
-        [NativeMethod]
-        public virtual int CreateDynamicPickupEx(int modelid, int type, float x, float y, float z, float streamdistance,
-            int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
-        {
-            throw new NativeNotImplementedException();
-        }
-    }
-
     public class GameMode : BaseMode
     {
         private readonly List<ITest> _tests = new List<ITest>
@@ -43,10 +33,6 @@ namespace TestMode
 
         protected override void OnInitialized(EventArgs e)
         {
-            var tt = NativeObjectProxyFactory.CreateInstance<TestTest>();
-            var id = tt.CreateDynamicPickupEx(42, 1, 5, 5, 5, 100, new[] {-1}, new[] {-1}, new[] {-1}, 1, 1, 1);
-            Console.WriteLine("ID ::: " + id);
-
             Console.WriteLine("Test initializing...");
 
             SetGameModeText("sa-mp# testmode");

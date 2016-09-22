@@ -30,15 +30,16 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod]
             public virtual int CreateDynamicRaceCP(int type, float x, float y, float z, float nextx, float nexty,
-                float nextz, float size, int worldid, int interiorid, int playerid, float streamdistance, int areaid, int priority)
+                float nextz, float size, int worldid, int interiorid, int playerid, float streamdistance, int areaid,
+                int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
-            [NativeMethod]
+            [NativeMethod(14, 15, 16, 17)]
             public virtual int CreateDynamicRaceCPEx(int type, float x, float y, float z, float nextx, float nexty,
-                float nextz, float size, float streamdistance, int[] worlds, int[] interiors, int[] players,
-                int maxworlds, int maxinteriors, int maxplayers)
+                float nextz, float size, float streamdistance, int[] worlds, int[] interiors, int[] players, int[] areas,
+                int priority, int maxworlds, int maxinteriors, int maxplayers, int maxareas)
             {
                 throw new NativeNotImplementedException();
             }

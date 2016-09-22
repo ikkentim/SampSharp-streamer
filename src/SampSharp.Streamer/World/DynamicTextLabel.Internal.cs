@@ -14,7 +14,6 @@
 // limitations under the License.
 
 using SampSharp.GameMode.API;
-using SampSharp.GameMode.SAMP;
 
 namespace SampSharp.Streamer.World
 {
@@ -37,10 +36,11 @@ namespace SampSharp.Streamer.World
                 throw new NativeNotImplementedException();
             }
 
-            [NativeMethod]
+            [NativeMethod(15, 16, 17, 18)]
             public virtual int CreateDynamic3DTextLabelEx(string text, int color, float x, float y, float z,
                 float drawdistance, int attachedplayer, int attachedvehicle, bool testlos, float streamdistance,
-                int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] worlds, int[] interiors, int[] players, int[] areas, int priority, int maxworlds, int maxinteriors,
+                int maxplayers, int maxareas)
             {
                 throw new NativeNotImplementedException();
             }
