@@ -1,3 +1,6 @@
+### 0.7.6119.34390-alpha
+- Updated for SampSharp 0.7.6119.33589-alpha
+
 ### 0.7.6109.35966-alpha
 - Added functionality that was missing for streamer 2.8.2
 

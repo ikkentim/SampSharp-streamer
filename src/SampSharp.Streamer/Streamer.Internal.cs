@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using SampSharp.GameMode.API;
+using SampSharp.GameMode.API.NativeObjects;
 
 namespace SampSharp.Streamer
 {
