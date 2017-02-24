@@ -175,12 +175,6 @@ namespace SampSharp.Streamer.World
             }
 
             [NativeMethod]
-            public virtual bool EditPlayerObject(int playerid, int objectid)
-            {
-                throw new NativeNotImplementedException();
-            }
-
-            [NativeMethod]
             public virtual bool SelectObject(int playerid)
             {
                 throw new NativeNotImplementedException();

@@ -163,7 +163,7 @@ namespace SampSharp.Streamer.World
         {
             AssertNotDisposed();
 
-            Internal.EditPlayerObject(player.Id, Id);
+            Internal.EditDynamicObject(player.Id, Id);
         }
 
         public static void Select(BasePlayer player)
