@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicTextLabelInternal>();
         }
 
-        protected class DynamicTextLabelInternal
+        public class DynamicTextLabelInternal
         {
             [NativeMethod]
             public virtual int CreateDynamic3DTextLabel(string text, int color, float x, float y, float z,

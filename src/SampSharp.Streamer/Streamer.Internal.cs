@@ -27,7 +27,7 @@ namespace SampSharp.Streamer
             Internal = NativeObjectProxyFactory.CreateInstance<StreamerInternal>();
         }
 
-        protected class StreamerInternal
+        public class StreamerInternal
         {
             [NativeMethod(Function = "Streamer_ProcessActiveItems")]
             public virtual int ProcessActiveItems()

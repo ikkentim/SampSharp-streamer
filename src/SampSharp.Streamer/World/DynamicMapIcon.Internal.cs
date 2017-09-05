@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicMapIconInternal>();
         }
 
-        protected class DynamicMapIconInternal
+        public class DynamicMapIconInternal
         {
             [NativeMethod]
             public virtual int CreateDynamicMapIcon(float x, float y, float z, int type, int color, int worldid,

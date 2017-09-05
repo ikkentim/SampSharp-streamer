@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicPickupInternal>();
         }
 
-        protected class DynamicPickupInternal
+        public class DynamicPickupInternal
         {
             [NativeMethod]
             public virtual int CreateDynamicPickup(int modelid, int type, float x, float y, float z, int worldid,

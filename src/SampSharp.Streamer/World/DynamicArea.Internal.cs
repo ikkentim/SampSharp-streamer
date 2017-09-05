@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicAreaInternal>();
         }
 
-        protected class DynamicAreaInternal
+        public class DynamicAreaInternal
         {
             [NativeMethod(3)]
             public virtual int CreateDynamicPolygon(float[] points, float minz, float maxz, int maxpoints, int worldid,

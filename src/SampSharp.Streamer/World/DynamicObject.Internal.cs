@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicObjectInternal>();
         }
 
-        protected class DynamicObjectInternal
+        public class DynamicObjectInternal
         {
             [NativeMethod]
             public virtual int CreateDynamicObject(int modelid, float x, float y, float z, float rx, float ry, float rz,

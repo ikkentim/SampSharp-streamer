@@ -20,6 +20,7 @@ using SampSharp.GameMode;
 using SampSharp.GameMode.API;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Definitions;
+using SampSharp.GameMode.World;
 using TestMode.Tests;
 
 namespace TestMode
@@ -30,6 +31,24 @@ namespace TestMode
         {
             new StreamerTest()
         };
+
+        #region Overrides of BaseMode
+
+        /// <summary>
+        ///     Raises the <see cref="E:SampSharp.GameMode.BaseMode.PlayerConnected" /> event.
+        /// </summary>
+        /// <param name="player">The player triggering the event.</param>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
+        protected override void OnPlayerConnected(BasePlayer player, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            var tmp = player.Name;
+            var took =DateTime.Now - now;
+            Console.WriteLine($"{tmp} {took}");
+            base.OnPlayerConnected(player, e);
+        }
+
+        #endregion
 
         protected override void OnInitialized(EventArgs e)
         {

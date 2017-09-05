@@ -27,7 +27,7 @@ namespace SampSharp.Streamer.World
             Internal = NativeObjectProxyFactory.CreateInstance<DynamicCheckpointInternal>();
         }
 
-        protected class DynamicCheckpointInternal
+        public class DynamicCheckpointInternal
         {
             [NativeMethod]
             public virtual int CreateDynamicCP(float x, float y, float z, float size, int worldid, int interiorid,
