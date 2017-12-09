@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using System;
+using SampSharp.Core.Callbacks;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.Events;
@@ -25,6 +26,7 @@ namespace SampSharp.Streamer
 {
     public partial class Streamer
     {
+        [Callback]
         internal void OnDynamicObjectMoved(int objectid)
         {
             var @object = DynamicObject.Find(objectid);
@@ -35,6 +37,7 @@ namespace SampSharp.Streamer
             OnDynamicObjectMoved(@object, EventArgs.Empty);
         }
 
+        [Callback]
         internal void OnPlayerEditDynamicObject(int playerid, int objectid, int response, float x, float y, float z,
             float rx, float ry, float rz)
         {
@@ -48,6 +51,7 @@ namespace SampSharp.Streamer
                     (EditObjectResponse) response, new Vector3(x, y, z), new Vector3(rx, ry, rz)));
         }
 
+        [Callback]
         internal void OnPlayerSelectDynamicObject(int playerid, int objectid, int modelid, float x, float y, float z)
         {
             var @object = DynamicObject.Find(objectid);
@@ -59,6 +63,7 @@ namespace SampSharp.Streamer
                 new PlayerSelectEventArgs(BasePlayer.FindOrCreate(playerid), modelid, new Vector3(x, y, z)));
         }
 
+        [Callback]
         internal bool OnPlayerShootDynamicObject(int playerid, int weaponid, int objectid, float x, float y, float z)
         {
             var @object = DynamicObject.Find(objectid);
@@ -66,12 +71,13 @@ namespace SampSharp.Streamer
             if (@object == null)
                 return false;
 
-	        var args = new PlayerShootEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, new Vector3(x, y, z));
+            var args = new PlayerShootEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, new Vector3(x, y, z));
             OnPlayerShootDynamicObject(@object, args);
-			
-	        return !args.PreventDamage;
+
+            return !args.PreventDamage;
         }
 
+        [Callback]
         internal void OnPlayerPickUpDynamicPickup(int playerid, int pickupid)
         {
             var pickup = DynamicPickup.Find(pickupid);
@@ -82,6 +88,7 @@ namespace SampSharp.Streamer
             OnPlayerPickUpDynamicPickup(pickup, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerEnterDynamicCP(int playerid, int checkpointid)
         {
             var checkpoint = DynamicCheckpoint.Find(checkpointid);
@@ -92,6 +99,7 @@ namespace SampSharp.Streamer
             OnPlayerEnterDynamicCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerLeaveDynamicCP(int playerid, int checkpointid)
         {
             var checkpoint = DynamicCheckpoint.Find(checkpointid);
@@ -102,6 +110,7 @@ namespace SampSharp.Streamer
             OnPlayerLeaveDynamicCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerEnterDynamicRaceCP(int playerid, int checkpointid)
         {
             var checkpoint = DynamicRaceCheckpoint.Find(checkpointid);
@@ -112,6 +121,7 @@ namespace SampSharp.Streamer
             OnPlayerEnterDynamicRaceCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerLeaveDynamicRaceCP(int playerid, int checkpointid)
         {
             var checkpoint = DynamicRaceCheckpoint.Find(checkpointid);
@@ -122,6 +132,7 @@ namespace SampSharp.Streamer
             OnPlayerLeaveDynamicRaceCheckpoint(checkpoint, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerEnterDynamicArea(int playerid, int areaid)
         {
             var area = DynamicArea.Find(areaid);
@@ -132,6 +143,7 @@ namespace SampSharp.Streamer
             OnPlayerEnterDynamicArea(area, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void OnPlayerLeaveDynamicArea(int playerid, int areaid)
         {
             var area = DynamicArea.Find(areaid);
@@ -142,9 +154,52 @@ namespace SampSharp.Streamer
             OnPlayerLeaveDynamicArea(area, new PlayerEventArgs(BasePlayer.FindOrCreate(playerid)));
         }
 
+        [Callback]
         internal void Streamer_OnPluginError(string error)
         {
             OnError(new ErrorEventArgs(error));
+        }
+
+        [Callback]
+        internal int OnPlayerGiveDamageDynamicActor(int playerid, int actorid, float amount, int weaponid, int bodypart)
+        {
+            var args =
+                new PlayerShotActorEventArgs(BasePlayer.FindOrCreate(playerid), (Weapon) weaponid, amount, (BodyPart) bodypart);
+            var actor = DynamicActor.Find(actorid);
+
+            if (actor != null)
+            {
+                // evt
+            }
+            return 0;
+        }
+
+        [Callback]
+        internal void OnDynamicActorStreamIn(int actorid, int playerid)
+        {
+            var actor = DynamicActor.Find(actorid);
+
+            if (actor == null)
+                return;
+        }
+
+        [Callback]
+        internal void OnDynamicActorStreamOut(int actorid, int playerid)
+        {
+            var actor = DynamicActor.Find(actorid);
+
+            if (actor == null)
+                return;
+        }
+
+        [Callback]
+        internal void Streamer_OnItemStreamIn(int type, int id)
+        {
+        }
+
+        [Callback]
+        internal void Streamer_OnItemStreamOut(int type, int id)
+        {
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace SampSharp.Streamer.World
             BasePlayer player = null, float streamDistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, type, 0, worldid, interiorid,
-                player?.Id ?? -1, streamDistance, (int)mapIconType, area?.Id ?? -1, priority);
+                player?.Id ?? -1, streamDistance, (int) mapIconType, area?.Id ?? -1, priority);
         }
 
         public DynamicMapIcon(Vector3 position, Color color, MapIconType mapIconType = MapIconType.Local,
@@ -37,7 +37,7 @@ namespace SampSharp.Streamer.World
             BasePlayer player = null, float streamDistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
             Id = Internal.CreateDynamicMapIcon(position.X, position.Y, position.Z, 0, color, worldid, interiorid,
-                player?.Id ?? -1, streamDistance, (int)mapIconType, area?.Id ?? -1, priority);
+                player?.Id ?? -1, streamDistance, (int) mapIconType, area?.Id ?? -1, priority);
         }
 
         public int Type
@@ -59,7 +59,7 @@ namespace SampSharp.Streamer.World
         public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicMapIcon[] exceptions)
         {
             var ids = exceptions?.Select(e => e.Id).ToArray() ?? new[] { -1 };
-            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int)StreamType.MapIcon, toggle, ids,
+            WorldInternal.ToggleAllItems(player?.Id ?? -1, (int) StreamType.MapIcon, toggle, ids,
                 ids.Length);
         }
 

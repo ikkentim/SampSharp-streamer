@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ namespace SampSharp.Streamer.World
             if (interiors == null) interiors = new[] { -1 };
             var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
             var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
-            
+
             Id = Internal.CreateDynamicPickupEx(modelid, type, position.X, position.Y, position.Z, streamdistance,
                 worlds, interiors, pl, ar, priority, worlds.Length, interiors.Length, pl.Length, ar.Length);
         }

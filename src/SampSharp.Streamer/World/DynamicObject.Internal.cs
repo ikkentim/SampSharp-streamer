@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.API;
-using SampSharp.GameMode.API.NativeObjects;
+using SampSharp.Core.Natives.NativeObjects;
 
 namespace SampSharp.Streamer.World
 {

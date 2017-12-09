@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.API;
-using SampSharp.GameMode.API.NativeObjects;
+using SampSharp.Core.Natives.NativeObjects;
 
 namespace SampSharp.Streamer.World
 {
@@ -24,9 +23,8 @@ namespace SampSharp.Streamer.World
 
         static DynamicWorldObject()
         {
-           WorldInternal = NativeObjectProxyFactory.CreateInstance<DynamicWorldObjectInternal>();
+            WorldInternal = NativeObjectProxyFactory.CreateInstance<DynamicWorldObjectInternal>();
         }
-
     }
 
     public class DynamicWorldObjectInternal
@@ -42,6 +40,7 @@ namespace SampSharp.Streamer.World
         {
             throw new NativeNotImplementedException();
         }
+
         [NativeMethod(Function = "Streamer_IsToggleItem")]
         public virtual bool IsToggleItem(int playerid, int type, int id)
         {
@@ -54,21 +53,44 @@ namespace SampSharp.Streamer.World
             throw new NativeNotImplementedException();
         }
 
-
         [NativeMethod(Function = "Streamer_ToggleAllItems")]
         public virtual bool ToggleAllItems(int playerid, int type, bool toggle, int[] exceptions, int maxexceptions)
         {
             throw new NativeNotImplementedException();
         }
 
-        [NativeMethod(Function = "Streamer_ToggleItemAntiAreas")]
-        public virtual bool ToggleItemAntiAreas(int type, int id, bool toggle)
+        [NativeMethod(Function = "Streamer_ToggleItemInvAreas")]
+        public virtual bool ToggleItemInvAreas(int type, int id, bool toggle)
         {
             throw new NativeNotImplementedException();
         }
 
-        [NativeMethod(Function = "Streamer_IsToggleItemAntiAreas")]
-        public virtual bool IsToggleItemAntiAreas(int type, int id)
+        [NativeMethod(Function = "Streamer_IsToggleItemInvAreas")]
+        public virtual bool IsToggleItemInvAreas(int type, int id)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_ToggleItemCallbacks")]
+        public virtual bool ToggleItemCallbacks(int type, int id, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_IsToggleItemCallbacks")]
+        public virtual bool IsToggleItemCallbacks(int type, int id)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_GetItemOffset")]
+        public virtual int GetItemOffset(int type, int id, out float x, out float y, out float z)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod(Function = "Streamer_SetItemOffset")]
+        public virtual int SetItemOffset(int type, int id, float x, float y, float z)
         {
             throw new NativeNotImplementedException();
         }

@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.API;
-using SampSharp.GameMode.API.NativeObjects;
+using SampSharp.Core.Natives.NativeObjects;
 
 namespace SampSharp.Streamer
 {
@@ -66,7 +65,8 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod(Function = "Streamer_UpdateEx")]
-            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorid, int type, int compensatedtime)
+            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorid, int type, int compensatedtime,
+                int freezeplayer)
             {
                 throw new NativeNotImplementedException();
             }
@@ -137,6 +137,54 @@ namespace SampSharp.Streamer
                 throw new NativeNotImplementedException();
             }
 
+            [NativeMethod(Function = "Streamer_SetPlayerTickRate")]
+            public virtual int SetPlayerTickRate(int playerid, int rate)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetPlayerTickRate")]
+            public virtual int GetPlayerTickRate(int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_ToggleChunkStream")]
+            public virtual int ToggleChunkStream(bool toggle)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_IsToggleChunkStream")]
+            public virtual bool IsToggleChunkStream()
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetChunkTickRate")]
+            public virtual int GetChunkTickRate(int type, int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_SetChunkTickRate")]
+            public virtual int SetChunkTickRate(int type, int rate, int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetChunkSize")]
+            public virtual int GetChunkSize(int type)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_SetChunkSize")]
+            public virtual int SetChunkSize(int type, int size)
+            {
+                throw new NativeNotImplementedException();
+            }
+
             [NativeMethod(Function = "Streamer_SetTickRate")]
             public virtual int SetTickRate(int rate)
             {
@@ -175,6 +223,24 @@ namespace SampSharp.Streamer
 
             [NativeMethod(Function = "Streamer_SetRadiusMultiplier")]
             public virtual int SetRadiusMultiplier(int type, float multiplier, int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_ToggleItemInvAreas")]
+            public virtual int ToggleItemInvAreas(int type, int id, bool toggle)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_ToggleItemCallbacks")]
+            public virtual int ToggleItemCallbacks(int type, int id, bool toggle)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_IsToggleItemCallbacks")]
+            public virtual int IsToggleItemCallbacks(int type, int id)
             {
                 throw new NativeNotImplementedException();
             }
@@ -235,6 +301,36 @@ namespace SampSharp.Streamer
 
             [NativeMethod(Function = "Streamer_GetLastUpdateTime")]
             public virtual int GetLastUpdateTime(out float time)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetNearbyItems")]
+            public virtual int GetNearbyItems(float x, float y, float z, int type, out int[] items, int maxitems, float range)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetAllVisibleItems")]
+            public virtual int GetAllVisibleItems(int playerid, int type, out int[] items, int maxitems)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public int GetPlayerCameraTargetDynObject(int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual int GetPlayerTargetDynamicActor(int playerid)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual int GetPlayerCameraTargetDynActor(int playerid)
             {
                 throw new NativeNotImplementedException();
             }

@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ namespace SampSharp.Streamer.Events
             Position = position;
         }
 
-        public int ModelId { get; private set; }
+        public int ModelId { get; }
 
-        public Vector3 Position { get; private set; }
+        public Vector3 Position { get; }
     }
 }

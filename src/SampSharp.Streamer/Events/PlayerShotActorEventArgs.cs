@@ -13,23 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.Controllers;
-using SampSharp.Streamer.World;
+using SampSharp.GameMode.Definitions;
+using SampSharp.GameMode.Events;
+using SampSharp.GameMode.World;
 
-namespace SampSharp.Streamer.Controllers
+namespace SampSharp.Streamer.Events
 {
-    public class DynamicTextLabelController : ITypeProvider
+    public class PlayerShotActorEventArgs : PlayerEventArgs
     {
-        #region Implementation of ITypeProvider
-
-        /// <summary>
-        ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
-        /// </summary>
-        public void RegisterTypes()
+        public PlayerShotActorEventArgs(BasePlayer player, Weapon weapon, float amount, BodyPart bodyPart)
+            : base(player)
         {
-            DynamicTextLabel.Register<DynamicTextLabel>();
+            Weapon = weapon;
+            Amount = amount;
+            BodyPart = bodyPart;
         }
 
-        #endregion
+        public Weapon Weapon { get; }
+
+        public float Amount { get; }
+
+        public BodyPart BodyPart { get; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace SampSharp.Streamer.World
             float size = 3.0f, int worldid = -1, int interiorid = -1, BasePlayer player = null,
             float streamdistance = 100.0f, DynamicArea area = null, int priority = 0)
         {
-            Id = Internal.CreateDynamicRaceCP((int)type, position.X, position.Y, position.Z, nextPosition.X,
+            Id = Internal.CreateDynamicRaceCP((int) type, position.X, position.Y, position.Z, nextPosition.X,
                 nextPosition.Y, nextPosition.Z, size, worldid, interiorid, player?.Id ?? -1,
                 streamdistance, area?.Id ?? -1, priority);
         }
@@ -43,7 +43,7 @@ namespace SampSharp.Streamer.World
             var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
             var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
 
-            Id = Internal.CreateDynamicRaceCPEx((int)type, position.X, position.Y, position.Z, nextPosition.X,
+            Id = Internal.CreateDynamicRaceCPEx((int) type, position.X, position.Y, position.Z, nextPosition.X,
                 nextPosition.Y, nextPosition.Z, size, streamdistance, worlds, interiors, pl, ar, priority, worlds.Length,
                 interiors.Length, pl.Length, ar.Length);
         }
@@ -85,9 +85,7 @@ namespace SampSharp.Streamer.World
             AssertNotDisposed();
 
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             Internal.TogglePlayerDynamicRaceCP(player.Id, Id, toggle);
         }
@@ -95,9 +93,7 @@ namespace SampSharp.Streamer.World
         public bool IsPlayerInCheckpoint(BasePlayer player)
         {
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             return Internal.IsPlayerInDynamicRaceCP(player.Id, Id);
         }
@@ -105,9 +101,7 @@ namespace SampSharp.Streamer.World
         public static void ToggleAllForPlayer(BasePlayer player, bool toggle)
         {
             if (player == null)
-            {
                 throw new ArgumentNullException(nameof(player));
-            }
 
             Internal.TogglePlayerAllDynamicRaceCPs(player.Id, toggle);
         }

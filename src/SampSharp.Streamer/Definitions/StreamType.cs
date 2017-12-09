@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ namespace SampSharp.Streamer.Definitions
         RaceCheckpoint = 3,
         MapIcon = 4,
         TextLabel = 5,
-        Area = 6
+        Area = 6,
+        Actor = 7
     }
 }

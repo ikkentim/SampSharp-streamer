@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,30 +22,6 @@ namespace SampSharp.Streamer
 {
     public partial class Streamer
     {
-        public event EventHandler<EventArgs> DynamicObjectMoved;
-
-        public event EventHandler<PlayerEditEventArgs> PlayerEditDynamicObject;
-
-        public event EventHandler<PlayerSelectEventArgs> PlayerSelectDynamicObject;
-
-        public event EventHandler<PlayerShootEventArgs> PlayerShootDynamicObject;
-
-        public event EventHandler<PlayerEventArgs> PlayerPickUpDynamicPickup;
-
-        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicCheckpoint;
-
-        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicCheckpoint;
-
-        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicRaceCheckpoint;
-
-        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
-
-        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
-
-        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
-
-        public event EventHandler<ErrorEventArgs> Error;
-
         protected virtual void OnDynamicObjectMoved(DynamicObject @object, EventArgs e)
         {
             DynamicObjectMoved?.Invoke(@object, e);
@@ -112,5 +88,29 @@ namespace SampSharp.Streamer
 
             Error?.Invoke(this, e);
         }
+
+        public event EventHandler<EventArgs> DynamicObjectMoved;
+
+        public event EventHandler<PlayerEditEventArgs> PlayerEditDynamicObject;
+
+        public event EventHandler<PlayerSelectEventArgs> PlayerSelectDynamicObject;
+
+        public event EventHandler<PlayerShootEventArgs> PlayerShootDynamicObject;
+
+        public event EventHandler<PlayerEventArgs> PlayerPickUpDynamicPickup;
+
+        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicCheckpoint;
+
+        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicCheckpoint;
+
+        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicRaceCheckpoint;
+
+        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
+
+        public event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
+
+        public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
+
+        public event EventHandler<ErrorEventArgs> Error;
     }
 }

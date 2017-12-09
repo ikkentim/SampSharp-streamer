@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2016 Tim Potze
+// Copyright 2017 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using SampSharp.GameMode.API;
-using SampSharp.GameMode.API.NativeObjects;
+using SampSharp.Core.Natives.NativeObjects;
 
 namespace SampSharp.Streamer.World
 {
@@ -31,35 +30,35 @@ namespace SampSharp.Streamer.World
         {
             [NativeMethod(3)]
             public virtual int CreateDynamicPolygon(float[] points, float minz, float maxz, int maxpoints, int worldid,
-                int interiorid, int playerid)
+                int interiorid, int playerid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicCircle(float x, float y, float size, int worldid, int interiorid,
-                int playerid)
+                int playerid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicRectangle(float minx, float miny, float maxx, float maxy, int worldid,
-                int interiorid, int playerid)
+                int interiorid, int playerid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicSphere(float x, float y, float z, float size, int worldid,
-                int interiorid, int playerid)
+                int interiorid, int playerid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicCube(float minx, float miny, float minz, float maxx, float maxy, float maxz,
-                int worldid, int interiorid, int playerid)
+                int worldid, int interiorid, int playerid, int priority)
             {
                 throw new NativeNotImplementedException();
             }
@@ -185,7 +184,8 @@ namespace SampSharp.Streamer.World
             }
 
             [NativeMethod]
-            public virtual int AttachDynamicAreaToObject(int areaid, int objectid, int type, int playerid, float offsetX, float offsetY, float offsetZ)
+            public virtual int AttachDynamicAreaToObject(int areaid, int objectid, int type, int playerid, float offsetX, float offsetY,
+                float offsetZ)
             {
                 throw new NativeNotImplementedException();
             }
@@ -205,21 +205,21 @@ namespace SampSharp.Streamer.World
 
             [NativeMethod]
             public virtual int CreateDynamicCircleEx(float x, float y, float size, int[] worlds, int[] interiors,
-                int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] players, int maxworlds, int maxinteriors, int maxplayers, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicRectangleEx(float minx, float miny, float maxx, float maxy, int[] worlds,
-                int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicSphereEx(float x, float y, float z, float size, int[] worlds,
-                int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers, int priority)
             {
                 throw new NativeNotImplementedException();
             }
@@ -227,14 +227,26 @@ namespace SampSharp.Streamer.World
             [NativeMethod]
             public virtual int CreateDynamicCubeEx(float minx, float miny, float minz, float maxx, float maxy,
                 float maxz, int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors,
-                int maxplayers)
+                int maxplayers, int priority)
             {
                 throw new NativeNotImplementedException();
             }
 
             [NativeMethod]
             public virtual int CreateDynamicPolygonEx(float[] points, float minz, float maxz, int maxpoints,
-                int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers)
+                int[] worlds, int[] interiors, int[] players, int maxworlds, int maxinteriors, int maxplayers, int priority)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual int ToggleDynAreaSpectateMode(int areaid, bool toggle)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public virtual bool IsToggleDynAreaSpectateMode(int areaid)
             {
                 throw new NativeNotImplementedException();
             }
