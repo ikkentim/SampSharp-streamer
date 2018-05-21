@@ -1,3 +1,7 @@
+### 0.8-alpha1
+- Updated for SampSharp 0.8-alpha6
+- Updated for streamer 2.9.2
+
 ### 0.7.6264.17665
 - Fixed DynamicObject.Edit not working
 

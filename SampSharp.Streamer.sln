@@ -7,6 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampSharp.Streamer", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMode", "src\TestMode\TestMode.csproj", "{054845C7-1998-47F2-A79B-51B24B86EC19}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{7E3E537C-FCA3-4DCB-A0A8-80F753487767}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		build.bat = build.bat
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		CHANGES.md = CHANGES.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
