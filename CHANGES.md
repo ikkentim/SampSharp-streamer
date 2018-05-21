@@ -1,4 +1,4 @@
-### 0.8-alpha1
+### 0.8.0-alpha1
 - Added more `IsDisposed` checks
 - Updated for SampSharp 0.8-alpha6
 - Updated for streamer 2.9.3
