@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,51 +44,91 @@ namespace SampSharp.Streamer.World
 
         #region Overrides of DynamicWorldObject<DynamicActor>
 
-        public override StreamType StreamType => StreamType.Actor;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.Actor;
+            }
+        }
 
         #endregion
 
-        public bool IsValid => Internal.IsValidDynamicActor(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicActor(Id);
+            }
+        }
 
         public virtual float FacingAngle
         {
             get
             {
+                AssertNotDisposed();
+
                 Internal.GetDynamicActorFacingAngle(Id, out var angle);
                 return angle;
             }
-            set { Internal.SetDynamicActorFacingAngle(Id, value); }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicActorFacingAngle(Id, value);
+            }
         }
 
         public virtual float Health
         {
             get
             {
+                AssertNotDisposed();
+
                 Internal.GetDynamicActorHealth(Id, out var angle);
                 return angle;
             }
-            set { Internal.SetDynamicActorHealth(Id, value); }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicActorHealth(Id, value);
+            }
         }
 
         public virtual bool IsInvulnerable
         {
-            get { return Internal.IsDynamicActorInvulnerable(Id); }
-            set { Internal.SetDynamicActorInvulnerable(Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsDynamicActorInvulnerable(Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicActorInvulnerable(Id, value);
+            }
         }
 
         public bool IsStreamedIn(BasePlayer forPlayer)
         {
+            AssertNotDisposed();
+
             if (forPlayer == null) throw new ArgumentNullException(nameof(forPlayer));
             return Internal.IsDynamicActorStreamedIn(Id, forPlayer.Id);
         }
 
         public void CleanAnimations()
         {
+            AssertNotDisposed();
+
             Internal.ClearDynamicActorAnimations(Id);
         }
 
         public void ApplyAnimation(string animLib, string animName, float delta, bool loop, bool lockX, bool lockY, bool freeze, int time)
         {
+            AssertNotDisposed();
+
             if (animLib == null) throw new ArgumentNullException(nameof(animLib));
             if (animName == null) throw new ArgumentNullException(nameof(animName));
 
@@ -98,6 +138,8 @@ namespace SampSharp.Streamer.World
         public void GetAnimation(out string animLib, out string animName, out float delta, out bool loop, out bool lockX, out bool lockY,
             out bool freeze, out int time)
         {
+            AssertNotDisposed();
+
             Internal.GetDynamicActorAnimation(Id, out animLib, out animName, out delta, out loop, out lockX, out lockY, out freeze, out time, 64, 64);
         }
 
@@ -108,6 +150,8 @@ namespace SampSharp.Streamer.World
         /// </summary>
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             Internal.DestroyDynamicActor(Id);
 
             base.Dispose(disposing);
@@ -119,18 +163,32 @@ namespace SampSharp.Streamer.World
 
         public override int World
         {
-            get { return Internal.GetDynamicActorVirtualWorld(Id); }
-            set { Internal.SetDynamicActorVirtualWorld(Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return Internal.GetDynamicActorVirtualWorld(Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicActorVirtualWorld(Id, value);
+            }
         }
 
         public override Vector3 Position
         {
             get
             {
+                AssertNotDisposed();
+
                 Internal.GetDynamicActorPos(Id, out var x, out var y, out var z);
                 return new Vector3(x, y, z);
             }
-            set { Internal.SetDynamicActorPos(Id, value.X, value.Y, value.Z); }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicActorPos(Id, value.X, value.Y, value.Z);
+            }
         }
 
         #endregion

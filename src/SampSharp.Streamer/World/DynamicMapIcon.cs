@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,19 +42,49 @@ namespace SampSharp.Streamer.World
 
         public int Type
         {
-            get { return GetInteger(StreamerDataType.Type); }
-            set { SetInteger(StreamerDataType.Type, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.Type);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.Type, value);
+            }
         }
 
         public Color Color
         {
-            get { return GetInteger(StreamerDataType.Color); }
-            set { SetInteger(StreamerDataType.Color, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.Color);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.Color, value);
+            }
         }
 
-        public bool IsValid => Internal.IsValidDynamicMapIcon(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicMapIcon(Id);
+            }
+        }
 
-        public override StreamType StreamType => StreamType.MapIcon;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.MapIcon;
+            }
+        }
 
         public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicMapIcon[] exceptions)
         {
@@ -65,6 +95,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             Internal.DestroyDynamicMapIcon(Id);
 
             base.Dispose(disposing);

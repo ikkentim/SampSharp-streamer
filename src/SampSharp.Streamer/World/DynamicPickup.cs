@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,21 +43,51 @@ namespace SampSharp.Streamer.World
                 worlds, interiors, pl, ar, priority, worlds.Length, interiors.Length, pl.Length, ar.Length);
         }
 
-        public override StreamType StreamType => StreamType.Pickup;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.Pickup;
+            }
+        }
 
         public virtual int Type
         {
-            get { return GetInteger(StreamerDataType.Type); }
-            set { SetInteger(StreamerDataType.Type, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.Type);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.Type, value);
+            }
         }
 
         public virtual int ModelId
         {
-            get { return GetInteger(StreamerDataType.ModelId); }
-            set { SetInteger(StreamerDataType.ModelId, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.ModelId);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.ModelId, value);
+            }
         }
 
-        public virtual bool IsValid => Internal.IsValidDynamicPickup(Id);
+        public virtual bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicPickup(Id);
+            }
+        }
 
         public event EventHandler<PlayerEventArgs> PickedUp;
 
@@ -70,6 +100,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             base.Dispose(disposing);
 
             Internal.DestroyDynamicPickup(Id);
@@ -77,6 +109,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void OnPickedUp(PlayerEventArgs e)
         {
+            AssertNotDisposed();
             PickedUp?.Invoke(this, e);
         }
     }

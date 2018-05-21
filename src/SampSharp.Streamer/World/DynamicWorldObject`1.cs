@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,32 +35,9 @@ namespace SampSharp.Streamer.World
             return BaseMode.Instance.Services.GetService<IStreamer>().ItemType[StreamType].GetFloat(Id, data);
         }
 
-        protected int[] GetArray(StreamerDataType data, int maxlength)
+        protected int[] GetArray(StreamerDataType data, int maxlength = -1)
         {
             return BaseMode.Instance.Services.GetService<IStreamer>().ItemType[StreamType].GetArray(Id, data, maxlength);
-        }
-
-        protected IEnumerable<int> GetArrayClean(StreamerDataType data, int maxlength)
-        {
-            // NOTE: This will return unexpected results if the array contains multiple zeroes.
-            var array = GetArray(data, maxlength);
-
-            if (array == null)
-                return null;
-
-            // Find length of array (up to zeroes filling the end of the array)
-            int length;
-            for (length = array.Length; array[length - 1] == 0; length--)
-            {
-                ;
-            }
-
-            // Increase size by 1 if the array 0 up to length does not contain a zero, but the plugin reports it should contain a zero (so the last value in the array probably is a zero)
-            var first0 = Array.IndexOf(array, 0);
-            if (length < maxlength && first0 == length && IsInArray(data, 0))
-                length++;
-
-            return array.Take(length);
         }
 
         protected void AppendToArray(StreamerDataType data, int value)
@@ -97,55 +74,96 @@ namespace SampSharp.Streamer.World
 
         public virtual int Interior
         {
-            get { return GetInteger(StreamerDataType.InteriorId); }
-            set { SetInteger(StreamerDataType.InteriorId, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.InteriorId);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.InteriorId, value);
+            }
         }
 
         public virtual IEnumerable<int> Interiors
         {
-            get { return GetArrayClean(StreamerDataType.InteriorId, 1024).Where(v => v != int.MinValue); }
+            get
+            {
+                AssertNotDisposed();
+                return GetArray(StreamerDataType.InteriorId).Where(v => v != int.MinValue);
+            }
             set
             {
+                AssertNotDisposed();
                 if (value == null)
                 {
                     SetArray(StreamerDataType.InteriorId, new[] { -1 });
                     return;
                 }
+
                 SetArray(StreamerDataType.InteriorId, value.ToArray());
             }
         }
 
         public virtual int World
         {
-            get { return GetInteger(StreamerDataType.WorldId); }
-            set { SetInteger(StreamerDataType.WorldId, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.WorldId);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.WorldId, value);
+            }
         }
 
         public virtual int Priority
         {
-            get { return GetInteger(StreamerDataType.Priority); }
-            set { SetInteger(StreamerDataType.Priority, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.Priority);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.Priority, value);
+            }
         }
 
         public virtual IEnumerable<int> Worlds
         {
-            get { return GetArrayClean(StreamerDataType.WorldId, 1024)?.Where(v => v != int.MinValue); }
+            get
+            {
+                AssertNotDisposed();
+                return GetArray(StreamerDataType.WorldId)?.Where(v => v != int.MinValue);
+            }
             set
             {
+                AssertNotDisposed();
                 if (value == null)
                 {
                     SetArray(StreamerDataType.WorldId, new[] { -1 });
                     return;
                 }
+
                 SetArray(StreamerDataType.WorldId, value.ToArray());
             }
         }
 
         public virtual BasePlayer Player
         {
-            get { return BasePlayer.FindOrCreate(GetInteger(StreamerDataType.PlayerId)); }
+            get
+            {
+                AssertNotDisposed();
+                return BasePlayer.FindOrCreate(GetInteger(StreamerDataType.PlayerId));
+            }
             set
             {
+                AssertNotDisposed();
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 SetInteger(StreamerDataType.PlayerId, value.Id);
@@ -154,67 +172,111 @@ namespace SampSharp.Streamer.World
 
         public virtual DynamicArea Area
         {
-            get { return DynamicArea.Find(GetInteger(StreamerDataType.AreaId)); }
-            set { SetInteger(StreamerDataType.AreaId, value?.Id ?? -1); }
+            get
+            {
+                AssertNotDisposed();
+                return DynamicArea.Find(GetInteger(StreamerDataType.AreaId));
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.AreaId, value?.Id ?? -1);
+            }
         }
 
         public virtual IEnumerable<BasePlayer> Players
         {
             get
             {
+                AssertNotDisposed();
                 return
-                    GetArrayClean(StreamerDataType.PlayerId, 1024)
+                    GetArray(StreamerDataType.PlayerId)
                         .Where(v => v != int.MinValue)
                         .Select(BasePlayer.FindOrCreate);
             }
             set
             {
+                AssertNotDisposed();
                 if (value == null)
                 {
                     SetArray(StreamerDataType.PlayerId, new[] { -1 });
                     return;
                 }
+
                 SetArray(StreamerDataType.PlayerId, value.Select(p => p?.Id ?? -1).ToArray());
             }
         }
 
         public virtual float StreamDistance
         {
-            get { return GetFloat(StreamerDataType.StreamDistance); }
-            set { SetFloat(StreamerDataType.StreamDistance, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetFloat(StreamerDataType.StreamDistance);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetFloat(StreamerDataType.StreamDistance, value);
+            }
         }
 
         public virtual bool IsStatic
         {
-            get { return WorldInternal.IsToggleItemStatic((int) StreamType, Id); }
-            set { WorldInternal.ToggleItemStatic((int) StreamType, Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return WorldInternal.IsToggleItemStatic((int) StreamType, Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                WorldInternal.ToggleItemStatic((int) StreamType, Id, value);
+            }
         }
 
         public virtual bool IsCheckAreaInversed
         {
-            get { return WorldInternal.IsToggleItemInvAreas((int) StreamType, Id); }
-            set { WorldInternal.ToggleItemInvAreas((int) StreamType, Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return WorldInternal.IsToggleItemInvAreas((int) StreamType, Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                WorldInternal.ToggleItemInvAreas((int) StreamType, Id, value);
+            }
         }
 
         public virtual bool IsCallbacksEnabled
         {
-            get { return WorldInternal.IsToggleItemCallbacks((int) StreamType, Id); }
-            set { WorldInternal.ToggleItemCallbacks((int) StreamType, Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return WorldInternal.IsToggleItemCallbacks((int) StreamType, Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                WorldInternal.ToggleItemCallbacks((int) StreamType, Id, value);
+            }
         }
 
         public virtual Vector3 Position
         {
             get
             {
-                return new Vector3(GetFloat(StreamerDataType.X),
-                    GetFloat(StreamerDataType.Y),
-                    GetFloat(StreamerDataType.Z));
+                AssertNotDisposed();
+                return BaseMode.Instance.Services.GetService<IStreamer>().ItemType[StreamType]
+                    .GetPosition(Id);
+
             }
             set
             {
-                SetFloat(StreamerDataType.X, value.X);
-                SetFloat(StreamerDataType.Y, value.Y);
-                SetFloat(StreamerDataType.Z, value.Z);
+                AssertNotDisposed();
+                BaseMode.Instance.Services.GetService<IStreamer>().ItemType[StreamType]
+                    .SetPosition(Id, value);
             }
         }
 
@@ -222,14 +284,20 @@ namespace SampSharp.Streamer.World
         {
             get
             {
+                AssertNotDisposed();
                 WorldInternal.GetItemOffset((int) StreamType, Id, out var x, out var y, out var z);
                 return new Vector3(x, y, z);
             }
-            set { WorldInternal.SetItemOffset((int) StreamType, Id, value.X, value.Y, value.Z); }
+            set
+            {
+                AssertNotDisposed();
+                WorldInternal.SetItemOffset((int) StreamType, Id, value.X, value.Y, value.Z);
+            }
         }
 
         public virtual bool IsVisibleForPlayer(BasePlayer player)
         {
+            AssertNotDisposed();
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
 
@@ -238,6 +306,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void ShowForPlayer(BasePlayer player)
         {
+            AssertNotDisposed();
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
 
@@ -246,6 +315,7 @@ namespace SampSharp.Streamer.World
 
         public virtual void HideForPlayer(BasePlayer player)
         {
+            AssertNotDisposed();
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
 
@@ -254,46 +324,55 @@ namespace SampSharp.Streamer.World
 
         public virtual void ToggleItem(BasePlayer player, bool toggle)
         {
+            AssertNotDisposed();
             WorldInternal.ToggleItem(player?.Id ?? -1, (int) StreamType, Id, toggle);
         }
 
         public virtual bool IsToggleItem(BasePlayer player)
         {
+            AssertNotDisposed();
             return WorldInternal.IsToggleItem(player?.Id ?? -1, (int) StreamType, Id);
         }
 
         public virtual bool IsVisibleInWorld(int worldid)
         {
+            AssertNotDisposed();
             return IsInArray(StreamerDataType.WorldId, worldid);
         }
 
-        public void ShowInWorld(int worlid)
+        public virtual void ShowInWorld(int worlid)
         {
+            AssertNotDisposed();
             AppendToArray(StreamerDataType.WorldId, worlid);
         }
 
-        public void HideInWorld(int worlid)
+        public virtual void HideInWorld(int worlid)
         {
+            AssertNotDisposed();
             RemoveArrayData(StreamerDataType.WorldId, worlid);
         }
 
         public virtual bool IsVisibleInInterior(int interiorid)
         {
+            AssertNotDisposed();
             return IsInArray(StreamerDataType.InteriorId, interiorid);
         }
 
-        public void ShowInInterior(int interiorid)
+        public virtual void ShowInInterior(int interiorid)
         {
+            AssertNotDisposed();
             AppendToArray(StreamerDataType.InteriorId, interiorid);
         }
 
         public void HideInInterior(int interiorid)
         {
+            AssertNotDisposed();
             RemoveArrayData(StreamerDataType.InteriorId, interiorid);
         }
 
         public void ToggleUpdate(BasePlayer player, bool toggle)
         {
+            AssertNotDisposed();
             BaseMode.Instance.Services.GetService<IStreamer>().ItemType[StreamType].ToggleUpdate(player, toggle);
         }
     }

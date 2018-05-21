@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,6 +28,12 @@ namespace SampSharp.Streamer
 
         public class StreamerInternal
         {
+            [NativeMethod(Function = "Streamer_AmxUnloadDestroyItems")]
+            public virtual int AmxUnloadDestroyItems(bool toggle)
+            {
+                throw new NativeNotImplementedException();
+            }
+
             [NativeMethod(Function = "Streamer_ProcessActiveItems")]
             public virtual int ProcessActiveItems()
             {
@@ -94,9 +100,15 @@ namespace SampSharp.Streamer
             {
                 throw new NativeNotImplementedException();
             }
-
+            
             [NativeMethod(Function = "Streamer_GetArrayData")]
             public virtual int GetArrayData(int type, int id, int data, out int[] dest, int maxlength)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_GetArrayDataLength")]
+            public virtual int GetArrayDataLength(int type, int id, int data)
             {
                 throw new NativeNotImplementedException();
             }
@@ -244,6 +256,18 @@ namespace SampSharp.Streamer
             {
                 throw new NativeNotImplementedException();
             }
+            
+            [NativeMethod(Function = "Streamer_GetItemPos")]
+            public virtual int GetItemPos(int type, int id, out float x, out float y, out float z)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_SetItemPos")]
+            public virtual int SetItemPos(int type, int id, float x, float y, float z)
+            {
+                throw new NativeNotImplementedException();
+            }
 
             [NativeMethod(Function = "Streamer_GetCellDistance")]
             public virtual int GetCellDistance(out float distance)
@@ -306,7 +330,7 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod(Function = "Streamer_GetNearbyItems")]
-            public virtual int GetNearbyItems(float x, float y, float z, int type, out int[] items, int maxitems, float range)
+            public virtual int GetNearbyItems(float x, float y, float z, int type, out int[] items, int maxitems, float range, int worldid)
             {
                 throw new NativeNotImplementedException();
             }

@@ -27,9 +27,13 @@ namespace TestMode
             var position = player.Position;
             _area?.Dispose();
             _area = DynamicArea.CreateSphere(position, size);
-
+            _area.Enter += (sender, args) => args.Player.SendClientMessage("Enter");
+            _area.Leave += (sender, args) => args.Player.SendClientMessage("Leave");
             player.SendClientMessage($"Area with size {size} created at {position}.");
+            player.SendClientMessage("Check - " + _area.Position);
         }
+        
+
         [Command("destroy")]
         public static async void DestroyCommand(BasePlayer player)
         {
@@ -116,6 +120,7 @@ namespace TestMode
             new DynamicTextLabel("[I am maroon]", Color.Maroon, pickup.Position + new Vector3(0, 0, 1), 100.0f);
 
             var obj = new DynamicObject(12991, new Vector3(10, 10, 3));
+            Console.WriteLine("obj position after spawn " + obj.Position);
             var offset = Vector3.One;
             obj.SetMaterialText(1, "Test", ObjectMaterialSize.X512X512, "Arial", 30, false, Color.Black, Color.White);
             obj.Move(obj.Position + -offset, 0.6f, obj.Rotation + new Vector3(0, 0, 25));

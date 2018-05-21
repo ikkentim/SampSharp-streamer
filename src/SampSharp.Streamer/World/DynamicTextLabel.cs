@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,38 +48,80 @@ namespace SampSharp.Streamer.World
                 ar.Length);
         }
 
-        public override StreamType StreamType => StreamType.TextLabel;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.TextLabel;
+            }
+        }
 
         public bool TestLOS
         {
-            get { return GetInteger(StreamerDataType.TestLOS) != 0; }
-            set { SetInteger(StreamerDataType.TestLOS, value ? 1 : 0); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.TestLOS) != 0;
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.TestLOS, value ? 1 : 0);
+            }
         }
 
         public float DrawDistance
         {
-            get { return GetFloat(StreamerDataType.DrawDistance); }
-            set { SetFloat(StreamerDataType.DrawDistance, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetFloat(StreamerDataType.DrawDistance);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetFloat(StreamerDataType.DrawDistance, value);
+            }
         }
 
         public string Text
         {
             get
             {
-                string value;
-                Internal.GetDynamic3DTextLabelText(Id, out value, 1024);
+                AssertNotDisposed();
+                Internal.GetDynamic3DTextLabelText(Id, out var value, 1024);
                 return value;
             }
-            set { Internal.UpdateDynamic3DTextLabelText(Id, Color, value); }
+            set
+            {
+                AssertNotDisposed();
+                Internal.UpdateDynamic3DTextLabelText(Id, Color, value);
+            }
         }
 
         public Color Color
         {
-            get { return GetInteger(StreamerDataType.Color); }
-            set { Internal.UpdateDynamic3DTextLabelText(Id, value, Text); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.Color);
+            }
+            set
+            {
+                AssertNotDisposed();
+                Internal.UpdateDynamic3DTextLabelText(Id, value, Text);
+            }
         }
 
-        public bool IsValid => Internal.IsValidDynamic3DTextLabel(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamic3DTextLabel(Id);
+            }
+        }
 
         public static void ToggleAllItems(BasePlayer player, bool toggle, DynamicTextLabel[] exceptions)
         {
@@ -90,6 +132,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             base.Dispose(disposing);
 
             Internal.DestroyDynamic3DTextLabel(Id);

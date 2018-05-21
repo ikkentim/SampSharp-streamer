@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,14 +43,36 @@ namespace SampSharp.Streamer.World
                 pl, ar, priority, worlds.Length, interiors.Length, pl.Length, ar.Length);
         }
 
-        public bool IsValid => Internal.IsValidDynamicCP(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicCP(Id);
+            }
+        }
 
-        public override StreamType StreamType => StreamType.Checkpoint;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.Checkpoint;
+            }
+        }
 
         public float Size
         {
-            get { return GetFloat(StreamerDataType.Size); }
-            set { SetFloat(StreamerDataType.Size, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetFloat(StreamerDataType.Size);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetFloat(StreamerDataType.Size, value);
+            }
         }
 
         public event EventHandler<PlayerEventArgs> Enter;
@@ -69,6 +91,8 @@ namespace SampSharp.Streamer.World
 
         public bool IsPlayerInCheckpoint(BasePlayer player)
         {
+            AssertNotDisposed();
+
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
 
@@ -99,6 +123,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             base.Dispose(disposing);
 
             Internal.DestroyDynamicCP(Id);
@@ -106,11 +132,13 @@ namespace SampSharp.Streamer.World
 
         public virtual void OnEnter(PlayerEventArgs e)
         {
+            AssertNotDisposed();
             Enter?.Invoke(this, e);
         }
 
         public virtual void OnLeave(PlayerEventArgs e)
         {
+            AssertNotDisposed();
             Leave?.Invoke(this, e);
         }
     }

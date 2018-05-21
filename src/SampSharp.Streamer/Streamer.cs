@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,11 +53,11 @@ namespace SampSharp.Streamer
             return Internal.GetPlayerTickRate(player.Id);
         }
 
-        public IEnumerable<T> GetNearbyItems<T>(Vector3 position, float range = 300, int maxItems = 32) where T : IDynamicWorldObject
+        public IEnumerable<T> GetNearbyItems<T>(Vector3 position, float range = 300, int maxItems = 32, int worldid = -1) where T : IDynamicWorldObject
         {
             var type = GetType<T>();
 
-            Internal.GetNearbyItems(position.X, position.Y, position.Z, type, out var items, maxItems, range);
+            Internal.GetNearbyItems(position.X, position.Y, position.Z, type, out var items, maxItems, range, worldid);
 
             return items.Where(item => item > 0)
                 .Select(GetItem<T>)
@@ -290,6 +290,11 @@ namespace SampSharp.Streamer
             set { Internal.ToggleErrorCallback(value); }
         }
 
+        public bool AmxUnloadDestroyItems
+        {
+            set { Internal.AmxUnloadDestroyItems(value); }
+        }
+
         public int TickRate
         {
             get { return Internal.GetTickRate(); }
@@ -300,8 +305,7 @@ namespace SampSharp.Streamer
         {
             get
             {
-                float value;
-                Internal.GetCellDistance(out value);
+                Internal.GetCellDistance(out var value);
                 return value;
             }
             set { Internal.SetCellDistance(value); }
@@ -311,8 +315,7 @@ namespace SampSharp.Streamer
         {
             get
             {
-                float value;
-                Internal.GetCellSize(out value);
+                Internal.GetCellSize(out var value);
                 return value;
             }
             set { Internal.SetCellSize(value); }
@@ -364,6 +367,17 @@ namespace SampSharp.Streamer
             }
 
             public StreamType StreamType { get; }
+            
+            public Vector3 GetPosition(int id)
+            {
+                Internal.GetItemPos((int) StreamType, id, out float x, out float y, out float z);
+                return new Vector3(x, y, z);
+            }
+
+            public void SetPosition(int id, Vector3 position)
+            {
+                Internal.SetItemPos((int) StreamType, id, position.X, position.Y, position.Z);
+            }
 
             public int GetChunkTickRate(BasePlayer player = null)
             {
@@ -382,18 +396,23 @@ namespace SampSharp.Streamer
 
             public float GetFloat(int id, StreamerDataType data)
             {
-                float value;
-                Internal.GetFloatData((int) StreamType, id, (int) data, out value);
+                Internal.GetFloatData((int)StreamType, id, (int)data, out var value);
+
+                return value;
+            }
+            
+            public int[] GetArray(int id, StreamerDataType data, int maxlength = -1)
+            {
+                if (maxlength < 0)
+                    maxlength = GetArrayDataLength(id, data);
+                Internal.GetArrayData((int) StreamType, id, (int) data, out var value, maxlength);
 
                 return value;
             }
 
-            public int[] GetArray(int id, StreamerDataType data, int maxlength)
+            public int GetArrayDataLength(int id, StreamerDataType data)
             {
-                int[] value;
-                Internal.GetArrayData((int) StreamType, id, (int) data, out value, maxlength);
-
-                return value;
+                return Internal.GetArrayDataLength((int) StreamType, id, (int) data);
             }
 
             public void AppendToArray(int id, StreamerDataType data, int value)

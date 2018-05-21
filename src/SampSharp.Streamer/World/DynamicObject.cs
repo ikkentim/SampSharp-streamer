@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,7 +46,14 @@ namespace SampSharp.Streamer.World
                 pl.Length, ar.Length);
         }
 
-        public override StreamType StreamType => StreamType.Object;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.Object;
+            }
+        }
 
         public event EventHandler<EventArgs> Moved;
 
@@ -58,6 +65,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             base.Dispose(disposing);
 
             Internal.DestroyDynamicObject(Id);
@@ -66,9 +75,10 @@ namespace SampSharp.Streamer.World
         public void GetMaterial(int materialindex, out int modelid, out string txdname, out string texturename,
             out Color materialColor)
         {
-            int holderMaterialColor;
+            AssertNotDisposed();
+
             Internal.GetDynamicObjectMaterial(Id, materialindex, out modelid, out txdname, out texturename,
-                out holderMaterialColor, 64, 64);
+                out var holderMaterialColor, 64, 64);
 
             materialColor = Color.FromInteger(holderMaterialColor, ColorFormat.ARGB);
         }
@@ -77,11 +87,9 @@ namespace SampSharp.Streamer.World
             out string fontface, out int fontsize, out bool bold, out Color fontcolor, out Color backcolor,
             out ObjectMaterialTextAlign textalignment)
         {
-            int holderFontColor, holderBackColor;
-            int holderMaterialSize;
-            int holderTextalignment;
-            Internal.GetDynamicObjectMaterialText(Id, materialindex, out text, out holderMaterialSize, out fontface,
-                out fontsize, out bold, out holderFontColor, out holderBackColor, out holderTextalignment, 1024, 64);
+            AssertNotDisposed();
+            Internal.GetDynamicObjectMaterialText(Id, materialindex, out text, out var holderMaterialSize, out fontface,
+                out fontsize, out bold, out var holderFontColor, out var holderBackColor, out var holderTextalignment, 1024, 64);
 
             fontcolor = Color.FromInteger(holderFontColor, ColorFormat.ARGB);
             backcolor = Color.FromInteger(holderBackColor, ColorFormat.ARGB);
@@ -141,10 +149,10 @@ namespace SampSharp.Streamer.World
 
         public virtual void AttachCameraToObject(BasePlayer player)
         {
+            AssertNotDisposed();
+
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
-
-            AssertNotDisposed();
 
             Internal.AttachCameraToDynamicObject(player.Id, Id);
         }
@@ -158,71 +166,113 @@ namespace SampSharp.Streamer.World
 
         public virtual void OnMoved(EventArgs e)
         {
+            AssertNotDisposed();
             Moved?.Invoke(this, e);
         }
 
         public virtual void OnSelected(PlayerSelectEventArgs e)
         {
+            AssertNotDisposed();
             Selected?.Invoke(this, e);
         }
 
         public virtual void OnEdited(PlayerEditEventArgs e)
         {
+            AssertNotDisposed();
             Edited?.Invoke(this, e);
         }
 
         public virtual void OnShot(PlayerShootEventArgs e)
         {
+            AssertNotDisposed();
             Shot?.Invoke(this, e);
         }
 
-        public bool IsMoving => Internal.IsDynamicObjectMoving(Id);
+        public bool IsMoving
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsDynamicObjectMoving(Id);
+            }
+        }
 
-        public bool IsValid => Internal.IsValidDynamicObject(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicObject(Id);
+            }
+        }
 
         public int ModelId
         {
-            get { return GetInteger(StreamerDataType.ModelId); }
-            set { SetInteger(StreamerDataType.ModelId, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetInteger(StreamerDataType.ModelId);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetInteger(StreamerDataType.ModelId, value);
+            }
         }
 
         public float DrawDistance
         {
-            get { return GetFloat(StreamerDataType.DrawDistance); }
-            set { SetFloat(StreamerDataType.DrawDistance, value); }
+            get
+            {
+                AssertNotDisposed();
+                return GetFloat(StreamerDataType.DrawDistance);
+            }
+            set
+            {
+                AssertNotDisposed();
+                SetFloat(StreamerDataType.DrawDistance, value);
+            }
         }
 
         public Vector3 Rotation
         {
             get
             {
-                float x, y, z;
-                Internal.GetDynamicObjectRot(Id, out x, out y, out z);
+                AssertNotDisposed();
+                Internal.GetDynamicObjectRot(Id, out var x, out var y, out var z);
                 return new Vector3(x, y, z);
             }
-            set { Internal.SetDynamicObjectRot(Id, value.X, value.Y, value.Z); }
+            set
+            {
+                AssertNotDisposed();
+                Internal.SetDynamicObjectRot(Id, value.X, value.Y, value.Z);
+            }
         }
 
         public int Move(Vector3 position, float speed, Vector3 rotation)
         {
+            AssertNotDisposed();
             return Internal.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed, rotation.X,
                 rotation.Y, rotation.Z);
         }
 
         public int Move(Vector3 position, float speed)
         {
+            AssertNotDisposed();
             return Internal.MoveDynamicObject(Id, position.X, position.Y, position.Z, speed, -1000.0f, -1000.0f,
                 -1000.0f);
         }
 
         public void Stop()
         {
+            AssertNotDisposed();
             Internal.StopDynamicObject(Id);
         }
 
         public void SetMaterial(int materialindex, int modelid, string txdname, string texturename,
             Color materialcolor = new Color())
         {
+            AssertNotDisposed();
             Internal.SetDynamicObjectMaterial(Id, materialindex, modelid, txdname, texturename,
                 materialcolor.ToInteger(ColorFormat.ARGB));
         }
@@ -232,6 +282,7 @@ namespace SampSharp.Streamer.World
             bool bold = true, Color fontcolor = new Color(), Color backcolor = new Color(),
             ObjectMaterialTextAlign textalignment = ObjectMaterialTextAlign.Center)
         {
+            AssertNotDisposed();
             Internal.SetDynamicObjectMaterialText(Id, materialindex, text, (int) materialsize, fontface, fontsize, bold,
                 fontcolor.ToInteger(ColorFormat.ARGB),
                 backcolor.ToInteger(ColorFormat.ARGB), (int) textalignment);

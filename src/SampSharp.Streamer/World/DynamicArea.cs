@@ -1,5 +1,5 @@
 ﻿// SampSharp.Streamer
-// Copyright 2017 Tim Potze
+// Copyright 2018 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,14 +25,45 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicArea : DynamicWorldObject<DynamicArea>
     {
-        public bool IsValid => Internal.IsValidDynamicArea(Id);
+        public bool IsValid
+        {
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsValidDynamicArea(Id);
+            }
+        }
 
-        public override StreamType StreamType => StreamType.Area;
+        public override StreamType StreamType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return StreamType.Area;
+            }
+        }
 
         public bool IsSpectateModeEnabled
         {
-            get { return Internal.IsToggleDynAreaSpectateMode(Id); }
-            set { Internal.ToggleDynAreaSpectateMode(Id, value); }
+            get
+            {
+                AssertNotDisposed();
+                return Internal.IsToggleDynAreaSpectateMode(Id);
+            }
+            set
+            {
+                AssertNotDisposed();
+                Internal.ToggleDynAreaSpectateMode(Id, value);
+            }
+        }
+
+        public AreaType AreaType
+        {
+            get
+            {
+                AssertNotDisposed();
+                return (AreaType) Internal.GetDynamicAreaType(Id);
+            }
         }
 
         public event EventHandler<PlayerEventArgs> Enter;
@@ -119,9 +150,8 @@ namespace SampSharp.Streamer.World
         {
             AssertNotDisposed();
 
-            float[] points;
             var pointCount = GetPointsCount();
-            Internal.GetDynamicPolygonPoints(Id, out points, pointCount * 2);
+            Internal.GetDynamicPolygonPoints(Id, out var points, pointCount * 2);
 
             if (points == null) yield break;
 
@@ -140,8 +170,7 @@ namespace SampSharp.Streamer.World
 
         public static IEnumerable<DynamicArea> GetAreasForPoint(Vector3 point)
         {
-            int[] areas;
-            Internal.GetDynamicAreasForPoint(point.X, point.Y, point.Z, out areas, GetAreasForPointCount(point));
+            Internal.GetDynamicAreasForPoint(point.X, point.Y, point.Z, out var areas, GetAreasForPointCount(point));
 
             if (areas == null) yield break;
 
@@ -161,8 +190,7 @@ namespace SampSharp.Streamer.World
 
         public static IEnumerable<DynamicArea> GetAreasForLine(Vector3 from, Vector3 to)
         {
-            int[] areas;
-            Internal.GetDynamicAreasForLine(from.X, from.Y, from.Z, to.X, to.Y, to.Z, out areas, GeAreasForLineCount(from, to));
+            Internal.GetDynamicAreasForLine(from.X, from.Y, from.Z, to.X, to.Y, to.Z, out var areas, GeAreasForLineCount(from, to));
 
             if (areas == null) yield break;
 
@@ -225,8 +253,7 @@ namespace SampSharp.Streamer.World
             if (player == null)
                 throw new ArgumentNullException(nameof(player));
 
-            int[] areas;
-            Internal.GetPlayerDynamicAreas(player.Id, out areas, GetAreaCountForPlayer(player));
+            Internal.GetPlayerDynamicAreas(player.Id, out var areas, GetAreaCountForPlayer(player));
 
             return areas?.Select(FindOrCreate);
         }
@@ -251,6 +278,8 @@ namespace SampSharp.Streamer.World
 
         protected override void Dispose(bool disposing)
         {
+            if (IsDisposed) return;
+
             base.Dispose(disposing);
 
             Internal.DestroyDynamicArea(Id);
@@ -265,11 +294,15 @@ namespace SampSharp.Streamer.World
 
         public virtual void OnEnter(PlayerEventArgs e)
         {
+            AssertNotDisposed();
+
             Enter?.Invoke(this, e);
         }
 
         public virtual void OnLeave(PlayerEventArgs e)
         {
+            AssertNotDisposed();
+
             Leave?.Invoke(this, e);
         }
 
