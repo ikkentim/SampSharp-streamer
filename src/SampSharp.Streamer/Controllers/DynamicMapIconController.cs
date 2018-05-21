@@ -25,7 +25,7 @@ namespace SampSharp.Streamer.Controllers
         /// <summary>
         ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
         /// </summary>
-        public void RegisterTypes()
+        public virtual void RegisterTypes()
         {
             DynamicMapIcon.Register<DynamicMapIcon>();
         }

@@ -22,7 +22,7 @@ namespace SampSharp.Streamer.Controllers
     {
         #region Implementation of IStreamerController
 
-        public void RegisterStreamerEvents(IStreamer streamer)
+        public virtual void RegisterStreamerEvents(IStreamer streamer)
         {
             streamer.PlayerPickUpDynamicPickup += (sender, args) =>
             {
@@ -38,7 +38,7 @@ namespace SampSharp.Streamer.Controllers
         /// <summary>
         ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
         /// </summary>
-        public void RegisterTypes()
+        public virtual void RegisterTypes()
         {
             DynamicPickup.Register<DynamicPickup>();
         }
