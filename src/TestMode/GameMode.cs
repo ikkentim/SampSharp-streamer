@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using SampSharp.Core.Natives;
 using SampSharp.Core.Natives.NativeObjects;
 using SampSharp.GameMode;
@@ -15,6 +16,33 @@ namespace TestMode
 {
     public class GameMode : BaseMode
     {
+        private static DynamicArea _area;
+
+        [Command("create")]
+        public static async void CreateCommand(BasePlayer player, float size = 5)
+        {
+            player.SendClientMessage($"Delay...");
+            await Task.Delay(100);
+
+            var position = player.Position;
+            _area?.Dispose();
+            _area = DynamicArea.CreateSphere(position, size);
+
+            player.SendClientMessage($"Area with size {size} created at {position}.");
+        }
+        [Command("destroy")]
+        public static async void DestroyCommand(BasePlayer player)
+        {
+            player.SendClientMessage($"Delay...");
+            await Task.Delay(100);
+
+            _area?.Dispose();
+
+            player.SendClientMessage(_area == null ? "Create an area with /create first." : "Area destroyed.");
+            _area = null;
+        }
+
+
         #region Overrides of BaseMode
 
         /// <summary>

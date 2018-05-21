@@ -11,7 +11,7 @@ namespace TestMode
         {
             new GameModeBuilder()
                 .Use<GameMode>()
-                .UseLogLevel(CoreLogLevel.Verbose)
+                .UseLogLevel(CoreLogLevel.Info)
                 .UseStartBehaviour(GameModeStartBehaviour.FakeGmx)
                 .Run();
         }
