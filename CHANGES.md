@@ -1,3 +1,6 @@
+### 0.8.0
+- Full release for SampSharp 0.8.0
+
 ### 0.8.0-alpha1
 - Added more `IsDisposed` checks
 - Updated for SampSharp 0.8-alpha6
