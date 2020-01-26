@@ -46,7 +46,6 @@ namespace TestMode
             _area = null;
         }
 
-
         #region Overrides of BaseMode
 
         /// <summary>

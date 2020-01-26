@@ -1,3 +1,6 @@
+### 0.9.0
+- Updated for SampSharp 0.9.0
+
 ### 0.8.0
 - Full release for SampSharp 0.8.0
 
