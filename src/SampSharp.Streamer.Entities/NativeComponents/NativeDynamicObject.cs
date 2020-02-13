@@ -38,13 +38,19 @@ namespace SampSharp.Streamer.Entities
         }
 
         [NativeMethod]
+        public virtual int GetDynamicObjectPos(out float x, out float y, out float z)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
         public virtual int SetDynamicObjectPos(float x, float y, float z)
         {
             throw new NativeNotImplementedException();
         }
 
         [NativeMethod]
-        public virtual int GetDynamicObjectPos(out float x, out float y, out float z)
+        public virtual int GetDynamicObjectRot(out float rx, out float ry, out float rz)
         {
             throw new NativeNotImplementedException();
         }
@@ -56,7 +62,13 @@ namespace SampSharp.Streamer.Entities
         }
 
         [NativeMethod]
-        public virtual int GetDynamicObjectRot(out float rx, out float ry, out float rz)
+        public bool GetDynamicObjectNoCameraCol()
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public bool SetDynamicObjectNoCameraCol()
         {
             throw new NativeNotImplementedException();
         }

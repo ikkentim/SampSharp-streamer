@@ -75,6 +75,18 @@ namespace SampSharp.Streamer.Entities
         }
 
         /// <summary>
+        /// Gets if camera collision of this dynamic object is disabled.
+        /// </summary>
+        public bool NoCameraCol
+        {
+            get
+            {
+                return GetComponent<NativeDynamicObject>().GetDynamicObjectNoCameraCol();
+            }
+            set => GetComponent<NativeDynamicObject>().SetDynamicObjectNoCameraCol();
+        }
+
+        /// <summary>
         /// Moves this dynamic object to the given position and rotation with the given speed.
         /// </summary>
         /// <param name="position">The position to which to move this dynamic object.</param>
