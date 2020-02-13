@@ -21,7 +21,7 @@ namespace SampSharp.Streamer.Entities
     public class NativeStreamerPlayer : BaseNativeComponent
     {
         [NativeMethod]
-        public void EditDynamicObject(int dynamicObjectId)
+        public virtual void EditDynamicObject(int dynamicObjectId)
         {
             throw new NativeNotImplementedException();
         }

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
@@ -37,7 +36,7 @@ namespace SampSharp.Streamer.Entities
 
             if (!entity.IsOfType(SampEntities.PlayerType))
                 return null;
-
+                
             entityManager.AddComponent<NativeStreamerPlayer>(entity);
 
             context.Arguments[0] = entity;
