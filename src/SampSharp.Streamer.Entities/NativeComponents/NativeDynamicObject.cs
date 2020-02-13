@@ -26,13 +26,13 @@ namespace SampSharp.Streamer.Entities
         public const int InvalidId = 0xFFFF;
 
         [NativeMethod]
-        public virtual bool DestroyDynamicObject()
+        public virtual bool IsValidDynamicObject()
         {
             throw new NativeNotImplementedException();
         }
 
         [NativeMethod]
-        public virtual bool IsValidDynamicObject()
+        public virtual bool DestroyDynamicObject()
         {
             throw new NativeNotImplementedException();
         }

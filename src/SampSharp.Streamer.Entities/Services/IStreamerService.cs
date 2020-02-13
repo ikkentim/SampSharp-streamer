@@ -76,5 +76,28 @@ namespace SampSharp.Streamer.Entities
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
+
+        #region Pickups
+
+        /// <summary>
+        ///     Creates a new Dynamic Pickup in the world.
+        /// </summary>
+        /// <param name="modelId">The model id.</param>
+        /// <param name="pickupType">The pickup type.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The attached player.</param>
+        /// <param name="streamDistance">The stream distance.</param>
+        /// <param name="areaid">The attached area id.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicPickup"/>
+        /// </returns>
+        DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1,
+            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+
+        #endregion
     }
 }

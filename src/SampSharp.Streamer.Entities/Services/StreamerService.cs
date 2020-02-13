@@ -65,7 +65,7 @@ namespace SampSharp.Streamer.Entities
 
         /// <inheritdoc />
         public DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation, 
-            int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 200.0f, 
+            int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 300.0f, 
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicObject(modelId, position.X, position.Y, position.Z,
@@ -85,6 +85,23 @@ namespace SampSharp.Streamer.Entities
         #endregion
 
         #region Pickups
+
+        /// <inheritdoc />
+        public DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1, 
+            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicPickup(modelId, (int)pickupType, position.X, position.Y, position.Z, virtualWorld, interior,
+                player, streamDistance, areaid, priority);
+
+            if (id == NativeDynamicPickup.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicPickupId(id);
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicPickup>(entity);
+            return _entityManager.AddComponent<DynamicPickup>(entity);
+        }
 
         #endregion
     }
