@@ -34,7 +34,8 @@ namespace SampSharp.Streamer.Entities
                 .UseMiddleware<StreamerPlayerConnectMiddleware>("OnPlayerConnect");
 
             builder
-                .EnableDynamicObjectEvents();
+                .EnableDynamicObjectEvents()
+                .EnableDynamicPickupEvents();
 
             return builder;
         }
@@ -55,6 +56,20 @@ namespace SampSharp.Streamer.Entities
             builder.UseMiddleware<PlayerEditDynamicObjectMiddleware>("OnPlayerEditDynamicObject");
             builder.UseMiddleware<PlayerSelectDynamicObjectMiddleware>("OnPlayerSelectDynamicObject");
             builder.UseMiddleware<PlayerShootDynamicObjectMiddleware>("OnPlayerShootDynamicObject");
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Enables all dynamic pickup related Streamer events.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <returns>The builder.</returns>
+        public static IEcsBuilder EnableDynamicPickupEvents(this IEcsBuilder builder)
+        {
+            builder.EnableEvent<int, int>("OnPlayerPickUpDynamicPickup");
+
+            builder.UseMiddleware<PlayerPickupDynamicPickupMiddleware>("OnPlayerPickUpDynamicPickup");
 
             return builder;
         }

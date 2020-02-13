@@ -100,7 +100,7 @@ namespace SampSharp.Streamer.Entities
             _entityManager.Create(entity, parent);
 
             _entityManager.AddComponent<NativeDynamicPickup>(entity);
-            return _entityManager.AddComponent<DynamicPickup>(entity);
+            return _entityManager.AddComponent<DynamicPickup>(entity, position);
         }
 
         #endregion

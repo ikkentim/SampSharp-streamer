@@ -23,15 +23,20 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicPickup : Component
     {
-        private DynamicPickup()
+        private DynamicPickup(Vector3 position)
         {
-
+            Position = position;
         }
 
         /// <summary>
         /// Gets whether this dynamic pickup is valid.
         /// </summary>
         public bool IsValid => GetComponent<NativeDynamicPickup>().IsValidDynamicPickup();
+
+        /// <summary>
+        /// Gets the position of this pickup.
+        /// </summary>
+        public Vector3 Position { get; }
 
         /// <inheritdoc />
         protected override void OnDestroyComponent()
