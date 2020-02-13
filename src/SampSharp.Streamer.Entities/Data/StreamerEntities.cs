@@ -36,6 +36,12 @@ namespace SampSharp.Streamer.Entities
         public static readonly Guid DynamicPickupType = new Guid("5930AA01-BEB3-4ABA-9107-B63C84F7F4B8");
 
         /// <summary>
+        ///     The Streamer dynamic checkpoint entity type identifier.
+        /// </summary>
+        [EntityType]
+        public static readonly Guid DynamicCheckpointType = new Guid("1E80381E-44BE-4A06-8C79-6309E7DD9440");
+
+        /// <summary>
         /// Gets a dynamic object entity identifier based on an integer dynamic object identifier.
         /// </summary>
         /// <param name="objectId">The dynamic object identifier.</param>
@@ -53,6 +59,16 @@ namespace SampSharp.Streamer.Entities
         public static EntityId GetDynamicPickupId(int pickupId)
         {
             return new EntityId(DynamicPickupType, pickupId);
+        }
+
+        /// <summary>
+        /// Gets a dynamic pickup entity identifier based on an integer dynamic checkpoint identifier.
+        /// </summary>
+        /// <param name="checkpointId">The dynamic checkpoint identifier.</param>
+        /// <returns>The entity identifier.</returns>
+        public static EntityId GetDynamicCheckpointId(int checkpointId)
+        {
+            return new EntityId(DynamicCheckpointType, checkpointId);
         }
     }
 }

@@ -35,7 +35,8 @@ namespace SampSharp.Streamer.Entities
 
             builder
                 .EnableDynamicObjectEvents()
-                .EnableDynamicPickupEvents();
+                .EnableDynamicPickupEvents()
+                .EnableDynamicCheckpointEvents();
 
             return builder;
         }
@@ -74,6 +75,22 @@ namespace SampSharp.Streamer.Entities
             return builder;
         }
 
+        /// <summary>
+        /// Enables all dynamic checkpoint related Streamer events.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <returns>The builder.</returns>
+        public static IEcsBuilder EnableDynamicCheckpointEvents(this IEcsBuilder builder)
+        {
+            builder.EnableEvent<int, int>("OnPlayerEnterDynamicCP");
+            builder.EnableEvent<int, int>("OnPlayerLeaveDynamicCP");
+
+            builder.UseMiddleware<PlayerEnterDynamicCheckpointMiddleware>("OnPlayerEnterDynamicCP");
+            builder.UseMiddleware<PlayerLeaveDynamicCheckpointMiddleware>("OnPlayerLeaveDynamicCP");
+
+            return builder;
+        }
+
         #region Player Extensions
 
         public static void EditDynamicObject(this Player player, EntityId dynamicObject)
@@ -81,9 +98,21 @@ namespace SampSharp.Streamer.Entities
             player.GetComponent<NativeStreamerPlayer>().EditDynamicObject(dynamicObject);
         }
 
-        public static int GetCameraTargetDynamicObject(this Player player)
+        public static EntityId GetCameraTargetDynamicObject(this Player player)
         {
-            return player.GetComponent<NativeStreamerPlayer>().GetPlayerCameraTargetDynObject();
+            var id = player.GetComponent<NativeStreamerPlayer>().GetPlayerCameraTargetDynObject();
+            return id == NativeDynamicObject.InvalidId ? EntityId.Empty : StreamerEntities.GetDynamicObjectId(id);
+        }
+
+        public static bool IsInDynamicCheckpoint(this Player player, EntityId dynamicCheckpointId)
+        {
+            return player.GetComponent<NativeStreamerPlayer>().IsPlayerInDynamicCP(dynamicCheckpointId);
+        }
+
+        public static EntityId GetVisibleDynamicCheckpoint(this Player player)
+        {
+            var id = player.GetComponent<NativeStreamerPlayer>().GetPlayerVisibleDynamicCP();
+            return id == NativeDynamicCheckpoint.InvalidId ? EntityId.Empty : StreamerEntities.GetDynamicCheckpointId(id);
         }
 
         #endregion

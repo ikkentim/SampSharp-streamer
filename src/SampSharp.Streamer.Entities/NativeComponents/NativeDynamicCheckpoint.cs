@@ -18,38 +18,23 @@ using SampSharp.Entities.SAMP;
 
 namespace SampSharp.Streamer.Entities
 {
-    public class NativeStreamerPlayer : BaseNativeComponent
+    public class NativeDynamicCheckpoint : BaseNativeComponent
     {
-        #region Objects
+        /// <summary>
+        ///     Identifier indicating the handle is invalid.
+        /// </summary>
+        public const int InvalidId = 0xFFFF;
 
         [NativeMethod]
-        public virtual void EditDynamicObject(int dynamicObjectId)
+        public virtual bool IsValidDynamicCP()
         {
             throw new NativeNotImplementedException();
         }
 
         [NativeMethod]
-        public virtual int GetPlayerCameraTargetDynObject()
+        public virtual bool DestroyDynamicCP()
         {
             throw new NativeNotImplementedException();
         }
-
-        #endregion
-
-        #region Checkpoint
-
-        [NativeMethod]
-        public virtual bool IsPlayerInDynamicCP(int dynamicCheckpointId)
-        {
-            throw new NativeNotImplementedException();
-        }
-
-        [NativeMethod]
-        public virtual int GetPlayerVisibleDynamicCP()
-        {
-            throw new NativeNotImplementedException();
-        }
-
-        #endregion
     }
 }

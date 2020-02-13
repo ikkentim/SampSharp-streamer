@@ -104,5 +104,26 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Checkpoint
+
+        /// <inheritdoc />
+        public DynamicCheckpoint CreateDynamicCP(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
+            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior, player,
+                streamDistance, areaid, priority);
+
+            if (id == NativeDynamicCheckpoint.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicCheckpointId(id);
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicCheckpoint>(entity);
+            return _entityManager.AddComponent<DynamicCheckpoint>(entity, position);
+        }
+
+        #endregion
     }
 }

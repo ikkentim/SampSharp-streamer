@@ -188,3 +188,4 @@ FakesAssemblies/
 # Cake
 tools/
 
+src/SampSharp.Streamer.Entities/streamer.inc

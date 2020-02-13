@@ -99,5 +99,27 @@ namespace SampSharp.Streamer.Entities
             EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
+
+        #region Checkpoint
+
+        /// <summary>
+        ///     Creates a new Dynamic Checkpoint in the world.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The attached player.</param>
+        /// <param name="streamDistance">The stream distance.</param>
+        /// <param name="areaid">The attached area id.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicCheckpoint"/>
+        /// </returns>
+        DynamicCheckpoint CreateDynamicCP(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
+            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+
+        #endregion
     }
 }
