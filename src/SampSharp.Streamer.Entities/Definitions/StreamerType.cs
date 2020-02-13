@@ -15,10 +15,16 @@
 
 namespace SampSharp.Streamer.Entities
 {
-    public enum StreamerObjectType
+    public enum StreamerType
     {
-        Global = 0,
-        Player = 1,
-        Dynamic = 2
+        All = -1,
+        Object = 0,
+        Pickup = 1,
+        Checkpoint = 2,
+        RaceCheckpoint = 3,
+        MapIcon = 4,
+        TextLabel = 5,
+        Area = 6,
+        Actor = 7
     }
 }

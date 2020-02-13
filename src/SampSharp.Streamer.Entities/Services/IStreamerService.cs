@@ -23,6 +23,37 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public interface IStreamerService
     {
+        #region Updates
+
+        /// <summary>
+        ///     Issues an update for the player.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="type">The item type.</param>
+        /// <returns>
+        ///     <see cref="bool"/>
+        /// </returns>
+        bool Update(EntityId player, StreamerType type);
+
+        /// <summary>
+        ///     Issues an update for the player at a specific position.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="type">The item type.</param>
+        /// <param name="compensatedtime">The compensated time in milliseconds.</param>
+        /// <param name="freezeplayer">The freeze player (0 to turn off, 1 to turn on).</param>
+        /// <returns>
+        ///     <see cref="bool"/>
+        /// </returns>
+        bool UpdateEx(EntityId player, Vector3 position, int virtualWorld = -1, int interior = -1, StreamerType type = StreamerType.All, int compensatedtime = -1, int freezeplayer = 1);
+
+        #endregion
+
+        #region Objects
+
         /// <summary>
         ///     Creates a new Dynamic Object in the world.
         /// </summary>
@@ -43,5 +74,7 @@ namespace SampSharp.Streamer.Entities
         DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation,
             int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 200.0f,
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+
+        #endregion
     }
 }

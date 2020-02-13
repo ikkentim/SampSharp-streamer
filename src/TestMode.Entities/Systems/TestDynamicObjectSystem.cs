@@ -42,8 +42,30 @@ namespace TestMode.Entities.Systems
             Console.WriteLine($"DynamicObject {dynamicObject.Entity.Handle} is moved.");
         }
 
+        [Event]
+        public void OnPlayerEditDynamicObject(Player player, DynamicObject dynamicObject, int response, Vector3 position, Vector3 rotation)
+        {
+            player.SendClientMessage($"OnPlayerEditDynamicObject ({dynamicObject.Entity.Handle}, {response}, {position.ToString()}, {rotation.ToString()})");
+        }
+
+        [Event]
+        public void OnPlayerSelectDynamicObject(Player player, DynamicObject dynamicObject, int modelId, Vector3 position)
+        {
+            player.SendClientMessage($"OnPlayerSelectDynamicObject ({dynamicObject.Entity.Handle}, {modelId}, {position.ToString()})");
+        }
+
+        [Event]
+        public bool OnPlayerShootDynamicObject(Player player, Weapon weapon, DynamicObject dynamicObject, Vector3 position)
+        {
+            player.SendClientMessage($"OnPlayerShootDynamicObject ({dynamicObject.Entity.Handle}, {position.ToString()})");
+
+            // TODO: PreventDamage ? (From doc : If a return value of 0 is specified, the weapon shot will not be registered)
+
+            return true;
+        }
+
         [PlayerCommand]
-        public void CreateDynamicObjectCommand(Player player, int modelId, IStreamerService streamerService)
+        public void CreateObjectCommand(Player player, int modelId, IStreamerService streamerService)
         {
             _dynamicObject = streamerService.CreateDynamicObject(modelId, player.Position, player.Rotation);
 
@@ -51,24 +73,39 @@ namespace TestMode.Entities.Systems
         }
 
         [PlayerCommand]
-        public void DestroyDynamicObjectCommand(Player player)
+        public void DestroyObjectCommand(Player player)
         {
-            _dynamicObject.Destroy();
-
-            player.SendClientMessage($"Destroy DynamicObject {_dynamicObject.Entity.Handle}.");
+            _dynamicObject.DestroyEntity();
         }
 
         [PlayerCommand]
-        public void MoveDynamicObjectCommand(Player player, float speed = 0.03f)
+        public void MoveObjectCommand(Player player, float speed = 0.03f)
         {
             _dynamicObject.Move((_dynamicObject.Position + Vector3.Left), speed, _dynamicObject.Rotation);
         }
 
         [PlayerCommand]
-        public void EditDynamicObjectCommand(Player player)
+        public void StopMoveObjectCommand(Player player, float speed = 0.03f)
+        {
+            _dynamicObject.Stop();
+        }
+
+        [PlayerCommand]
+        public void EditObjectCommand(Player player)
         {
             player.EditDynamicObject(_dynamicObject);
+        }
 
+        [PlayerCommand]
+        public void SelectObjectCommand(Player player)
+        {
+            player.Select();
+        }
+
+        [PlayerCommand]
+        public void ShootObjectCommand(Player player)
+        {
+            player.GiveWeapon(Weapon.AK47, 100);
         }
     }
 }

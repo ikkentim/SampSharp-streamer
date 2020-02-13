@@ -25,5 +25,11 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+
+        [NativeMethod]
+        public virtual int GetPlayerCameraTargetDynObject()
+        {
+            throw new NativeNotImplementedException();
+        }
     }
 }

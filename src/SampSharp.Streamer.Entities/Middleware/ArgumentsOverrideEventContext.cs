@@ -13,12 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using SampSharp.Entities;
+
 namespace SampSharp.Streamer.Entities
 {
-    public enum StreamerObjectType
+    internal class ArgumentsOverrideEventContext : EventContext
     {
-        Global = 0,
-        Player = 1,
-        Dynamic = 2
+        public ArgumentsOverrideEventContext(int argumentCount)
+        {
+            Arguments = new object[argumentCount];
+        }
+
+        public EventContext BaseContext { get; set; }
+
+        public override string Name => BaseContext.Name;
+
+        public override object[] Arguments { get; }
+
+        public override IServiceProvider EventServices => BaseContext.EventServices;
     }
 }

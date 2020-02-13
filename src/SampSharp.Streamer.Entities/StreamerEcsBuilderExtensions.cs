@@ -30,8 +30,13 @@ namespace SampSharp.Streamer.Entities
         /// <returns>The builder.</returns>
         public static IEcsBuilder EnableStreamerEvents(this IEcsBuilder builder)
         {
-            return builder
+            builder
+                .UseMiddleware<StreamerPlayerConnectMiddleware>("OnPlayerConnect");
+
+            builder
                 .EnableDynamicObjectEvents();
+
+            return builder;
         }
 
         /// <summary>
@@ -42,16 +47,30 @@ namespace SampSharp.Streamer.Entities
         public static IEcsBuilder EnableDynamicObjectEvents(this IEcsBuilder builder)
         {
             builder.EnableEvent<int>("OnDynamicObjectMoved");
+            builder.EnableEvent<int, int, int, float, float, float, float, float, float>("OnPlayerEditDynamicObject");
+            builder.EnableEvent<int, int, int, float, float, float>("OnPlayerSelectDynamicObject");
+            builder.EnableEvent<int, int, int, float, float, float>("OnPlayerShootDynamicObject");
 
             builder.UseMiddleware<EntityMiddleware>("OnDynamicObjectMoved", 0, StreamerEntities.DynamicObjectType, false);
-            builder.UseMiddleware<StreamerPlayerConnectMiddleware>("OnPlayerConnect"); // TODO: Move elsewhere
+            builder.UseMiddleware<PlayerEditDynamicObjectMiddleware>("OnPlayerEditDynamicObject");
+            builder.UseMiddleware<PlayerSelectDynamicObjectMiddleware>("OnPlayerSelectDynamicObject");
+            builder.UseMiddleware<PlayerShootDynamicObjectMiddleware>("OnPlayerShootDynamicObject");
 
             return builder;
         }
+
+        #region Player Extensions
 
         public static void EditDynamicObject(this Player player, EntityId dynamicObject)
         {
             player.GetComponent<NativeStreamerPlayer>().EditDynamicObject(dynamicObject);
         }
+
+        public static int GetCameraTargetDynamicObject(this Player player)
+        {
+            return player.GetComponent<NativeStreamerPlayer>().GetPlayerCameraTargetDynObject();
+        }
+
+        #endregion
     }
 }

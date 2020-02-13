@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
@@ -213,6 +215,8 @@ namespace SampSharp.Streamer.Entities
         /// <inheritdoc />
         protected override void OnDestroyComponent()
         {
+            Console.WriteLine("OnDestroyComponent");
+
             GetComponent<NativeDynamicObject>().DestroyDynamicObject();
         }
     }

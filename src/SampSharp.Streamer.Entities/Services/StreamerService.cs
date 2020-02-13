@@ -35,6 +35,34 @@ namespace SampSharp.Streamer.Entities
             _native = nativeProxy.Instance;
         }
 
+        #region Updates
+
+        /// <inheritdoc />
+        public bool Update(EntityId player, StreamerType type)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+
+            var success = _native.Streamer_Update(player.Handle, (int)type);
+
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool UpdateEx(EntityId player, Vector3 position, int virtualWorld = -1, int interior = -1, StreamerType type = StreamerType.All, int compensatedtime = -1, int freezeplayer = 1)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+
+            var success = _native.Streamer_UpdateEx(player.Handle, position.X, position.Y, position.Z, virtualWorld, interior, (int)type, compensatedtime, freezeplayer);
+
+            return success;
+        }
+
+        #endregion
+
+        #region Objects
+
         /// <inheritdoc />
         public DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation, 
             int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 200.0f, 
@@ -53,5 +81,11 @@ namespace SampSharp.Streamer.Entities
             _entityManager.AddComponent<NativeDynamicObject>(entity);
             return _entityManager.AddComponent<DynamicObject>(entity);
         }
+
+        #endregion
+
+        #region Pickups
+
+        #endregion
     }
 }

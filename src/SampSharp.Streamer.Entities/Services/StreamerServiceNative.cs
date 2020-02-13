@@ -21,6 +21,24 @@ namespace SampSharp.Streamer.Entities
 {
     public class StreamerServiceNative
     {
+        #region Updates
+
+        [NativeMethod]
+        public virtual bool Streamer_Update(int playerid, int type)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_UpdateEx(int playerid, float x, float y, float z, int worldid = -1, int interiorid = -1, int type = -1, int compensatedtime = -1, int freezeplayer = 1)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
+
+        #region Objects
+
         [NativeMethod]
         public virtual int CreateDynamicObject(int modelid, float x, float y, float z, float rx, float ry, float rz,
             int worldid, int interiorid, int playerid, float streamdistance, float drawdistance, int areaid,
@@ -28,5 +46,18 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+
+        #endregion
+
+        #region Pickups
+
+        [NativeMethod]
+        public virtual int CreateDynamicPickup(int modelid, int type, float x, float y, float z, int worldid,
+            int interiorid, int playerid, float streamdistance, int areaid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
     }
 }
