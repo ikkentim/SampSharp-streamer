@@ -30,8 +30,13 @@ namespace SampSharp.Streamer.Entities
 
         public object Invoke(EventContext context, IEntityManager entityManager)
         {
+            var entity = (EntityId)context.Arguments[0];
 
-            var entity = SampEntities.GetPlayerId((int) context.Arguments[0]);
+            if (!entityManager.Exists(entity))
+                return null;
+
+            if (!entity.IsOfType(SampEntities.PlayerType))
+                return null;
 
             entityManager.AddComponent<NativeStreamerPlayer>(entity);
 
