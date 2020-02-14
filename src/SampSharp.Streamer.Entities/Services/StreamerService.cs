@@ -105,10 +105,10 @@ namespace SampSharp.Streamer.Entities
 
         #endregion
 
-        #region Checkpoint
+        #region Checkpoints
 
         /// <inheritdoc />
-        public DynamicCheckpoint CreateDynamicCP(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
+        public DynamicCheckpoint CreateDynamicCheckpoint(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
             EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior, player,

@@ -117,7 +117,7 @@ namespace SampSharp.Streamer.Entities
         /// <returns>
         ///     <see cref="DynamicCheckpoint"/>
         /// </returns>
-        DynamicCheckpoint CreateDynamicCP(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
+        DynamicCheckpoint CreateDynamicCheckpoint(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
             EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion

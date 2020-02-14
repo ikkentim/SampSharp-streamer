@@ -60,7 +60,7 @@ namespace SampSharp.Streamer.Entities
 
         #endregion
 
-        #region Checkpoint
+        #region Checkpoints
 
         [NativeMethod]
         public virtual int CreateDynamicCP(float x, float y, float z, float size, int worldid, int interiorid,

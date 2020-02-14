@@ -20,7 +20,6 @@ namespace SampSharp.Streamer.Entities
 {
     internal class PlayerPickupDynamicPickupMiddleware
     {
-        private readonly ArgumentsOverrideEventContext _context = new ArgumentsOverrideEventContext(2);
         private readonly EventDelegate _next;
 
         public PlayerPickupDynamicPickupMiddleware(EventDelegate next)
@@ -28,23 +27,21 @@ namespace SampSharp.Streamer.Entities
             _next = next;
         }
 
-        public object Invoke(EventContext context)
+        public object Invoke(EventContext context, IEntityManager entityManager)
         {
-            var inArgs = context.Arguments;
+            var playerEntity = SampEntities.GetPlayerId((int)context.Arguments[0]);
+            var pickupEntity = StreamerEntities.GetDynamicPickupId((int)context.Arguments[1]);
 
-            var playerEntity = SampEntities.GetPlayerId((int)inArgs[0]);
-            var pickupEntity = StreamerEntities.GetDynamicPickupId((int)inArgs[1]);
-
-            if (pickupEntity == null)
+            if (!entityManager.Exists(playerEntity))
                 return null;
 
-            _context.BaseContext = context;
+            if (!entityManager.Exists(pickupEntity))
+                return null;
 
-            var args = _context.Arguments;
-            args[0] = playerEntity;
-            args[1] = pickupEntity;
+            context.Arguments[0] = playerEntity;
+            context.Arguments[1] = pickupEntity;
 
-            return _next(_context);
+            return _next(context);
         }
     }
 }

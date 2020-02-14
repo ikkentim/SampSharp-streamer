@@ -31,12 +31,6 @@ namespace TestMode.Entities.Systems
         private DynamicObject _dynamicObject;
 
         [Event]
-        public void OnGameModeInit()
-        {
-
-        }
-
-        [Event]
         public void OnDynamicObjectMoved(DynamicObject dynamicObject)
         {
             Console.WriteLine($"DynamicObject {dynamicObject.Entity.Handle} is moved.");
