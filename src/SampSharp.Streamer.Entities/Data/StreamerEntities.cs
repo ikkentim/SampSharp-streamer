@@ -42,10 +42,16 @@ namespace SampSharp.Streamer.Entities
         public static readonly Guid DynamicCheckpointType = new Guid("1E80381E-44BE-4A06-8C79-6309E7DD9440");
 
         /// <summary>
-        ///     The Streamer dynamic racecheckpoint entity type identifier.
+        ///     The Streamer dynamic race checkpoint entity type identifier.
         /// </summary>
         [EntityType]
         public static readonly Guid DynamicRaceCheckpointType = new Guid("388F3E60-A176-473C-A4E2-D852F894DFDF");
+
+        /// <summary>
+        ///     The Streamer dynamic map icon entity type identifier.
+        /// </summary>
+        [EntityType]
+        public static readonly Guid DynamicMapIconType = new Guid("595B2E88-FAC5-478F-9E60-191B63B352ED");
 
         /// <summary>
         /// Gets a dynamic object entity identifier based on an integer dynamic object identifier.
@@ -85,6 +91,16 @@ namespace SampSharp.Streamer.Entities
         public static EntityId GetDynamicRaceCheckpointId(int raceCheckpointId)
         {
             return new EntityId(DynamicRaceCheckpointType, raceCheckpointId);
+        }
+
+        /// <summary>
+        /// Gets a dynamic map icon entity identifier based on an integer dynamic map icon identifier.
+        /// </summary>
+        /// <param name="mapIconId">The dynamicmap icon identifier.</param>
+        /// <returns>The entity identifier.</returns>
+        public static EntityId GetDynamicMapIconId(int mapIconId)
+        {
+            return new EntityId(DynamicMapIconType, mapIconId);
         }
     }
 }

@@ -155,5 +155,29 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Map Icon
+
+        /// <inheritdoc />
+        public DynamicMapIcon CreateDynamicMapIcon(Vector3 position, MapIcon mapIcon, Color color, 
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f, 
+            MapIconType style = MapIconType.Local, int areaid = -1, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicMapIcon(position.X, position.Y, position.Z, (int)mapIcon, color,
+                virtualWorld, interior, player ? player.Entity.Handle : -1, streamDistance, (int)style, areaid, priority);
+
+            if (id == NativeDynamicMapIcon.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicRaceCheckpointId(id);
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicMapIcon>(entity);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
+            return _entityManager.AddComponent<DynamicMapIcon>(entity, position, mapIcon, style);
+        }
+
+        #endregion
     }
 }

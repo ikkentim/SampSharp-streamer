@@ -146,5 +146,30 @@ namespace SampSharp.Streamer.Entities
             EntityId parent = default);
 
         #endregion
+
+        #region Map Icon
+
+        /// <summary>
+        ///     Creates a new Dynamic Map Icon in the world.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="mapIcon">The map icon type.</param>
+        /// <param name="color">The color.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The attached player.</param>
+        /// <param name="streamDistance">The stream distance.</param>
+        /// <param name="style">The map icon style.</param>
+        /// <param name="areaid">The attached area id.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicMapIcon"/>
+        /// </returns>
+        DynamicMapIcon CreateDynamicMapIcon(Vector3 position, MapIcon mapIcon, Color color,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f,
+            MapIconType style = MapIconType.Local, int areaid = -1, int priority = 0, EntityId parent = default);
+
+        #endregion
     }
 }
