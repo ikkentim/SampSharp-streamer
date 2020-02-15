@@ -36,7 +36,8 @@ namespace SampSharp.Streamer.Entities
             builder
                 .EnableDynamicObjectEvents()
                 .EnableDynamicPickupEvents()
-                .EnableDynamicCheckpointEvents();
+                .EnableDynamicCheckpointEvents()
+                .EnableDynamicRaceCheckpointEvents();
 
             return builder;
         }
@@ -91,6 +92,22 @@ namespace SampSharp.Streamer.Entities
             return builder;
         }
 
+        /// <summary>
+        /// Enables all dynamic race checkpoint related Streamer events.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <returns>The builder.</returns>
+        public static IEcsBuilder EnableDynamicRaceCheckpointEvents(this IEcsBuilder builder)
+        {
+            builder.EnableEvent<int, int>("OnPlayerEnterDynamicRaceCP");
+            builder.EnableEvent<int, int>("OnPlayerLeaveDynamicRaceCP");
+
+            builder.UseMiddleware<PlayerEnterDynamicRaceCheckpointMiddleware>("OnPlayerEnterDynamicRaceCP");
+            builder.UseMiddleware<PlayerLeaveDynamicRaceCheckpointMiddleware>("OnPlayerLeaveDynamicRaceCP");
+
+            return builder;
+        }
+
         #region Player Extensions
 
         public static void EditDynamicObject(this Player player, EntityId dynamicObject)
@@ -113,6 +130,17 @@ namespace SampSharp.Streamer.Entities
         {
             var id = player.GetComponent<NativeStreamerPlayer>().GetPlayerVisibleDynamicCP();
             return id == NativeDynamicCheckpoint.InvalidId ? EntityId.Empty : StreamerEntities.GetDynamicCheckpointId(id);
+        }
+
+        public static bool IsInDynamicRaceCheckpoint(this Player player, EntityId dynamicRaceCheckpointId)
+        {
+            return player.GetComponent<NativeStreamerPlayer>().IsPlayerInDynamicRaceCP(dynamicRaceCheckpointId);
+        }
+
+        public static EntityId GetVisibleDynamicRaceCheckpoint(this Player player)
+        {
+            var id = player.GetComponent<NativeStreamerPlayer>().GetPlayerVisibleDynamicRaceCP();
+            return id == NativeDynamicRaceCheckpoint.InvalidId ? EntityId.Empty : StreamerEntities.GetDynamicRaceCheckpointId(id);
         }
 
         #endregion

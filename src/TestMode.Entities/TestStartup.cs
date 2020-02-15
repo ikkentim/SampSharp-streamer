@@ -48,7 +48,11 @@ namespace TestMode.Entities
 
             // Components
             NativeObjectProxyFactory.CreateInstance<NativeDynamicObject>();
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicPickup>();
             NativeObjectProxyFactory.CreateInstance<NativeStreamerPlayer>();
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicCheckpoint>();
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicRaceCheckpoint>();
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicWorldObject>();
 
             // Services
             NativeObjectProxyFactory.CreateInstance<StreamerServiceNative>();

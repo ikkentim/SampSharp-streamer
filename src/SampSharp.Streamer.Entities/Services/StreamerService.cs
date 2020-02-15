@@ -65,11 +65,11 @@ namespace SampSharp.Streamer.Entities
 
         /// <inheritdoc />
         public DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation, 
-            int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 300.0f, 
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 300.0f, 
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicObject(modelId, position.X, position.Y, position.Z,
-                rotation.X, rotation.Y, rotation.Z, virtualWorld, interior, player, 
+                rotation.X, rotation.Y, rotation.Z, virtualWorld, interior, player ? player.Entity.Handle : -1, 
                 streamDistance, drawDistance, areaid, priority);
 
             if (id == NativeDynamicObject.InvalidId)
@@ -79,6 +79,8 @@ namespace SampSharp.Streamer.Entities
             _entityManager.Create(entity, parent);
 
             _entityManager.AddComponent<NativeDynamicObject>(entity);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
             return _entityManager.AddComponent<DynamicObject>(entity);
         }
 
@@ -88,10 +90,10 @@ namespace SampSharp.Streamer.Entities
 
         /// <inheritdoc />
         public DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1, 
-            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicPickup(modelId, (int)pickupType, position.X, position.Y, position.Z, virtualWorld, interior,
-                player, streamDistance, areaid, priority);
+                player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
 
             if (id == NativeDynamicPickup.InvalidId)
                 throw new EntityCreationException();
@@ -100,6 +102,8 @@ namespace SampSharp.Streamer.Entities
             _entityManager.Create(entity, parent);
 
             _entityManager.AddComponent<NativeDynamicPickup>(entity);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
             return _entityManager.AddComponent<DynamicPickup>(entity, position);
         }
 
@@ -109,10 +113,10 @@ namespace SampSharp.Streamer.Entities
 
         /// <inheritdoc />
         public DynamicCheckpoint CreateDynamicCheckpoint(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
-            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
-            var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior, player,
-                streamDistance, areaid, priority);
+            var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior, 
+                player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
 
             if (id == NativeDynamicCheckpoint.InvalidId)
                 throw new EntityCreationException();
@@ -121,7 +125,33 @@ namespace SampSharp.Streamer.Entities
             _entityManager.Create(entity, parent);
 
             _entityManager.AddComponent<NativeDynamicCheckpoint>(entity);
-            return _entityManager.AddComponent<DynamicCheckpoint>(entity, position);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
+            return _entityManager.AddComponent<DynamicCheckpoint>(entity, position, size);
+        }
+
+        #endregion
+
+        #region Race Checkpoints
+
+        /// <inheritdoc />
+        public DynamicRaceCheckpoint CreateDynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition, float size,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0,
+            EntityId parent = default)
+        {
+            var id = _native.CreateDynamicRaceCP((int)type, position.X, position.Y, position.Z, nextPosition.X, nextPosition.Y, nextPosition.Z, 
+                size, virtualWorld, interior, player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
+
+            if (id == NativeDynamicRaceCheckpoint.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicRaceCheckpointId(id);
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicRaceCheckpoint>(entity);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
+            return _entityManager.AddComponent<DynamicRaceCheckpoint>(entity, position, nextPosition);
         }
 
         #endregion

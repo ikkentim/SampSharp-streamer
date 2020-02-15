@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
@@ -23,9 +24,10 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicRaceCheckpoint : Component
     {
-        private DynamicRaceCheckpoint(Vector3 position)
+        private DynamicRaceCheckpoint(Vector3 position, Vector3 nextPosition)
         {
             Position = position;
+            NextPosition = nextPosition;
         }
 
         /// <summary>
@@ -37,6 +39,28 @@ namespace SampSharp.Streamer.Entities
         /// Gets the position of this race checkpoint.
         /// </summary>
         public Vector3 Position { get; }
+
+        /// <summary>
+        /// Gets the next position of this race checkpoint.
+        /// </summary>
+        public Vector3 NextPosition { get; }
+
+        /// <summary>
+        ///     The toggle race checkpoint for specific player.
+        /// </summary>
+        /// <param name="player">The player to toggle (or not) the checkpoint.</param>
+        /// <param name="toggle">TRUE to toggle.</param>
+        /// <returns>
+        ///     <see cref="bool"/>
+        /// </returns>
+        public bool ToggleForPlayer(Player player, bool toggle)
+        {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
+            return GetComponent<NativeDynamicWorldObject>().ToggleItem(
+                player.Entity.Handle, (int)StreamerType.RaceCheckpoint, this.Entity.Handle, toggle);
+        }
 
         /// <inheritdoc />
         protected override void OnDestroyComponent()

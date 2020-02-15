@@ -18,11 +18,11 @@ using SampSharp.Entities.SAMP;
 
 namespace SampSharp.Streamer.Entities
 {
-    internal class PlayerEnterDynamicCheckpointMiddleware
+    internal class PlayerLeaveDynamicRaceCheckpointMiddleware
     {
         private readonly EventDelegate _next;
 
-        public PlayerEnterDynamicCheckpointMiddleware(EventDelegate next)
+        public PlayerLeaveDynamicRaceCheckpointMiddleware(EventDelegate next)
         {
             _next = next;
         }
@@ -30,16 +30,16 @@ namespace SampSharp.Streamer.Entities
         public object Invoke(EventContext context, IEntityManager entityManager)
         {
             var playerEntity = SampEntities.GetPlayerId((int)context.Arguments[0]);
-            var checkpointEntity = StreamerEntities.GetDynamicCheckpointId((int)context.Arguments[1]);
+            var raceCheckpointEntity = StreamerEntities.GetDynamicRaceCheckpointId((int)context.Arguments[1]);
 
             if (!entityManager.Exists(playerEntity))
                 return null;
 
-            if (!entityManager.Exists(checkpointEntity))
+            if (!entityManager.Exists(raceCheckpointEntity))
                 return null;
 
             context.Arguments[0] = playerEntity;
-            context.Arguments[1] = checkpointEntity;
+            context.Arguments[1] = raceCheckpointEntity;
 
             return _next(context);
         }

@@ -70,5 +70,17 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Race Checkpoints
+
+        [NativeMethod]
+        public virtual int CreateDynamicRaceCP(int type, float x, float y, float z, float nextx, float nexty,
+            float nextz, float size, int worldid, int interiorid, int playerid, float streamdistance, int areaid,
+            int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
     }
 }

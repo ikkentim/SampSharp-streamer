@@ -72,7 +72,7 @@ namespace SampSharp.Streamer.Entities
         ///     <see cref="DynamicObject"/>
         /// </returns>
         DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation,
-            int virtualWorld = -1, int interior = -1, EntityId player = default, float streamDistance = 200.0f,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f,
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
@@ -96,7 +96,7 @@ namespace SampSharp.Streamer.Entities
         ///     <see cref="DynamicPickup"/>
         /// </returns>
         DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1,
-            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
 
@@ -118,7 +118,32 @@ namespace SampSharp.Streamer.Entities
         ///     <see cref="DynamicCheckpoint"/>
         /// </returns>
         DynamicCheckpoint CreateDynamicCheckpoint(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
-            EntityId player = default, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
+
+        #endregion
+
+        #region Race Checkpoint
+
+        /// <summary>
+        ///     Creates a new Dynamic Race Checkpoint in the world.
+        /// </summary>
+        /// <param name="type">The check point type.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="nextPosition">The next position.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The attached player.</param>
+        /// <param name="streamDistance">The stream distance.</param>
+        /// <param name="areaid">The attached area id.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicRaceCheckpoint"/>
+        /// </returns>
+        DynamicRaceCheckpoint CreateDynamicRaceCheckpoint(CheckpointType type, Vector3 position, Vector3 nextPosition, float size,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0,
+            EntityId parent = default);
 
         #endregion
     }

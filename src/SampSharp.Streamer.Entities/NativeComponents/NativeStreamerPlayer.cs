@@ -36,7 +36,7 @@ namespace SampSharp.Streamer.Entities
 
         #endregion
 
-        #region Checkpoint
+        #region Checkpoints
 
         [NativeMethod]
         public virtual bool IsPlayerInDynamicCP(int dynamicCheckpointId)
@@ -46,6 +46,22 @@ namespace SampSharp.Streamer.Entities
 
         [NativeMethod]
         public virtual int GetPlayerVisibleDynamicCP()
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
+
+        #region Race Checkpoints
+
+        [NativeMethod]
+        public virtual bool IsPlayerInDynamicRaceCP(int dynamicRaceCheckpointId)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int GetPlayerVisibleDynamicRaceCP()
         {
             throw new NativeNotImplementedException();
         }

@@ -42,6 +42,12 @@ namespace SampSharp.Streamer.Entities
         public static readonly Guid DynamicCheckpointType = new Guid("1E80381E-44BE-4A06-8C79-6309E7DD9440");
 
         /// <summary>
+        ///     The Streamer dynamic racecheckpoint entity type identifier.
+        /// </summary>
+        [EntityType]
+        public static readonly Guid DynamicRaceCheckpointType = new Guid("388F3E60-A176-473C-A4E2-D852F894DFDF");
+
+        /// <summary>
         /// Gets a dynamic object entity identifier based on an integer dynamic object identifier.
         /// </summary>
         /// <param name="objectId">The dynamic object identifier.</param>
@@ -62,13 +68,23 @@ namespace SampSharp.Streamer.Entities
         }
 
         /// <summary>
-        /// Gets a dynamic pickup entity identifier based on an integer dynamic checkpoint identifier.
+        /// Gets a dynamic checkpoint entity identifier based on an integer dynamic checkpoint identifier.
         /// </summary>
         /// <param name="checkpointId">The dynamic checkpoint identifier.</param>
         /// <returns>The entity identifier.</returns>
         public static EntityId GetDynamicCheckpointId(int checkpointId)
         {
             return new EntityId(DynamicCheckpointType, checkpointId);
+        }
+
+        /// <summary>
+        /// Gets a dynamic race checkpoint entity identifier based on an integer dynamic race checkpoint identifier.
+        /// </summary>
+        /// <param name="checkpointId">The dynamic race checkpoint identifier.</param>
+        /// <returns>The entity identifier.</returns>
+        public static EntityId GetDynamicRaceCheckpointId(int raceCheckpointId)
+        {
+            return new EntityId(DynamicRaceCheckpointType, raceCheckpointId);
         }
     }
 }
