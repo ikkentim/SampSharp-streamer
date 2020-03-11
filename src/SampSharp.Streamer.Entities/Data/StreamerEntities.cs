@@ -52,6 +52,12 @@ namespace SampSharp.Streamer.Entities
         /// </summary>
         [EntityType]
         public static readonly Guid DynamicMapIconType = new Guid("595B2E88-FAC5-478F-9E60-191B63B352ED");
+        
+        /// <summary>
+        ///     The Streamer dynamic text label entity type identifier.
+        /// </summary>
+        [EntityType]
+        public static readonly Guid DynamicTextLabelType = new Guid("9A93A721-7B86-4D90-94A1-43CE918776A7");
 
         /// <summary>
         /// Gets a dynamic object entity identifier based on an integer dynamic object identifier.
@@ -96,11 +102,21 @@ namespace SampSharp.Streamer.Entities
         /// <summary>
         /// Gets a dynamic map icon entity identifier based on an integer dynamic map icon identifier.
         /// </summary>
-        /// <param name="mapIconId">The dynamicmap icon identifier.</param>
+        /// <param name="mapIconId">The dynamic map icon identifier.</param>
         /// <returns>The entity identifier.</returns>
         public static EntityId GetDynamicMapIconId(int mapIconId)
         {
             return new EntityId(DynamicMapIconType, mapIconId);
+        }
+
+        /// <summary>
+        /// Gets a dynamic text label entity identifier based on an integer dynamic text label identifier.
+        /// </summary>
+        /// <param name="mapIconId">The dynamic text label identifier.</param>
+        /// <returns>The entity identifier.</returns>
+        public static EntityId GetDynamicTextLabelId(int textLabelId)
+        {
+            return new EntityId(DynamicTextLabelType, textLabelId);
         }
     }
 }

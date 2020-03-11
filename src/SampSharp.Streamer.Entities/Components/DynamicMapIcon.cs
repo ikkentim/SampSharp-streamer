@@ -25,11 +25,12 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicMapIcon : Component
     {
-        private DynamicMapIcon(Vector3 position, MapIcon type, MapIconType style)
+        private DynamicMapIcon(Vector3 position, MapIcon type, MapIconType style, Color color)
         {
             Position = position;
             Type = type;
             Style = style;
+            Color = color;
         }
 
         /// <summary>
@@ -51,6 +52,11 @@ namespace SampSharp.Streamer.Entities
         /// Gets the style of this map icon.
         /// </summary>
         public MapIconType Style { get; }
+
+        /// <summary>
+        /// Gets the color of this map icon.
+        /// </summary>
+        public Color Color { get; }
 
         /// <summary>
         ///     The toggle map icon for specific player.

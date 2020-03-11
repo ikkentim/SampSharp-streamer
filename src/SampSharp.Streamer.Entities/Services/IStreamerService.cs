@@ -171,5 +171,33 @@ namespace SampSharp.Streamer.Entities
             MapIconType style = MapIconType.Local, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
+
+        #region Text Labels
+
+        /// <summary>
+        ///     Creates a new Dynamic Text Label in the world. 
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="color">The color.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="drawDistance">The draw distance.</param>
+        /// <param name="attachedPlayer">The attach player.</param>
+        /// <param name="attachedVehicle">The attache vehicle.</param>
+        /// <param name="testLos">The test los.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player.</param>
+        /// <param name="streamDistance">The stream distance.</param>
+        /// <param name="areaid">The area id.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicTextLabel"/>
+        /// </returns>
+        DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance,
+            Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1,
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+
+        #endregion
     }
 }

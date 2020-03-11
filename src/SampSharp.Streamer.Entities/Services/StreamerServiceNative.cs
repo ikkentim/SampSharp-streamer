@@ -93,5 +93,17 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Text Labels
+
+        [NativeMethod]
+        public virtual int CreateDynamic3DTextLabel(string text, int color, float x, float y, float z,
+            float drawdistance, int attachedplayer, int attachedvehicle, bool testlos, int worldid, int interiorid,
+            int playerid, float streamdistance, int areaid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
     }
 }

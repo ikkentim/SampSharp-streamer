@@ -175,7 +175,31 @@ namespace SampSharp.Streamer.Entities
             _entityManager.AddComponent<NativeDynamicMapIcon>(entity);
             _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
 
-            return _entityManager.AddComponent<DynamicMapIcon>(entity, position, mapIcon, style);
+            return _entityManager.AddComponent<DynamicMapIcon>(entity, position, mapIcon, style, color);
+        }
+
+        #endregion
+
+        #region Text Labels
+
+        public DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance, 
+            Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1, 
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamic3DTextLabel(text, color, position.X, position.Y, position.Z,
+            drawDistance, attachedPlayer ? attachedPlayer.Entity.Handle : -1, attachedVehicle ? attachedVehicle.Entity.Handle : -1, testLos, virtualWorld, interior,
+            player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
+
+            if (id == NativeDynamicTextLabel.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicTextLabelId(id);
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicTextLabel>(entity);
+            _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
+
+            return _entityManager.AddComponent<DynamicTextLabel>(entity, position);
         }
 
         #endregion
