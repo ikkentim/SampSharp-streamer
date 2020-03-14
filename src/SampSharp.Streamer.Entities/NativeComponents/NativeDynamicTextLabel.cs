@@ -1,4 +1,4 @@
-﻿z// SampSharp.Streamer
+﻿// SampSharp.Streamer
 // Copyright 2020 Tim Potze
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");

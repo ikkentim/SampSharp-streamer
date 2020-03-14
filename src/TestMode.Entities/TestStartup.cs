@@ -47,12 +47,14 @@ namespace TestMode.Entities
             // Warm up native objects for profiling purposes
 
             // Components
+            NativeObjectProxyFactory.CreateInstance<NativeStreamerPlayer>();
+
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicWorldObject>();
             NativeObjectProxyFactory.CreateInstance<NativeDynamicObject>();
             NativeObjectProxyFactory.CreateInstance<NativeDynamicPickup>();
-            NativeObjectProxyFactory.CreateInstance<NativeStreamerPlayer>();
             NativeObjectProxyFactory.CreateInstance<NativeDynamicCheckpoint>();
             NativeObjectProxyFactory.CreateInstance<NativeDynamicRaceCheckpoint>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicWorldObject>();
+            NativeObjectProxyFactory.CreateInstance<NativeDynamicTextLabel>();
 
             // Services
             NativeObjectProxyFactory.CreateInstance<StreamerServiceNative>();

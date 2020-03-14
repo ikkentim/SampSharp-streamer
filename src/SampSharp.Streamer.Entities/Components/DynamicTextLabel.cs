@@ -29,6 +29,11 @@ namespace SampSharp.Streamer.Entities
         }
 
         /// <summary>
+        /// Gets whether this dynamic text label is valid.
+        /// </summary>
+        public bool IsValid => GetComponent<NativeDynamicTextLabel>().IsValidDynamic3DTextLabel();
+
+        /// <summary>
         /// Gets the position of this text label.
         /// </summary>
         public Vector3 Position { get; }

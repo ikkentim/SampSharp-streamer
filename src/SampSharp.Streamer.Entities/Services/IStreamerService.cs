@@ -196,7 +196,7 @@ namespace SampSharp.Streamer.Entities
         /// </returns>
         DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance,
             Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1,
-            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
+            Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
     }

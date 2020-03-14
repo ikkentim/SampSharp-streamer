@@ -194,6 +194,7 @@ namespace SampSharp.Streamer.Entities
                 throw new EntityCreationException();
 
             var entity = StreamerEntities.GetDynamicTextLabelId(id);
+
             _entityManager.Create(entity, parent);
 
             _entityManager.AddComponent<NativeDynamicTextLabel>(entity);
