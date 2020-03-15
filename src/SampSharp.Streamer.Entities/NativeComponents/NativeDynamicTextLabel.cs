@@ -36,5 +36,17 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+
+        [NativeMethod]
+        public virtual int GetDynamic3DTextLabelText(out string text, int maxlength)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int UpdateDynamic3DTextLabelText(int color, string text)
+        {
+            throw new NativeNotImplementedException();
+        }
     }
 }

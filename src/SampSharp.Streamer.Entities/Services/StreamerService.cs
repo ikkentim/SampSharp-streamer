@@ -201,7 +201,7 @@ namespace SampSharp.Streamer.Entities
             _entityManager.AddComponent<NativeDynamicTextLabel>(entity);
             _entityManager.AddComponent<NativeDynamicWorldObject>(entity);
 
-            return _entityManager.AddComponent<DynamicTextLabel>(entity, position);
+            return _entityManager.AddComponent<DynamicTextLabel>(entity, text, color, position, drawDistance, virtualWorld);
         }
 
         #endregion

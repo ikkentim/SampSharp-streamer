@@ -23,10 +23,25 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicTextLabel : Component
     {
-        private DynamicTextLabel(Vector3 position)
+        #region Properties
+
+        private string _text;
+        private Color _color;
+
+        #endregion
+
+        #region Constructor
+
+        private DynamicTextLabel(string text, Color color, Vector3 position, float drawDistance, int virtualWorld)
         {
+            _text = text;
+            _color = color;
             Position = position;
+            DrawDistance = drawDistance;
+            VirtualWorld = virtualWorld;
         }
+
+        #endregion
 
         /// <summary>
         /// Gets whether this dynamic text label is valid.
@@ -34,9 +49,45 @@ namespace SampSharp.Streamer.Entities
         public bool IsValid => GetComponent<NativeDynamicTextLabel>().IsValidDynamic3DTextLabel();
 
         /// <summary>
-        /// Gets the position of this text label.
+        /// Gets or sets the text of this dynamic text label.
+        /// </summary>
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                _text = value;
+                GetComponent<NativeDynamicTextLabel>().UpdateDynamic3DTextLabelText(Color, value ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of this dynamic text label.
+        /// </summary>
+        public Color Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                GetComponent<NativeDynamicTextLabel>().UpdateDynamic3DTextLabelText(value, Text);
+            }
+        }
+
+        /// <summary>
+        /// Gets the position of this dynamic text label.
         /// </summary>
         public Vector3 Position { get; }
+
+        /// <summary>
+        /// Gets the draw distance of this dynamic text label.
+        /// </summary>
+        public float DrawDistance { get; }
+
+        /// <summary>
+        /// Gets the virtual world of this dynamic text label.
+        /// </summary>
+        public int VirtualWorld { get; }
 
         /// <inheritdoc />
         protected override void OnDestroyComponent()

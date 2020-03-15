@@ -29,7 +29,7 @@ namespace TestMode.Entities.Systems
     public class TestDynamicTextLabelSystem : ISystem
     {
         [PlayerCommand]
-        public void CreateTextLabelCommand(Player player, string text, IStreamerService streamerService, IWorldService worldService)
+        public void CreateTextLabelCommand(Player player, string text, IStreamerService streamerService)
         {
             var dynamicTextLabel = streamerService.CreateDynamicTextLabel(
                 text, 
@@ -38,6 +38,26 @@ namespace TestMode.Entities.Systems
 
             player.SendClientMessage($"DynamicTextLabel {dynamicTextLabel.Entity.Handle} created.");
             player.SendClientMessage($"DynamicTextLabel {dynamicTextLabel.Entity.Handle} is valid: {dynamicTextLabel.IsValid}");
+            player.SendClientMessage($"DynamicTextLabel color: {dynamicTextLabel.Color.ToString()}");
+            player.SendClientMessage($"DynamicTextLabel text: {dynamicTextLabel.Text.ToString()}");
+        }
+
+        [PlayerCommand]
+        public void EditTextLabelCommand(Player player, int textLabelIdId, string text, IEntityManager entityManager)
+        {
+            DynamicTextLabel dynamicTextLabel = entityManager.GetComponent<DynamicTextLabel>(StreamerEntities.GetDynamicTextLabelId(textLabelIdId));
+            dynamicTextLabel.Text = text;
+
+            player.SendClientMessage($"Edit DynamicTextLabel {dynamicTextLabel.Entity.Handle} text ({dynamicTextLabel.Text.ToString()}.");
+        }
+
+        [PlayerCommand]
+        public void EditColorTextLabelCommand(Player player, int textLabelIdId, IEntityManager entityManager)
+        {
+            DynamicTextLabel dynamicTextLabel = entityManager.GetComponent<DynamicTextLabel>(StreamerEntities.GetDynamicTextLabelId(textLabelIdId));
+            dynamicTextLabel.Color = Color.Blue;
+
+            player.SendClientMessage($"Edit Color DynamicTextLabel.");
         }
 
         [PlayerCommand]
