@@ -60,6 +60,12 @@ namespace SampSharp.Streamer.Entities
         public static readonly Guid DynamicTextLabelType = new Guid("9A93A721-7B86-4D90-94A1-43CE918776A7");
 
         /// <summary>
+        ///     The Streamer dynamic area entity type identifier.
+        /// </summary>
+        [EntityType]
+        public static readonly Guid DynamicAreaType = new Guid("0CEA86BA-978E-4289-913A-14433D8F9362");
+
+        /// <summary>
         /// Gets a dynamic object entity identifier based on an integer dynamic object identifier.
         /// </summary>
         /// <param name="objectId">The dynamic object identifier.</param>
@@ -117,6 +123,16 @@ namespace SampSharp.Streamer.Entities
         public static EntityId GetDynamicTextLabelId(int textLabelId)
         {
             return new EntityId(DynamicTextLabelType, textLabelId);
+        }
+
+        /// <summary>
+        /// Gets a dynamic area entity identifier based on an integer dynamic area identifier.
+        /// </summary>
+        /// <param name="mapIconId">The dynamic area identifier.</param>
+        /// <returns>The entity identifier.</returns>
+        public static EntityId GetDynamicAreaId(int areaId)
+        {
+            return new EntityId(DynamicAreaType, areaId);
         }
     }
 }
