@@ -182,12 +182,13 @@ namespace SampSharp.Streamer.Entities
 
         #region Text Labels
 
+        /// <inheritdoc />
         public DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance, 
             Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1, 
             Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamic3DTextLabel(text, color, position.X, position.Y, position.Z,
-            drawDistance, attachedPlayer ? attachedPlayer.Entity.Handle : -1, attachedVehicle ? attachedVehicle.Entity.Handle : -1, testLos, virtualWorld, interior,
+            drawDistance, attachedPlayer ? attachedPlayer.Entity.Handle : 0xFFFF, attachedVehicle ? attachedVehicle.Entity.Handle : 0xFFFF, testLos, virtualWorld, interior,
             player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
 
             if (id == NativeDynamicTextLabel.InvalidId)

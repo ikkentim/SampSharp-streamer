@@ -29,13 +29,12 @@ namespace TestMode.Entities.Systems
     public class TestDynamicTextLabelSystem : ISystem
     {
         [PlayerCommand]
-        public void CreateTextLabelCommand(Player player, string text, IStreamerService streamerService)
+        public void CreateTextLabelCommand(Player player, string text, IStreamerService streamerService, IWorldService worldService)
         {
             var dynamicTextLabel = streamerService.CreateDynamicTextLabel(
                 text, 
                 Color.Red, 
-                player.Position + Vector3.Up, 10.0f,
-                virtualWorld:player.VirtualWorld, interior:player.Interior);
+                player.Position, 10.0f);
 
             player.SendClientMessage($"DynamicTextLabel {dynamicTextLabel.Entity.Handle} created.");
             player.SendClientMessage($"DynamicTextLabel {dynamicTextLabel.Entity.Handle} is valid: {dynamicTextLabel.IsValid}");
