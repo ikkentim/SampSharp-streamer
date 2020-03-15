@@ -23,7 +23,7 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicArea : Component
     {
-        private DynamicArea(Vector3 position)
+        private DynamicArea(Vector2 position)
         {
             Position = position;
         }
@@ -31,12 +31,17 @@ namespace SampSharp.Streamer.Entities
         /// <summary>
         /// Gets whether this dynamic area is valid.
         /// </summary>
-        public bool IsValid => GetComponent<NativeDynamicTextLabel>().IsValidDynamic3DTextLabel();
+        public bool IsValid => GetComponent<NativeDynamicArea>().IsValidDynamicArea();
 
         /// <summary>
-        /// Gets the position of this text label.
+        /// Gets the dynamic area type.
         /// </summary>
-        public Vector3 Position { get; }
+        public AreaType AreaType => (AreaType)GetComponent<NativeDynamicArea>().GetDynamicAreaType();
+
+        /// <summary>
+        /// Gets the position (XY) of this dynamic area.
+        /// </summary>
+        public Vector2 Position { get; }
 
         /// <inheritdoc />
         protected override void OnDestroyComponent()

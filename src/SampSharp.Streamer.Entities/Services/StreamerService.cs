@@ -205,5 +205,28 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Area
+
+        /// <inheritdoc />
+        public DynamicArea CreateDynamicCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1, 
+            Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicCircle(position.X, position.Y, size, virtualWorld, interior, 
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity, position);
+        }
+
+        #endregion
     }
 }

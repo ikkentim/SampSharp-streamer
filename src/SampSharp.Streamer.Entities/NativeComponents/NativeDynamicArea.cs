@@ -36,5 +36,11 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+
+        [NativeMethod]
+        public virtual int GetDynamicAreaType()
+        {
+            throw new NativeNotImplementedException();
+        }
     }
 }

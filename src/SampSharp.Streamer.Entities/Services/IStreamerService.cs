@@ -199,5 +199,25 @@ namespace SampSharp.Streamer.Entities
             Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default);
 
         #endregion
+
+        #region Area
+
+        /// <summary>
+        ///     Creates a new dynamic circle in the world.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateDynamicCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1,
+            Player player = null, int priority = 0, EntityId parent = default);
+
+        #endregion
     }
 }

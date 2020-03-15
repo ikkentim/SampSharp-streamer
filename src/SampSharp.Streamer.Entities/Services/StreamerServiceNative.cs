@@ -105,5 +105,17 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Area
+
+        [NativeMethod]
+        public virtual int CreateDynamicCircle(float x, float y, float size, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+
+        #endregion
     }
 }
