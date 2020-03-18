@@ -67,5 +67,33 @@ namespace SampSharp.Streamer.Entities
         }
 
         #endregion
+
+        #region Area
+
+        [NativeMethod]
+        public virtual bool IsPlayerInDynamicArea(int dynamicAreaId, bool recheck = false)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool IsPlayerInAnyDynamicArea(bool recheck = false)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int GetPlayerNumberDynamicAreas()
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int GetPlayerDynamicAreas(out int[] areas, int maxlength)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        #endregion
     }
 }

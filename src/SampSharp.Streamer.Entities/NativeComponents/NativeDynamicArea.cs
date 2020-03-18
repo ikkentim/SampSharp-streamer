@@ -42,5 +42,35 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+
+        [NativeMethod]
+        public virtual int GetDynamicPolygonPoints(out float[] points, int maxlength)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int GetDynamicPolygonNumberPoints()
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool IsAnyPlayerInDynamicArea(bool recheck = false)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool IsAnyPlayerInAnyDynamicArea(bool recheck = false)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int GetPlayerNumberDynamicAreas(int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
     }
 }

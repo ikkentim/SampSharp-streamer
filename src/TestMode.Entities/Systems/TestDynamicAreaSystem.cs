@@ -43,10 +43,68 @@ namespace TestMode.Entities.Systems
         [PlayerCommand]
         public void CreateCircleCommand(Player player, float size, IStreamerService streamerService)
         {
-            DynamicArea dynamicCircle = streamerService.CreateDynamicCircle(player.Position.XY, size, player.VirtualWorld, player.Interior);
+            DynamicArea dynamicCircle = streamerService.CreateCircle(player.Position.XY, size, player.VirtualWorld, player.Interior);
 
             player.SendClientMessage($"DynamicArea (Circle) {dynamicCircle.Entity.Handle} created.");
             player.SendClientMessage($"DynamicArea (Circle) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreateCylinderCommand(Player player, IStreamerService streamerService)
+        {
+            DynamicArea dynamicCircle = streamerService.CreateCylinder(
+                player.Position.XY, 5.0f, 5.0f, 10.0f, player.VirtualWorld, player.Interior);
+
+            player.SendClientMessage($"DynamicArea (Cylinder) {dynamicCircle.Entity.Handle} created.");
+            player.SendClientMessage($"DynamicArea (Cylinder) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreateSphereCommand(Player player, IStreamerService streamerService)
+        {
+            DynamicArea dynamicCircle = streamerService.CreateSphere(
+                player.Position, 10.0f, player.VirtualWorld, player.Interior);
+
+            player.SendClientMessage($"DynamicArea (Sphere) {dynamicCircle.Entity.Handle} created.");
+            player.SendClientMessage($"DynamicArea (Sphere) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreateRectangleCommand(Player player, float minx, float miny, float maxx, float maxy, IStreamerService streamerService)
+        {
+            DynamicArea dynamicCircle = streamerService.CreateRectangle(
+                new Vector2(minx, miny), new Vector2(maxx, maxy), player.VirtualWorld, player.Interior);
+
+            player.SendClientMessage($"DynamicArea (Rectangle) {dynamicCircle.Entity.Handle} created.");
+            player.SendClientMessage($"DynamicArea (Rectangle) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreateCuboidCommand(Player player, float minx, float miny, float minz, 
+            float maxx, float maxy, float maxz, IStreamerService streamerService)
+        {
+            DynamicArea dynamicCircle = streamerService.CreateCuboid(
+                new Vector3(minx, miny, minz), new Vector3(maxx, maxy, maxz), player.VirtualWorld, player.Interior);
+
+            player.SendClientMessage($"DynamicArea (Cuboid) {dynamicCircle.Entity.Handle} created.");
+            player.SendClientMessage($"DynamicArea (Cuboid) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreateCubeCommand(Player player, float minx, float miny, float minz,
+            float maxx, float maxy, float maxz, IStreamerService streamerService)
+        {
+            DynamicArea dynamicCircle = streamerService.CreateCube(
+                new Vector3(minx, miny, minz), new Vector3(maxx, maxy, maxz), player.VirtualWorld, player.Interior);
+
+            player.SendClientMessage($"DynamicArea (Cube) {dynamicCircle.Entity.Handle} created.");
+            player.SendClientMessage($"DynamicArea (Cube) {dynamicCircle.Entity.Handle} is valid: {dynamicCircle.IsValid}");
+        }
+
+        [PlayerCommand]
+        public void CreatePolygonCommand(Player player, IStreamerService streamerService)
+        {
+            // ToDo
         }
 
         [PlayerCommand]
@@ -55,6 +113,20 @@ namespace TestMode.Entities.Systems
             DynamicArea dynamicArea = entityManager.GetComponent<DynamicArea>(StreamerEntities.GetDynamicAreaId(areaId));
 
             player.SendClientMessage($"DynamicArea Type: {dynamicArea.AreaType}");
+        }
+
+        [PlayerCommand]
+        public void IsInAreaCommand(Player player, DynamicArea dynamicArea)
+        {
+            bool isIn = player.IsPlayerInDynamicArea(dynamicArea);
+            player.SendClientMessage($"IsPlayerInDynamicArea {dynamicArea.Entity.Handle} = {isIn}");
+        }
+
+        [PlayerCommand]
+        public void IsInAnyAreaCommand(Player player, bool recheck = false)
+        {
+            bool isInAny = player.IsPlayerInAnyDynamicArea(recheck);
+            player.SendClientMessage($"IsPlayerInAnyDynamicArea = {isInAny}");
         }
     }
 }

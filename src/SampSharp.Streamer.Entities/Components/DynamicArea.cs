@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
@@ -23,9 +25,9 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public sealed class DynamicArea : Component
     {
-        private DynamicArea(Vector2 position)
+        private DynamicArea()
         {
-            Position = position;
+
         }
 
         /// <summary>
@@ -39,9 +41,44 @@ namespace SampSharp.Streamer.Entities
         public AreaType AreaType => (AreaType)GetComponent<NativeDynamicArea>().GetDynamicAreaType();
 
         /// <summary>
-        /// Gets the position (XY) of this dynamic area.
+        /// Gets polygon points.
         /// </summary>
-        public Vector2 Position { get; }
+        public IEnumerable<Vector3> GetPolygonPoints()
+        {
+            var pointCount = GetPointsCount();
+            GetComponent<NativeDynamicArea>().GetDynamicPolygonPoints(out var points, pointCount * 2);
+
+            if (points == null) yield break;
+
+            for (var i = 0; i < points.Length - 1; i += 2)
+            {
+                yield return new Vector3(points[i], points[i + 1]);
+            }
+        }
+
+        /// <summary>
+        /// Gets number points.
+        /// </summary>
+        public int GetPointsCount()
+        {
+            return GetComponent<NativeDynamicArea>().GetDynamicPolygonNumberPoints();
+        }
+
+        /// <summary>
+        /// Gets any player in area.
+        /// </summary>
+        public bool IsAnyPlayerInArea(bool recheck = false)
+        {
+            return GetComponent<NativeDynamicArea>().IsAnyPlayerInDynamicArea(recheck);
+        }
+
+        /// <summary>
+        /// Gets any player in any area.
+        /// </summary>
+        public bool IsAnyPlayerInAnyArea(bool recheck = false)
+        {
+            return GetComponent<NativeDynamicArea>().IsAnyPlayerInAnyDynamicArea(recheck);
+        }
 
         /// <inheritdoc />
         protected override void OnDestroyComponent()

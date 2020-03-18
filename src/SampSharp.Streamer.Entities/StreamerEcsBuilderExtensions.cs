@@ -13,6 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 
@@ -159,6 +162,35 @@ namespace SampSharp.Streamer.Entities
             var id = player.GetComponent<NativeStreamerPlayer>().GetPlayerVisibleDynamicRaceCP();
             return id == NativeDynamicRaceCheckpoint.InvalidId ? EntityId.Empty : StreamerEntities.GetDynamicRaceCheckpointId(id);
         }
+
+        public static bool IsPlayerInDynamicArea(this Player player, EntityId dynamicAreaId, bool recheck = false)
+        {
+            return player.GetComponent<NativeStreamerPlayer>().IsPlayerInDynamicArea(dynamicAreaId, recheck);
+        }
+
+        public static bool IsPlayerInAnyDynamicArea(this Player player, bool recheck = false)
+        {
+            return player.GetComponent<NativeStreamerPlayer>().IsPlayerInAnyDynamicArea(recheck);
+        }
+
+        public static int GetAreaCountForPlayer(this Player player)
+        {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
+            return player.GetComponent<NativeStreamerPlayer>().GetPlayerNumberDynamicAreas();
+        }
+
+        // ToDo
+        /*public static IEnumerable<DynamicArea> GetAreasForPlayer(this Player player)
+        {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
+            player.GetComponent<NativeStreamerPlayer>().GetPlayerDynamicAreas(out var areas, GetAreaCountForPlayer(player));
+
+            return areas?.Select(FindOrCreate);
+        }*/
 
         #endregion
     }

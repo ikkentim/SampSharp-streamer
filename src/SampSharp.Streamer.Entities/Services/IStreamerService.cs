@@ -215,8 +215,107 @@ namespace SampSharp.Streamer.Entities
         /// <returns>
         ///     <see cref="DynamicArea"/>
         /// </returns>
-        DynamicArea CreateDynamicCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1,
+        DynamicArea CreateCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1,
             Player player = null, int priority = 0, EntityId parent = default);
+
+        /// <summary>
+        ///     Creates a new dynamic cylinder in the world.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="minz">The minz.</param>
+        /// <param name="maxz">The maxz.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateCylinder(Vector2 position, float minz, float maxz, float size,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default);
+
+        /// <summary>
+        ///     Creates a new dynamic sphere in the world.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateSphere(Vector3 position, float size,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default);
+
+        /// <summary>
+        ///     Creates a new dynamic rectange in the world.
+        /// </summary>
+        /// <param name="min">The min XY.</param>
+        /// <param name="max">The max XY.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateRectangle(Vector2 min, Vector2 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default);
+
+        /// <summary>
+        ///     Creates a new dynamic cuboid in the world.
+        /// </summary>
+        /// <param name="min">The min XYZ.</param>
+        /// <param name="max">The max XYZ.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateCuboid(Vector3 min, Vector3 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default);
+
+        /// <summary>
+        ///     Creates a new dynamic cube in the world.
+        /// </summary>
+        /// <param name="min">The min XYZ.</param>
+        /// <param name="max">The max XYZ.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreateCube(Vector3 min, Vector3 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+
+        /// <summary>
+        ///     Creates a new dynamic polygon in the world.
+        /// </summary>
+        /// <param name="points">The points.</param>
+        /// <param name="minz">The minz.</param>
+        /// <param name="maxz">The maxz.</param>
+        /// <param name="virtualWorld">The virtual world.</param>
+        /// <param name="interior">The interior.</param>
+        /// <param name="player">The player</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="parent">The EntityId parent.</param>
+        /// <returns>
+        ///     <see cref="DynamicArea"/>
+        /// </returns>
+        DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity, float maxz = float.PositiveInfinity,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default);
 
         #endregion
     }

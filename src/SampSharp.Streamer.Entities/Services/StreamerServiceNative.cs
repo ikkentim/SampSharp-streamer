@@ -115,6 +115,47 @@ namespace SampSharp.Streamer.Entities
             throw new NativeNotImplementedException();
         }
 
+        [NativeMethod]
+        public virtual int CreateDynamicCylinder(float x, float y, float minz, float maxz, float size, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int CreateDynamicSphere(float x, float y, float z, float size, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int CreateDynamicRectangle(float minx, float miny, float maxx, float maxy, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int CreateDynamicCuboid(float minx, float miny, float minz, float maxx, float maxy, float maxz, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int CreateDynamicCube(float minx, float miny, float minz, float maxx, float maxy, float maxz, int worldid, int interiorid,
+            int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int CreateDynamicPolygon(float[] points, float minz, float maxz, int maxpoints, int worldid,
+            int interiorid, int playerid, int priority)
+        {
+            throw new NativeNotImplementedException();
+        }
 
         #endregion
     }

@@ -209,7 +209,7 @@ namespace SampSharp.Streamer.Entities
         #region Area
 
         /// <inheritdoc />
-        public DynamicArea CreateDynamicCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1, 
+        public DynamicArea CreateCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1, 
             Player player = null, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicCircle(position.X, position.Y, size, virtualWorld, interior, 
@@ -224,7 +224,115 @@ namespace SampSharp.Streamer.Entities
 
             _entityManager.AddComponent<NativeDynamicArea>(entity);
 
-            return _entityManager.AddComponent<DynamicArea>(entity, position);
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreateCylinder(Vector2 position, float minz, float maxz, float size, 
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicCylinder(position.X, position.Y, minz, maxz, size, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreateSphere(Vector3 position, float size,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicSphere(position.X, position.Y, position.Z, size, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreateRectangle(Vector2 min, Vector2 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicRectangle(min.X, min.Y, max.X, max.Y, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreateCuboid(Vector3 min, Vector3 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicCuboid(min.X, min.Y, min.Z, max.X, max.Y, max.Z, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreateCube(Vector3 min, Vector3 max,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicCube(min.X, min.Y, min.Z, max.X, max.Y, max.Z, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
+        }
+
+        public DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity, float maxz = float.PositiveInfinity,
+            int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
+        {
+            var id = _native.CreateDynamicPolygon(points, minz, maxz, points.Length, virtualWorld, interior,
+                player ? player.Entity.Handle : -1, priority);
+
+            if (id == NativeDynamicArea.InvalidId)
+                throw new EntityCreationException();
+
+            var entity = StreamerEntities.GetDynamicAreaId(id);
+
+            _entityManager.Create(entity, parent);
+
+            _entityManager.AddComponent<NativeDynamicArea>(entity);
+
+            return _entityManager.AddComponent<DynamicArea>(entity);
         }
 
         #endregion
