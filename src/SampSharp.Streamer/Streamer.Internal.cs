@@ -342,7 +342,7 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod]
-            public int GetPlayerCameraTargetDynObject(int playerid)
+            public virtual int GetPlayerCameraTargetDynObject(int playerid)
             {
                 throw new NativeNotImplementedException();
             }
