@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/*
 
 # Build results
 [Dd]ebug/
@@ -187,3 +188,4 @@ FakesAssemblies/
 # Cake
 tools/
 
+src/SampSharp.Streamer.Entities/streamer.inc
