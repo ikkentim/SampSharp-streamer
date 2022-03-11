@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampSharp.Streamer", "src\SampSharp.Streamer\SampSharp.Streamer.csproj", "{0B2AFC37-E324-401B-B270-F5C8C1A04096}"
 EndProject
@@ -9,11 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMode", "src\TestMode\Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{7E3E537C-FCA3-4DCB-A0A8-80F753487767}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
-		build.bat = build.bat
-		build.cake = build.cake
-		build.ps1 = build.ps1
-		build.sh = build.sh
 		CHANGES.md = CHANGES.md
 	EndProjectSection
 EndProject
