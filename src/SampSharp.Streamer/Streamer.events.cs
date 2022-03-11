@@ -76,6 +76,21 @@ namespace SampSharp.Streamer
         {
             PlayerLeaveDynamicArea?.Invoke(area, e);
         }
+        
+        protected virtual void OnDynamicActorStreamIn(DynamicActor actor, PlayerEventArgs e)
+        {
+            DynamicActorStreamIn?.Invoke(actor, e);
+        }
+        
+        protected virtual void OnDynamicActorStreamOut(DynamicActor actor, PlayerEventArgs e)
+        {
+            DynamicActorStreamOut?.Invoke(actor, e);
+        }
+
+        protected virtual void OnPlayerGiveDamageDynamicActor(DynamicActor actor, PlayerShotActorEventArgs e)
+        {
+            PlayerGiveDamageDynamicActor?.Invoke(actor, e);
+        }
 
         protected virtual void OnError(ErrorEventArgs e)
         {
@@ -108,8 +123,14 @@ namespace SampSharp.Streamer
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicRaceCheckpoint;
 
         public event EventHandler<PlayerEventArgs> PlayerEnterDynamicArea;
-
+        
         public event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
+        
+        public event EventHandler<PlayerEventArgs> DynamicActorStreamIn;
+
+        public event EventHandler<PlayerEventArgs> DynamicActorStreamOut;
+        
+        public event EventHandler<PlayerShotActorEventArgs> PlayerGiveDamageDynamicActor;
 
         public event EventHandler<ErrorEventArgs> Error;
     }

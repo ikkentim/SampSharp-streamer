@@ -54,6 +54,12 @@ namespace SampSharp.Streamer
 
         event EventHandler<PlayerEventArgs> PlayerLeaveDynamicArea;
 
+        event EventHandler<PlayerEventArgs> DynamicActorStreamIn;
+
+        event EventHandler<PlayerEventArgs> DynamicActorStreamOut;
+        
+        event EventHandler<PlayerShotActorEventArgs> PlayerGiveDamageDynamicActor;
+
         event EventHandler<ErrorEventArgs> Error;
 
         float GetLastUpdateTime();

@@ -113,6 +113,13 @@ namespace SampSharp.Streamer.World
 
             Internal.AttachDynamicAreaToVehicle(Id, vehicle.Id, offset.X, offset.Y, offset.Z);
         }
+        
+        public bool IsInArea(Vector3 point)
+        {
+            AssertNotDisposed();
+
+            return Internal.IsPointInDynamicArea(Id, point.X, point.Y, point.Z);
+        }
 
         public bool IsInArea(BasePlayer player, bool recheck = false)
         {
@@ -206,13 +213,6 @@ namespace SampSharp.Streamer.World
         public static int GeAreasForLineCount(Vector3 from, Vector3 to)
         {
             return Internal.GetNumberDynamicAreasForLine(from.X, from.Y, from.Z, to.X, to.Y, to.Z);
-        }
-
-        public bool IsInArea(Vector3 point)
-        {
-            AssertNotDisposed();
-
-            return Internal.IsPointInDynamicArea(Id, point.X, point.Y, point.Z);
         }
 
         public static bool IsInAnyArea(Vector3 point)

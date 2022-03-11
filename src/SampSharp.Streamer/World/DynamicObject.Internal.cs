@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicObject
     {
-        protected static readonly DynamicObjectInternal Internal;
-
-        static DynamicObject()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicObjectInternal>();
-        }
-
+        protected static readonly DynamicObjectInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicObjectInternal>();
+      
         public class DynamicObjectInternal
         {
             [NativeMethod]

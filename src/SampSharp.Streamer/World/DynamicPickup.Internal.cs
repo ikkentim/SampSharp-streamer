@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicPickup
     {
-        protected static readonly DynamicPickupInternal Internal;
-
-        static DynamicPickup()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicPickupInternal>();
-        }
-
+        protected static readonly DynamicPickupInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicPickupInternal>();
+        
         public class DynamicPickupInternal
         {
             [NativeMethod]

@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicArea
     {
-        protected static readonly DynamicAreaInternal Internal;
-
-        static DynamicArea()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicAreaInternal>();
-        }
-
+        protected static readonly DynamicAreaInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicAreaInternal>();
+        
         public class DynamicAreaInternal
         {
             [NativeMethod(3)]

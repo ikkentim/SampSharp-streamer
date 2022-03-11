@@ -40,12 +40,44 @@ namespace SampSharp.Streamer.Controllers
 
         #region Implementation of ITypeProvider
 
-        /// <summary>
-        ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
-        /// </summary>
         public virtual void RegisterTypes()
         {
             DynamicArea.Register<DynamicArea>();
+        }
+
+        #endregion
+    }
+
+    public class DynamicActorController : ITypeProvider, IStreamerController
+    {
+        #region Implementation of IStreamerController
+
+        public virtual void RegisterStreamerEvents(IStreamer streamer)
+        {
+            streamer.DynamicActorStreamIn += (sender, args) =>
+            {
+                var actor = sender as DynamicActor;
+                actor?.OnStreamIn(args);
+            };
+            streamer.DynamicActorStreamOut += (sender, args) =>
+            {
+                var actor = sender as DynamicActor;
+                actor?.OnStreamOut(args);
+            };
+            streamer.PlayerGiveDamageDynamicActor += (sender, args) =>
+            {
+                var actor = sender as DynamicActor;
+                actor?.OnPlayerGiveDamage(args);
+            };
+        }
+
+        #endregion
+
+        #region Implementation of ITypeProvider
+
+        public virtual void RegisterTypes()
+        {
+            DynamicActor.Register<DynamicActor>();
         }
 
         #endregion

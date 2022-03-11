@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicTextLabel
     {
-        protected static readonly DynamicTextLabelInternal Internal;
-
-        static DynamicTextLabel()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicTextLabelInternal>();
-        }
-
+        protected static readonly DynamicTextLabelInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicTextLabelInternal>();
+      
         public class DynamicTextLabelInternal
         {
             [NativeMethod]

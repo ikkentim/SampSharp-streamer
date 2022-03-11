@@ -19,12 +19,7 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicActor
     {
-        protected static readonly DynamicActorInternal Internal;
-
-        static DynamicActor()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicActorInternal>();
-        }
+        protected static readonly DynamicActorInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicActorInternal>();
 
         public class DynamicActorInternal
         {

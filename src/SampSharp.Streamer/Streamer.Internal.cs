@@ -19,13 +19,8 @@ namespace SampSharp.Streamer
 {
     public partial class Streamer
     {
-        protected static StreamerInternal Internal;
-
-        static Streamer()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<StreamerInternal>();
-        }
-
+        protected static readonly StreamerInternal Internal = NativeObjectProxyFactory.CreateInstance<StreamerInternal>();
+  
         public class StreamerInternal
         {
             [NativeMethod(Function = "Streamer_AmxUnloadDestroyItems")]
@@ -71,8 +66,9 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod(Function = "Streamer_UpdateEx")]
-            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorid, int type, int compensatedtime,
-                int freezeplayer)
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Name based on native name")]
+            public virtual int UpdateEx(int playerid, float x, float y, float z, int worldid, int interiorId, int type,
+                int compensatedTime, int freezePlayer)
             {
                 throw new NativeNotImplementedException();
             }
@@ -342,7 +338,7 @@ namespace SampSharp.Streamer
             }
 
             [NativeMethod]
-            public int GetPlayerCameraTargetDynObject(int playerid)
+            public virtual int GetPlayerCameraTargetDynObject(int playerid)
             {
                 throw new NativeNotImplementedException();
             }

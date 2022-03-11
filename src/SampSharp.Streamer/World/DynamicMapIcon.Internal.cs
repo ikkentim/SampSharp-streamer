@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicMapIcon
     {
-        protected static readonly DynamicMapIconInternal Internal;
-
-        static DynamicMapIcon()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicMapIconInternal>();
-        }
-
+        protected static readonly DynamicMapIconInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicMapIconInternal>();
+     
         public class DynamicMapIconInternal
         {
             [NativeMethod]

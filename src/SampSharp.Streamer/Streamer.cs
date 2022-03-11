@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
@@ -35,20 +36,30 @@ namespace SampSharp.Streamer
         public static void Update(BasePlayer player)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             Internal.Update(player.Id, -1);
         }
 
         public void SetPlayerTickRate(BasePlayer player, int rate)
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             Internal.SetPlayerTickRate(player.Id, rate);
         }
 
         public int GetPlayerTickRate(BasePlayer player)
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             return Internal.GetPlayerTickRate(player.Id);
         }
 
@@ -66,7 +77,11 @@ namespace SampSharp.Streamer
 
         public IEnumerable<T> GetVisibleItems<T>(BasePlayer player, int maxItems = 32) where T : IDynamicWorldObject
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             var type = GetType<T>();
 
             Internal.GetAllVisibleItems(player.Id, type, out var items, maxItems);
@@ -79,81 +94,122 @@ namespace SampSharp.Streamer
 
         public DynamicObject GetPlayerCameraTargetObject(BasePlayer player)
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
 
             return DynamicObject.Find(Internal.GetPlayerCameraTargetDynObject(player.Id));
         }
 
         public DynamicActor GetPlayerTargetActor(BasePlayer player)
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
 
             return DynamicActor.Find(Internal.GetPlayerTargetDynamicActor(player.Id));
         }
 
         public DynamicActor GetPlayerCameraTargetActor(BasePlayer player)
         {
-            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
 
             return DynamicActor.Find(Internal.GetPlayerCameraTargetDynActor(player.Id));
         }
 
-        private T GetItem<T>(int id) where T : IDynamicWorldObject
+        private static T GetItem<T>(int id) where T : IDynamicWorldObject
         {
             if (typeof(DynamicTextLabel).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicTextLabel.Find(id);
+            }
 
             if (typeof(DynamicPickup).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicPickup.Find(id);
+            }
 
             if (typeof(DynamicRaceCheckpoint).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicRaceCheckpoint.Find(id);
+            }
 
             if (typeof(DynamicObject).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicObject.Find(id);
+            }
 
             if (typeof(DynamicMapIcon).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicMapIcon.Find(id);
+            }
 
             if (typeof(DynamicCheckpoint).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicCheckpoint.Find(id);
+            }
 
             if (typeof(DynamicArea).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicArea.Find(id);
+            }
 
             if (typeof(DynamicActor).IsAssignableFrom(typeof(T)))
+            {
                 return (T) (IDynamicWorldObject) DynamicActor.Find(id);
+            }
 
-            throw new Exception("Unknown dynamic world object type.");
+            throw new InvalidOperationException("Type T is not a known dynamic world object type.");
         }
 
-        private int GetType<T>() where T : IDynamicWorldObject
+        private static int GetType<T>() where T : IDynamicWorldObject
         {
             if (typeof(DynamicTextLabel).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.TextLabel;
+            }
 
             if (typeof(DynamicPickup).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.Pickup;
+            }
 
             if (typeof(DynamicRaceCheckpoint).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.RaceCheckpoint;
+            }
 
             if (typeof(DynamicObject).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.Object;
+            }
 
             if (typeof(DynamicMapIcon).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.MapIcon;
+            }
 
             if (typeof(DynamicCheckpoint).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.Checkpoint;
+            }
 
             if (typeof(DynamicArea).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.Area;
+            }
 
             if (typeof(DynamicActor).IsAssignableFrom(typeof(T)))
+            {
                 return (int) StreamType.Actor;
+            }
 
-            throw new Exception("Unknown dynamic world object type.");
+            throw new InvalidOperationException("Type T is not a known dynamic world object type.");
         }
 
         #region Implementation of IService
@@ -173,7 +229,9 @@ namespace SampSharp.Streamer
         public void ToggleIdleUpdate(BasePlayer player, bool toggle)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             Internal.ToggleIdleUpdate(player.Id, toggle);
         }
@@ -181,7 +239,9 @@ namespace SampSharp.Streamer
         public bool IsToggleIdleUpdate(BasePlayer player)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             return Internal.IsToggleIdleUpdate(player.Id);
         }
@@ -189,7 +249,9 @@ namespace SampSharp.Streamer
         public void ToggleCameraUpdate(BasePlayer player, bool toggle)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             Internal.ToggleCameraUpdate(player.Id, toggle);
         }
@@ -197,7 +259,9 @@ namespace SampSharp.Streamer
         public bool IsToggleCameraUpdate(BasePlayer player)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             return Internal.IsToggleCameraUpdate(player.Id);
         }
@@ -206,14 +270,20 @@ namespace SampSharp.Streamer
             bool freezeplayer = true)
         {
             if (player == null)
+            {
                 throw new ArgumentNullException(nameof(player));
+            }
 
             Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1, compensatedtime, freezeplayer ? 1 : 0);
         }
 
         public void SetPriority(params StreamType[] types)
         {
-            if (types == null) throw new ArgumentNullException(nameof(types));
+            if (types == null)
+            {
+                throw new ArgumentNullException(nameof(types));
+            }
+
             Internal.SetTypePriority(types.Select(t => (int) t).ToArray(), types.Length);
         }
 
@@ -289,6 +359,7 @@ namespace SampSharp.Streamer
             set { Internal.ToggleErrorCallback(value); }
         }
 
+        [SuppressMessage("Major Code Smell", "S2376:Write-only properties should not be used", Justification = "Streamer provides no getter")]
         public bool AmxUnloadDestroyItems
         {
             set { Internal.AmxUnloadDestroyItems(value); }
@@ -369,7 +440,7 @@ namespace SampSharp.Streamer
             
             public Vector3 GetPosition(int id)
             {
-                Internal.GetItemPos((int) StreamType, id, out float x, out float y, out float z);
+                Internal.GetItemPos((int) StreamType, id, out var x, out var y, out var z);
                 return new Vector3(x, y, z);
             }
 
@@ -403,7 +474,10 @@ namespace SampSharp.Streamer
             public int[] GetArray(int id, StreamerDataType data, int maxlength = -1)
             {
                 if (maxlength < 0)
+                {
                     maxlength = GetArrayDataLength(id, data);
+                }
+
                 Internal.GetArrayData((int) StreamType, id, (int) data, out var value, maxlength);
 
                 return value;
@@ -447,20 +521,30 @@ namespace SampSharp.Streamer
             public void ToggleUpdate(BasePlayer player, bool toggle)
             {
                 if (player == null)
+                {
                     throw new ArgumentNullException(nameof(player));
+                }
 
                 Internal.ToggleItemUpdate(player.Id, (int) StreamType, toggle);
             }
 
             public int GetVisibleItems(BasePlayer player)
             {
-                if (player == null) throw new ArgumentNullException(nameof(player));
+                if (player == null)
+                {
+                    throw new ArgumentNullException(nameof(player));
+                }
+
                 return Internal.GetVisibleItems((int) StreamType, player.Id);
             }
 
             public void SetVisibleItems(BasePlayer player, int items)
             {
-                if (player == null) throw new ArgumentNullException(nameof(player));
+                if (player == null)
+                {
+                    throw new ArgumentNullException(nameof(player));
+                }
+
                 Internal.SetVisibleItems((int) StreamType, items, player.Id);
             }
         }

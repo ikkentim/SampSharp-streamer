@@ -19,13 +19,8 @@ namespace SampSharp.Streamer.World
 {
     public partial class DynamicRaceCheckpoint
     {
-        protected static readonly DynamicRaceCheckpointInternal Internal;
-
-        static DynamicRaceCheckpoint()
-        {
-            Internal = NativeObjectProxyFactory.CreateInstance<DynamicRaceCheckpointInternal>();
-        }
-
+        protected static readonly DynamicRaceCheckpointInternal Internal = NativeObjectProxyFactory.CreateInstance<DynamicRaceCheckpointInternal>();
+      
         public class DynamicRaceCheckpointInternal
         {
             [NativeMethod]

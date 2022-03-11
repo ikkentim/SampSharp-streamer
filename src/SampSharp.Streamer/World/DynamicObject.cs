@@ -279,13 +279,13 @@ namespace SampSharp.Streamer.World
 
         public void SetMaterialText(int materialindex, string text,
             ObjectMaterialSize materialsize = ObjectMaterialSize.X256X128, string fontface = "Arial", int fontsize = 24,
-            bool bold = true, Color fontcolor = new Color(), Color backcolor = new Color(),
+            bool bold = true, Color foreColor = new Color(), Color backColor = new Color(),
             ObjectMaterialTextAlign textalignment = ObjectMaterialTextAlign.Center)
         {
             AssertNotDisposed();
             Internal.SetDynamicObjectMaterialText(Id, materialindex, text, (int) materialsize, fontface, fontsize, bold,
-                fontcolor.ToInteger(ColorFormat.ARGB),
-                backcolor.ToInteger(ColorFormat.ARGB), (int) textalignment);
+                foreColor.ToInteger(ColorFormat.ARGB),
+                backColor.ToInteger(ColorFormat.ARGB), (int) textalignment);
         }
     }
 }

@@ -35,9 +35,6 @@ namespace SampSharp.Streamer.Controllers
 
         #region Implementation of ITypeProvider
 
-        /// <summary>
-        ///     Registers types this <see cref="T:SampSharp.GameMode.Controllers.ITypeProvider" /> requires the system to use.
-        /// </summary>
         public virtual void RegisterTypes()
         {
             DynamicPickup.Register<DynamicPickup>();

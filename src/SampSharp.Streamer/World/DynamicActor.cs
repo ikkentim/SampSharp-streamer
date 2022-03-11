@@ -16,8 +16,10 @@
 using System;
 using System.Linq;
 using SampSharp.GameMode;
+using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
+using SampSharp.Streamer.Events;
 
 namespace SampSharp.Streamer.World
 {
@@ -33,8 +35,8 @@ namespace SampSharp.Streamer.World
         public DynamicActor(int modelid, float angle, Vector3 position, bool invulnerable = true, float health = 100.0f, float streamdistance = 200,
             int[] worlds = null, int[] interiors = null, BasePlayer[] players = null, DynamicArea[] areas = null, int priority = 0)
         {
-            if (worlds == null) worlds = new[] { -1 };
-            if (interiors == null) interiors = new[] { -1 };
+            worlds ??= new[] { -1 };
+            interiors ??= new[] { -1 };
             var pl = players?.Select(p => p.Id).ToArray() ?? new[] { -1 };
             var ar = areas?.Select(a => a.Id).ToArray() ?? new[] { -1 };
 
@@ -150,7 +152,10 @@ namespace SampSharp.Streamer.World
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (IsDisposed) return;
+            if (IsDisposed)
+            {
+                return;
+            }
 
             Internal.DestroyDynamicActor(Id);
 
@@ -192,5 +197,32 @@ namespace SampSharp.Streamer.World
         }
 
         #endregion
+
+        public event EventHandler<PlayerEventArgs> StreamIn; 
+
+        public event EventHandler<PlayerEventArgs> StreamOut; 
+
+        public event EventHandler<PlayerShotActorEventArgs> PlayerShot; 
+
+        public virtual void OnStreamIn(PlayerEventArgs args)
+        {
+            AssertNotDisposed();
+
+            StreamIn?.Invoke(this, args);
+        }
+
+        public virtual void OnStreamOut(PlayerEventArgs args)
+        {
+            AssertNotDisposed();
+
+            StreamOut?.Invoke(this, args);
+        }
+
+        public virtual void OnPlayerGiveDamage(PlayerShotActorEventArgs args)
+        {
+            AssertNotDisposed();
+
+            PlayerShot?.Invoke(this, args);
+        }
     }
 }

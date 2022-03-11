@@ -79,7 +79,7 @@ csharp_style_expression_bodied_constructors = false:silent
 csharp_style_expression_bodied_indexers = when_on_single_line:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:warning
-csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_methods = when_on_single_line:none
 csharp_style_expression_bodied_operators = when_on_single_line:silent
 csharp_style_expression_bodied_properties = when_on_single_line:silent
 
@@ -237,6 +237,21 @@ dotnet_diagnostic.S1125.severity = none
 
 # S1135: Track uses of "TODO" tags
 dotnet_diagnostic.S1135.severity = warning
+
+# S1006: Method overrides should not change parameter defaults
+dotnet_diagnostic.S1006.severity = none
+
+# S2743: Static fields should not be used in generic types
+dotnet_diagnostic.S2743.severity = none
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+# IDE0022: Use expression body for methods
+dotnet_diagnostic.IDE0022.severity = none
+
+# S3218: Inner class members should not shadow outer class "static" or type members
+dotnet_diagnostic.S3218.severity = none
 
 [**Tests/**.cs]
 
