@@ -2,8 +2,8 @@
   "profiles": {
       "TestMode (samp-server)": {
       "commandName": "Executable",
-      "executablePath": "..\\env\\samp-server.exe",
-      "workingDirectory": "..\\env\\"
+      "executablePath": ".\\samp-server.exe",
+      "workingDirectory": "..\\..\\env\\"
     }
   }
 }

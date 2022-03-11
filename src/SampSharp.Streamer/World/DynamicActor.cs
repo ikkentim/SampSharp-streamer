@@ -202,7 +202,7 @@ namespace SampSharp.Streamer.World
 
         public event EventHandler<PlayerEventArgs> StreamOut; 
 
-        public event EventHandler<PlayerShotActorEventArgs> PlayerShot; 
+        public event EventHandler<PlayerShotActorEventArgs> PlayerGiveDamage; 
 
         public virtual void OnStreamIn(PlayerEventArgs args)
         {
@@ -222,7 +222,7 @@ namespace SampSharp.Streamer.World
         {
             AssertNotDisposed();
 
-            PlayerShot?.Invoke(this, args);
+            PlayerGiveDamage?.Invoke(this, args);
         }
     }
 }

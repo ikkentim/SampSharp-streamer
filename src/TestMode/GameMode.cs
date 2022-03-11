@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using SampSharp.Core.Natives;
@@ -14,6 +15,7 @@ using SampSharp.Streamer.World;
 
 namespace TestMode
 {
+    [SuppressMessage("Major Bug", "S3168:\"async\" methods should not return \"void\"", Justification = "SampSharp commands")]
     public class GameMode : BaseMode
     {
         private static DynamicArea _area;
@@ -77,8 +79,8 @@ namespace TestMode
 
             Console.WriteLine("Area handle: " + area.Id);
 
-            area.Enter += (sender, args) => args.Player.SendClientMessage("Entered polygon");
-            area.Leave += (sender, args) => args.Player.SendClientMessage("Left polygon");
+            area.Enter += (_, args) => args.Player.SendClientMessage("Entered polygon");
+            area.Leave += (_, args) => args.Player.SendClientMessage("Left polygon");
 
             var isValid = area.IsValid;
             var position = area.Position;
@@ -86,8 +88,8 @@ namespace TestMode
             Console.WriteLine($"area.IsValid = {isValid}, area.Position = {position}, Points = {string.Join(", ", points)}");
             
             var area2 = DynamicArea.CreateRectangle(0, 0, 20, 20);
-            area2.Enter += (sender, args) => args.Player.SendClientMessage("Entered Rectangle");
-            area2.Leave += (sender, args) => args.Player.SendClientMessage("Left Rectangle");
+            area2.Enter += (_, args) => args.Player.SendClientMessage("Entered Rectangle");
+            area2.Leave += (_, args) => args.Player.SendClientMessage("Left Rectangle");
 
             var icon = new DynamicMapIcon(new Vector3(1500, -1500, 0), Color.Blue, MapIconType.Global, -1, -1, null, 300);
 
@@ -97,7 +99,7 @@ namespace TestMode
 
             var pickup = new DynamicPickup(1274, 23, new Vector3(0, 0, 3), 100f,
                 new[] { 11, 22, 33, 44, 0, 55, 66, 77, 88, 99 }); //Dollar icon
-            pickup.PickedUp += (sender, args) => args.Player.SendClientMessage(Color.White, "Picked Up");
+            pickup.PickedUp += (_, args) => args.Player.SendClientMessage(Color.White, "Picked Up");
 
             var pickup2 = new DynamicPickup(1274, 23, Vector3.One, 42);
 
@@ -105,34 +107,37 @@ namespace TestMode
             Console.WriteLine("World: {0}", string.Join(",", pickup2.Worlds));
 
             var checkpoint = new DynamicCheckpoint(new Vector3(10, 10, 3));
-            checkpoint.Enter += (sender, args) => args.Player.SendClientMessage(Color.White, "Entered CP");
-            checkpoint.Leave += (sender, args) => args.Player.SendClientMessage(Color.White, "Left CP");
+            checkpoint.Enter += (_, args) => args.Player.SendClientMessage(Color.White, "Entered CP");
+            checkpoint.Leave += (_, args) => args.Player.SendClientMessage(Color.White, "Left CP");
 
             var actor = new DynamicActor(100, new Vector3(20, 10, 5), 0);
-            
+
+            actor.PlayerGiveDamage += (_, args) => args.Player.SendClientMessage(Color.White,
+                $"Hit actor for {args.Amount} on {args.BodyPart} with {args.Weapon}");
 
 
-            var racecheckpoint = new DynamicRaceCheckpoint(CheckpointType.Normal, new Vector3(-10, -10, 3), new Vector3());
-            racecheckpoint.Enter += (sender, args) => args.Player.SendClientMessage(Color.White, "Entered RCP");
-            racecheckpoint.Leave += (sender, args) => args.Player.SendClientMessage(Color.White, "Left RCP");
+            var raceCheckpoint = new DynamicRaceCheckpoint(CheckpointType.Normal, new Vector3(-10, -10, 3), new Vector3());
+            raceCheckpoint.Enter += (_, args) => args.Player.SendClientMessage(Color.White, "Entered RCP");
+            raceCheckpoint.Leave += (_, args) => args.Player.SendClientMessage(Color.White, "Left RCP");
 
-            new DynamicTextLabel("[I am maroon]", Color.Maroon, pickup.Position + new Vector3(0, 0, 1), 100.0f);
+            _ = new DynamicTextLabel("[I am maroon]", Color.Maroon, pickup.Position + new Vector3(0, 0, 1), 100.0f);
 
             var obj = new DynamicObject(12991, new Vector3(10, 10, 3));
             Console.WriteLine("obj position after spawn " + obj.Position);
             var offset = Vector3.One;
             obj.SetMaterialText(1, "Test", ObjectMaterialSize.X512X512, "Arial", 30, false, Color.Black, Color.White);
             obj.Move(obj.Position + -offset, 0.6f, obj.Rotation + new Vector3(0, 0, 25));
-            obj.Moved += (sender, args) =>
+            obj.Moved += (_, _) =>
             {
                 Console.WriteLine("moved");
-                obj.Move(obj.Position + (offset = -offset), 0.6f, obj.Rotation + new Vector3(0, 0, 25));
+                offset = -offset;
+                obj.Move(obj.Position + offset, 0.6f, obj.Rotation + new Vector3(0, 0, 25));
             };
 
 
             Console.WriteLine("Test error handling...");
             streamer.IsErrorCallbackEnabled = true;
-            streamer.Error += (sender, args) => { Console.WriteLine("Error CB: " + args.Error); };
+            streamer.Error += (_, args) => { Console.WriteLine("Error CB: " + args.Error); };
             streamer.PrintStackTraceOnError = true;
             streamer.ItemType[StreamType.MapIcon].GetArray(9999, StreamerDataType.Color, 1);
             Console.WriteLine("Messages should have appeared above.");

@@ -5,14 +5,12 @@ using SampSharp.Core.Logging;
 
 namespace TestMode
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             new GameModeBuilder()
                 .Use<GameMode>()
-                .UseLogLevel(CoreLogLevel.Info)
-                .UseStartBehaviour(GameModeStartBehaviour.FakeGmx)
                 .Run();
         }
     }
