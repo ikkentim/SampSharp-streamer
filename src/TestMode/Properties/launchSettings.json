@@ -1,6 +1,6 @@
 {
   "profiles": {
-      "TestMode (samp-server)": {
+      "TestMode.GameMode (samp-server)": {
       "commandName": "Executable",
       "executablePath": ".\\samp-server.exe",
       "workingDirectory": "..\\..\\env\\"

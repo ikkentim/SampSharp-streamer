@@ -2,8 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using SampSharp.Core.Natives;
-using SampSharp.Core.Natives.NativeObjects;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Definitions;
 using SampSharp.GameMode.SAMP;
@@ -13,7 +11,7 @@ using SampSharp.Streamer;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.World;
 
-namespace TestMode
+namespace TestMode.GameMode
 {
     [SuppressMessage("Major Bug", "S3168:\"async\" methods should not return \"void\"", Justification = "SampSharp commands")]
     public class GameMode : BaseMode

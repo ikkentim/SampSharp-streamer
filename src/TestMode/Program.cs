@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using SampSharp.Core;
-using SampSharp.Core.Logging;
+﻿using SampSharp.Core;
 
-namespace TestMode
+namespace TestMode.GameMode
 {
     internal static class Program
     {

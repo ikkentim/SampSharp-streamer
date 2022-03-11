@@ -29,7 +29,7 @@ namespace TestMode.Entities.Systems
         [Event]
         public void OnPlayerPickUpDynamicPickup(Player player, DynamicPickup dynamicPickup)
         {
-            player.SendClientMessage($"OnPlayerPickUpDynamicPickup({player.Entity.Handle}, {dynamicPickup.Entity.Handle})");
+            player.SendClientMessage($"OnPlayerPickUpDynamicPickup({player.Entity}, {dynamicPickup.Entity})");
         }
 
         [PlayerCommand]

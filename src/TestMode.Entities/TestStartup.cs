@@ -38,26 +38,6 @@ namespace TestMode.Entities
                 .EnableSampEvents()
                 .EnablePlayerCommands()
                 .EnableStreamerEvents();
-
-            WarmUpNativeObjects();
-        }
-
-        private void WarmUpNativeObjects()
-        {
-            // Warm up native objects for profiling purposes
-
-            // Components
-            NativeObjectProxyFactory.CreateInstance<NativeStreamerPlayer>();
-
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicWorldObject>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicObject>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicPickup>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicCheckpoint>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicRaceCheckpoint>();
-            NativeObjectProxyFactory.CreateInstance<NativeDynamicTextLabel>();
-
-            // Services
-            NativeObjectProxyFactory.CreateInstance<StreamerServiceNative>();
         }
     }
 }
