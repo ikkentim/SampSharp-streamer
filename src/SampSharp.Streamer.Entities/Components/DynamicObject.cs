@@ -84,7 +84,14 @@ namespace SampSharp.Streamer.Entities
             {
                 return GetComponent<NativeDynamicObject>().GetDynamicObjectNoCameraCol();
             }
-            set => GetComponent<NativeDynamicObject>().SetDynamicObjectNoCameraCol();
+        }
+
+        /// <summary>
+        /// Disables camera collision of this dynamic object.
+        /// </summary>
+        public void SetNoCameraCol()
+        {
+            GetComponent<NativeDynamicObject>().SetDynamicObjectNoCameraCol();
         }
 
         /// <summary>

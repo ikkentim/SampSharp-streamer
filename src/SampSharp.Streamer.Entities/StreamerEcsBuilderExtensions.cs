@@ -45,7 +45,7 @@ namespace SampSharp.Streamer.Entities
 
             return builder;
         }
-
+        
         /// <summary>
         /// Enables all dynamic object related Streamer events.
         /// </summary>

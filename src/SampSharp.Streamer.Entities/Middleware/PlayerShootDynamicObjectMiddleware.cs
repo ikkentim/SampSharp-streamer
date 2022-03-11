@@ -35,7 +35,7 @@ namespace SampSharp.Streamer.Entities
             var playerEntity = SampEntities.GetPlayerId((int)inArgs[0]);
             var objectEntity = StreamerEntities.GetDynamicObjectId((int)inArgs[2]);
 
-            if (objectEntity == null)
+            if (!objectEntity)
                 return null;
 
             _context.BaseContext = context;
