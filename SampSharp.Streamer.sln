@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{7E3E537C
 		CHANGES.md = CHANGES.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampSharp.Streamer.Entities", "src\SampSharp.Streamer.Entities\SampSharp.Streamer.Entities.csproj", "{101CB4F0-1444-45BC-940A-612D9C9F5322}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMode.Entities", "src\TestMode.Entities\TestMode.Entities.csproj", "{109388DF-1825-43B3-960C-86A55A0C220B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{054845C7-1998-47F2-A79B-51B24B86EC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{054845C7-1998-47F2-A79B-51B24B86EC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{054845C7-1998-47F2-A79B-51B24B86EC19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{101CB4F0-1444-45BC-940A-612D9C9F5322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{101CB4F0-1444-45BC-940A-612D9C9F5322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{101CB4F0-1444-45BC-940A-612D9C9F5322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{101CB4F0-1444-45BC-940A-612D9C9F5322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{109388DF-1825-43B3-960C-86A55A0C220B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{109388DF-1825-43B3-960C-86A55A0C220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{109388DF-1825-43B3-960C-86A55A0C220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{109388DF-1825-43B3-960C-86A55A0C220B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
