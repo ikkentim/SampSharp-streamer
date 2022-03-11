@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Streamer Wrapper for SampSharp.Entities</Title>
+    <Description>A SampSharp wrapper for Incognito's streamer plugin.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SampSharp.Entities" Version="0.10.0-alpha1" />
+  </ItemGroup>
+
+</Project>
