@@ -1,3 +1,9 @@
+### 0.10.0-alpha1
+- Added SampSharp.Streamer.Entities. Please note not every single streamer function is available yet in the API. Thanks @Eidorian for setting this up! (#20)
+- Updated for streamer 2.9.5
+- Updated for SampSharp 0.10.0-alpha1
+
+
 ### 0.9.0
 - Updated for SampSharp 0.9.0
 
