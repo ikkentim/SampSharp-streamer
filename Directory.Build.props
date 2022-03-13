@@ -13,7 +13,7 @@
 
   <PropertyGroup Condition="'$(IsLibrary)' == 'True'">
     <OutputPath>..\..\bin\$(Configuration)\</OutputPath>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
