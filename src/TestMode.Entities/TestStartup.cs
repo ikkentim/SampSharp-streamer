@@ -14,8 +14,6 @@
 // limitations under the License.
 
 using Microsoft.Extensions.DependencyInjection;
-
-using SampSharp.Core.Natives.NativeObjects;
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 

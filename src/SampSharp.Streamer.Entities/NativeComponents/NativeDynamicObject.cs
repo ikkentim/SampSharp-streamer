@@ -137,6 +137,12 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
+        
+        [NativeMethod]
+        public virtual int RemoveDynamicObjectMaterial(int materialindex)
+        {
+            throw new NativeNotImplementedException();
+        }
 
         [NativeMethod]
         public virtual bool IsDynamicObjectMaterialTextUsed(int materialindex)
@@ -151,11 +157,17 @@ namespace SampSharp.Streamer.Entities
         {
             throw new NativeNotImplementedException();
         }
-
+        
         [NativeMethod]
         public virtual int SetDynamicObjectMaterialText(int materialindex, string text,
             int materialsize, string fontface, int fontsize, bool bold, int fontcolor, int backcolor,
             int textalignment)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int RemoveDynamicObjectMaterialText(int materialindex)
         {
             throw new NativeNotImplementedException();
         }

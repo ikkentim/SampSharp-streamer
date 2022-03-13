@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
 using SampSharp.Entities;
 using SampSharp.Entities.SAMP;
 using SampSharp.Entities.SAMP.Commands;

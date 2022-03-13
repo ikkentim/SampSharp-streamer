@@ -235,13 +235,13 @@ namespace SampSharp.Streamer
         }
 
         [Callback]
-        internal void Streamer_OnItemStreamIn(int type, int id)
+        internal void Streamer_OnItemStreamIn(int type, int id, int data)
         {
             // not implemented.
         }
 
         [Callback]
-        internal void Streamer_OnItemStreamOut(int type, int id)
+        internal void Streamer_OnItemStreamOut(int type, int id, int data)
         {
             // not implemented.
         }

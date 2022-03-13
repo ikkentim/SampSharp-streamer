@@ -179,6 +179,18 @@ namespace SampSharp.Streamer.World
             {
                 throw new NativeNotImplementedException();
             }
+            
+            [NativeMethod]
+            public bool RemoveDynamicObjectMaterial(int objectid, int materialindex)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
+            public bool RemoveDynamicObjectMaterialText(int objectid, int materialindex)
+            {
+                throw new NativeNotImplementedException();
+            }
         }
     }
 }

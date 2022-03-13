@@ -90,6 +90,24 @@ namespace SampSharp.Streamer
             {
                 throw new NativeNotImplementedException();
             }
+            
+            [NativeMethod(Function = "Streamer_RemoveIntData")]
+            public virtual int RemoveIntData(int type, int id, int data)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_HasIntData")]
+            public virtual int HasIntData(int type, int id, int data)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod(Function = "Streamer_HasArrayData")]
+            public virtual int HasArrayData(int type, int id, int data)
+            {
+                throw new NativeNotImplementedException();
+            }
 
             [NativeMethod(Function = "Streamer_SetIntData")]
             public virtual int SetIntData(int type, int id, int data, int value)

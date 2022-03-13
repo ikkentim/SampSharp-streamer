@@ -15,7 +15,6 @@
 
 using SampSharp.Core.Natives.NativeObjects;
 using SampSharp.Entities;
-using SampSharp.Entities.SAMP;
 
 namespace SampSharp.Streamer.Entities
 {

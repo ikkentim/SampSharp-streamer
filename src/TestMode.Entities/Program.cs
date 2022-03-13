@@ -14,7 +14,6 @@
 // limitations under the License.
 
 using SampSharp.Core;
-using SampSharp.Core.Logging;
 using SampSharp.Entities;
 
 namespace TestMode.Entities

@@ -98,7 +98,7 @@ namespace SampSharp.Streamer.Entities
         /// <summary>
         /// Gets a dynamic race checkpoint entity identifier based on an integer dynamic race checkpoint identifier.
         /// </summary>
-        /// <param name="checkpointId">The dynamic race checkpoint identifier.</param>
+        /// <param name="raceCheckpointId">The dynamic race checkpoint identifier.</param>
         /// <returns>The entity identifier.</returns>
         public static EntityId GetDynamicRaceCheckpointId(int raceCheckpointId)
         {
@@ -118,7 +118,7 @@ namespace SampSharp.Streamer.Entities
         /// <summary>
         /// Gets a dynamic text label entity identifier based on an integer dynamic text label identifier.
         /// </summary>
-        /// <param name="mapIconId">The dynamic text label identifier.</param>
+        /// <param name="textLabelId">The dynamic text label identifier.</param>
         /// <returns>The entity identifier.</returns>
         public static EntityId GetDynamicTextLabelId(int textLabelId)
         {
@@ -128,7 +128,7 @@ namespace SampSharp.Streamer.Entities
         /// <summary>
         /// Gets a dynamic area entity identifier based on an integer dynamic area identifier.
         /// </summary>
-        /// <param name="mapIconId">The dynamic area identifier.</param>
+        /// <param name="areaId">The dynamic area identifier.</param>
         /// <returns>The entity identifier.</returns>
         public static EntityId GetDynamicAreaId(int areaId)
         {

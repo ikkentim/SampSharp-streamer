@@ -287,5 +287,17 @@ namespace SampSharp.Streamer.World
                 foreColor.ToInteger(ColorFormat.ARGB),
                 backColor.ToInteger(ColorFormat.ARGB), (int) textalignment);
         }
+
+        public void RemoveMaterial(int materialindex)
+        {
+            AssertNotDisposed();
+            Internal.RemoveDynamicObjectMaterial(Id, materialindex);
+        }
+        
+        public void RemoveMaterialText(int materialindex)
+        {
+            AssertNotDisposed();
+            Internal.RemoveDynamicObjectMaterialText(Id, materialindex);
+        }
     }
 }

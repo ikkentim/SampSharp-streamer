@@ -193,6 +193,15 @@ namespace SampSharp.Streamer.Entities
         }
 
         /// <summary>
+        /// Remove the material of this dynamic object.
+        /// </summary>
+        /// <param name="materialindex">The material index.</param>
+        public void RemoveMaterial(int materialindex)
+        {
+            GetComponent<NativeDynamicObject>().RemoveDynamicObjectMaterial(materialindex);
+        }
+
+        /// <summary>
         /// Gets the material text of this dynamic object.
         /// </summary>
         public void GetMaterialText(int materialindex, out string text,
@@ -228,6 +237,15 @@ namespace SampSharp.Streamer.Entities
         {
             GetComponent<NativeDynamicObject>().SetDynamicObjectMaterialText(materialindex, text, (int)materialsize, fontface, fontsize, bold,
                 fontcolor.ToInteger(ColorFormat.ARGB), backcolor.ToInteger(ColorFormat.ARGB), (int)textalignment);
+        }
+        
+        /// <summary>
+        /// Remove the material text of this dynamic object.
+        /// </summary>
+        /// <param name="materialindex">The material index.</param>
+        public void RemoveMaterialText(int materialindex)
+        {
+            GetComponent<NativeDynamicObject>().RemoveDynamicObjectMaterialText(materialindex);
         }
 
         /// <summary>
