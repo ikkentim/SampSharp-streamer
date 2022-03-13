@@ -18,9 +18,9 @@ using SampSharp.Entities;
 
 namespace TestMode.Entities
 {
-    internal class Program
+    internal static class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             new GameModeBuilder()
                 .UseEcs<TestStartup>()

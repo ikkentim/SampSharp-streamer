@@ -15,13 +15,39 @@
 
 namespace SampSharp.Streamer.Entities
 {
+    /// <summary>
+    /// Contains types of areas a see <see cref="DynamicArea"/> can cover.
+    /// </summary>
     public enum AreaType
     {
+        /// <summary>
+        /// A circular area
+        /// </summary>
         Circle = 0,
+
+        /// <summary>
+        /// A cylindrical area.
+        /// </summary>
         Cylinder = 1,
+
+        /// <summary>
+        /// A spherical area
+        /// </summary>
         Sphere = 2,
+
+        /// <summary>
+        /// A rectangular area.
+        /// </summary>
         Rectangle = 3,
+
+        /// <summary>
+        /// A cuboidal area.
+        /// </summary>
         Cuboid = 4,
+
+        /// <summary>
+        /// A polygonal area.
+        /// </summary>
         Polygon = 5
     }
 }

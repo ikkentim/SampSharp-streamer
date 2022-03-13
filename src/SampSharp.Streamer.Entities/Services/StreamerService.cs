@@ -226,7 +226,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreateCylinder(Vector2 position, float minz, float maxz, float size, 
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
@@ -244,7 +245,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreateSphere(Vector3 position, float size,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
@@ -262,7 +264,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreateRectangle(Vector2 min, Vector2 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
@@ -280,7 +283,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreateCuboid(Vector3 min, Vector3 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
@@ -298,7 +302,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreateCube(Vector3 min, Vector3 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
@@ -316,7 +321,8 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-
+        
+        /// <inheritdoc />
         public DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity, float maxz = float.PositiveInfinity,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {

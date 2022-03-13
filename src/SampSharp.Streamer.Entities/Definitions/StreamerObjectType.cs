@@ -13,12 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using SampSharp.Entities.SAMP;
+
 namespace SampSharp.Streamer.Entities
 {
+    /// <summary>
+    /// Provides types of visible objects available in streamer and SampSharp.
+    /// </summary>
     public enum StreamerObjectType
     {
+        /// <summary>
+        /// A <see cref="GlobalObject"/>.
+        /// </summary>
         Global = 0,
+        /// <summary>
+        /// A <see cref="PlayerObject"/>.
+        /// </summary>
         Player = 1,
+
+        /// <summary>
+        /// A <see cref="DynamicObject"/>.
+        /// </summary>
         Dynamic = 2
     }
 }

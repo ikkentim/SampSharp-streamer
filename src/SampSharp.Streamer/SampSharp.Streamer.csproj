@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Streamer Wrapper for SampSharp.GameMode</Title>
     <Description>A SampSharp wrapper for Incognito's streamer plugin.</Description>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

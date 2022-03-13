@@ -15,16 +15,47 @@
 
 namespace SampSharp.Streamer.Entities
 {
+    /// <summary>
+    /// Contains types of entities available in streamer.
+    /// </summary>
     public enum StreamerType
     {
+        /// <summary>
+        /// All types provided by streamer.
+        /// </summary>
         All = -1,
+        /// <summary>
+        /// A <see cref="DynamicObject"/>.
+        /// </summary>
         Object = 0,
+        /// <summary>
+        /// A <see cref="DynamicPickup"/>.
+        /// </summary>
         Pickup = 1,
+        /// <summary>
+        /// A <see cref="DynamicCheckpoint"/>.
+        /// </summary>
         Checkpoint = 2,
+        /// <summary>
+        /// A <see cref="DynamicRaceCheckpoint"/>.
+        /// </summary>
         RaceCheckpoint = 3,
+        /// <summary>
+        /// A <see cref="DynamicMapIcon"/>.
+        /// </summary>
         MapIcon = 4,
+        /// <summary>
+        /// A <see cref="DynamicTextLabel"/>.
+        /// </summary>
         TextLabel = 5,
+        /// <summary>
+        /// A <see cref="DynamicArea"/>.
+        /// </summary>
         Area = 6,
+        /// <summary>
+        /// A dynamic actor.
+        /// </summary>
+        // TODO: Implement actor in SampSharp.Streamer.Entities.
         Actor = 7
     }
 }
