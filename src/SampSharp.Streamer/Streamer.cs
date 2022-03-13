@@ -33,16 +33,6 @@ namespace SampSharp.Streamer
     {
         public const int InvalidId = 0;
 
-        public static void Update(BasePlayer player)
-        {
-            if (player == null)
-            {
-                throw new ArgumentNullException(nameof(player));
-            }
-
-            Internal.Update(player.Id, -1);
-        }
-
         public void SetPlayerTickRate(BasePlayer player, int rate)
         {
             if (player == null)
@@ -63,7 +53,8 @@ namespace SampSharp.Streamer
             return Internal.GetPlayerTickRate(player.Id);
         }
 
-        public IEnumerable<T> GetNearbyItems<T>(Vector3 position, float range = 300, int maxItems = 32, int worldid = -1) where T : IDynamicWorldObject
+        public IEnumerable<T> GetNearbyItems<T>(Vector3 position, float range = 300, int maxItems = 32,
+            int worldid = -1) where T : IDynamicWorldObject
         {
             var type = GetType<T>();
 
@@ -126,42 +117,42 @@ namespace SampSharp.Streamer
         {
             if (typeof(DynamicTextLabel).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicTextLabel.Find(id);
+                return (T)(IDynamicWorldObject)DynamicTextLabel.Find(id);
             }
 
             if (typeof(DynamicPickup).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicPickup.Find(id);
+                return (T)(IDynamicWorldObject)DynamicPickup.Find(id);
             }
 
             if (typeof(DynamicRaceCheckpoint).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicRaceCheckpoint.Find(id);
+                return (T)(IDynamicWorldObject)DynamicRaceCheckpoint.Find(id);
             }
 
             if (typeof(DynamicObject).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicObject.Find(id);
+                return (T)(IDynamicWorldObject)DynamicObject.Find(id);
             }
 
             if (typeof(DynamicMapIcon).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicMapIcon.Find(id);
+                return (T)(IDynamicWorldObject)DynamicMapIcon.Find(id);
             }
 
             if (typeof(DynamicCheckpoint).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicCheckpoint.Find(id);
+                return (T)(IDynamicWorldObject)DynamicCheckpoint.Find(id);
             }
 
             if (typeof(DynamicArea).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicArea.Find(id);
+                return (T)(IDynamicWorldObject)DynamicArea.Find(id);
             }
 
             if (typeof(DynamicActor).IsAssignableFrom(typeof(T)))
             {
-                return (T) (IDynamicWorldObject) DynamicActor.Find(id);
+                return (T)(IDynamicWorldObject)DynamicActor.Find(id);
             }
 
             throw new InvalidOperationException("Type T is not a known dynamic world object type.");
@@ -171,42 +162,42 @@ namespace SampSharp.Streamer
         {
             if (typeof(DynamicTextLabel).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.TextLabel;
+                return (int)StreamType.TextLabel;
             }
 
             if (typeof(DynamicPickup).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.Pickup;
+                return (int)StreamType.Pickup;
             }
 
             if (typeof(DynamicRaceCheckpoint).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.RaceCheckpoint;
+                return (int)StreamType.RaceCheckpoint;
             }
 
             if (typeof(DynamicObject).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.Object;
+                return (int)StreamType.Object;
             }
 
             if (typeof(DynamicMapIcon).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.MapIcon;
+                return (int)StreamType.MapIcon;
             }
 
             if (typeof(DynamicCheckpoint).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.Checkpoint;
+                return (int)StreamType.Checkpoint;
             }
 
             if (typeof(DynamicArea).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.Area;
+                return (int)StreamType.Area;
             }
 
             if (typeof(DynamicActor).IsAssignableFrom(typeof(T)))
             {
-                return (int) StreamType.Actor;
+                return (int)StreamType.Actor;
             }
 
             throw new InvalidOperationException("Type T is not a known dynamic world object type.");
@@ -266,7 +257,8 @@ namespace SampSharp.Streamer
             return Internal.IsToggleCameraUpdate(player.Id);
         }
 
-        public void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1, int compensatedtime = -1,
+        public void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1,
+            int compensatedtime = -1,
             bool freezeplayer = true)
         {
             if (player == null)
@@ -274,7 +266,18 @@ namespace SampSharp.Streamer
                 throw new ArgumentNullException(nameof(player));
             }
 
-            Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1, compensatedtime, freezeplayer ? 1 : 0);
+            Internal.UpdateEx(player.Id, position.X, position.Y, position.Z, worldid, interiorid, -1, compensatedtime,
+                freezeplayer ? 1 : 0);
+        }
+
+        public void Update(BasePlayer player)
+        {
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            Internal.Update(player.Id, -1);
         }
 
         public void SetPriority(params StreamType[] types)
@@ -284,14 +287,14 @@ namespace SampSharp.Streamer
                 throw new ArgumentNullException(nameof(types));
             }
 
-            Internal.SetTypePriority(types.Select(t => (int) t).ToArray(), types.Length);
+            Internal.SetTypePriority(types.Select(t => (int)t).ToArray(), types.Length);
         }
 
         public StreamType[] GetPriority()
         {
-            var types = new int[(int) StreamType.Area + 1];
+            var types = new int[(int)StreamType.Area + 1];
             Internal.GetTypePriority(types, types.Length);
-            return types.Select(t => (StreamType) t).ToArray();
+            return types.Select(t => (StreamType)t).ToArray();
         }
 
         public float GetLastUpdateTime()
@@ -325,13 +328,9 @@ namespace SampSharp.Streamer
             // Load the steamer controllers.
             var types = new[]
             {
-                typeof(DynamicAreaController),
-                typeof(DynamicCheckpointController),
-                typeof(DynamicMapIconController),
-                typeof(DynamicObjectController),
-                typeof(DynamicPickupController),
-                typeof(DynamicRaceCheckpointController),
-                typeof(DynamicTextLabelController)
+                typeof(DynamicAreaController), typeof(DynamicCheckpointController),
+                typeof(DynamicMapIconController), typeof(DynamicObjectController), typeof(DynamicPickupController),
+                typeof(DynamicRaceCheckpointController), typeof(DynamicTextLabelController)
             };
 
             foreach (var type in types)
@@ -359,7 +358,8 @@ namespace SampSharp.Streamer
             set { Internal.ToggleErrorCallback(value); }
         }
 
-        [SuppressMessage("Major Code Smell", "S2376:Write-only properties should not be used", Justification = "Streamer provides no getter")]
+        [SuppressMessage("Major Code Smell", "S2376:Write-only properties should not be used",
+            Justification = "Streamer provides no getter")]
         public bool AmxUnloadDestroyItems
         {
             set { Internal.AmxUnloadDestroyItems(value); }
@@ -391,7 +391,7 @@ namespace SampSharp.Streamer
             set { Internal.SetCellSize(value); }
         }
 
-        public OptionItemTypeCollection ItemType { get; } = new OptionItemTypeCollection();
+        public OptionItemTypeSet ItemType { get; } = new OptionItemTypeSet();
 
         public bool IsErrorCallbackEnabled
         {
@@ -406,153 +406,6 @@ namespace SampSharp.Streamer
         }
 
         public bool PrintStackTraceOnError { get; set; }
-
-        #endregion
-
-        #region Subclasses
-
-        public sealed class OptionItemType
-        {
-            public OptionItemType(StreamType streamType)
-            {
-                StreamType = streamType;
-            }
-
-            public int VisibleItems
-            {
-                get { return Internal.GetVisibleItems((int) StreamType, -1); }
-                set { Internal.SetVisibleItems((int) StreamType, value, -1); }
-            }
-
-            public int MaxItems
-            {
-                get { return Internal.GetMaxItems((int) StreamType); }
-                set { Internal.SetMaxItems((int) StreamType, value); }
-            }
-
-            public int ChunkSize
-            {
-                get { return Internal.GetChunkSize((int) StreamType); }
-                set { Internal.SetChunkSize((int) StreamType, value); }
-            }
-
-            public StreamType StreamType { get; }
-            
-            public Vector3 GetPosition(int id)
-            {
-                Internal.GetItemPos((int) StreamType, id, out var x, out var y, out var z);
-                return new Vector3(x, y, z);
-            }
-
-            public void SetPosition(int id, Vector3 position)
-            {
-                Internal.SetItemPos((int) StreamType, id, position.X, position.Y, position.Z);
-            }
-
-            public int GetChunkTickRate(BasePlayer player = null)
-            {
-                return Internal.GetChunkTickRate((int) StreamType, player?.Id ?? -1);
-            }
-
-            public void SetChunkTickRate(int rate, BasePlayer player = null)
-            {
-                Internal.SetChunkTickRate((int) StreamType, rate, player?.Id ?? -1);
-            }
-
-            public int GetInteger(int id, StreamerDataType data)
-            {
-                return Internal.GetIntData((int) StreamType, id, (int) data);
-            }
-
-            public float GetFloat(int id, StreamerDataType data)
-            {
-                Internal.GetFloatData((int)StreamType, id, (int)data, out var value);
-
-                return value;
-            }
-            
-            public int[] GetArray(int id, StreamerDataType data, int maxlength = -1)
-            {
-                if (maxlength < 0)
-                {
-                    maxlength = GetArrayDataLength(id, data);
-                }
-
-                Internal.GetArrayData((int) StreamType, id, (int) data, out var value, maxlength);
-
-                return value;
-            }
-
-            public int GetArrayDataLength(int id, StreamerDataType data)
-            {
-                return Internal.GetArrayDataLength((int) StreamType, id, (int) data);
-            }
-
-            public void AppendToArray(int id, StreamerDataType data, int value)
-            {
-                Internal.AppendArrayData((int) StreamType, id, (int) data, value);
-            }
-
-            public void RemoveArrayData(int id, StreamerDataType data, int value)
-            {
-                Internal.RemoveArrayData((int) StreamType, id, (int) data, value);
-            }
-
-            public bool IsInArray(int id, StreamerDataType data, int value)
-            {
-                return Internal.IsInArrayData((int) StreamType, id, (int) data, value);
-            }
-
-            public void SetInteger(int id, StreamerDataType data, int value)
-            {
-                Internal.SetIntData((int) StreamType, id, (int) data, value);
-            }
-
-            public void SetFloat(int id, StreamerDataType data, float value)
-            {
-                Internal.SetFloatData((int) StreamType, id, (int) data, value);
-            }
-
-            public void SetArray(int id, StreamerDataType data, int[] value)
-            {
-                Internal.SetArrayData((int) StreamType, id, (int) data, value, value.Length);
-            }
-
-            public void ToggleUpdate(BasePlayer player, bool toggle)
-            {
-                if (player == null)
-                {
-                    throw new ArgumentNullException(nameof(player));
-                }
-
-                Internal.ToggleItemUpdate(player.Id, (int) StreamType, toggle);
-            }
-
-            public int GetVisibleItems(BasePlayer player)
-            {
-                if (player == null)
-                {
-                    throw new ArgumentNullException(nameof(player));
-                }
-
-                return Internal.GetVisibleItems((int) StreamType, player.Id);
-            }
-
-            public void SetVisibleItems(BasePlayer player, int items)
-            {
-                if (player == null)
-                {
-                    throw new ArgumentNullException(nameof(player));
-                }
-
-                Internal.SetVisibleItems((int) StreamType, items, player.Id);
-            }
-        }
-
-        public sealed class OptionItemTypeCollection
-        {
-            public OptionItemType this[StreamType type] => new OptionItemType(type);
-        }
 
         #endregion
     }

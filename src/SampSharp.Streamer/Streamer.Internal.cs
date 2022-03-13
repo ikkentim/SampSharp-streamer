@@ -19,7 +19,7 @@ namespace SampSharp.Streamer
 {
     public partial class Streamer
     {
-        protected static readonly StreamerInternal Internal = NativeObjectProxyFactory.CreateInstance<StreamerInternal>();
+        protected internal static readonly StreamerInternal Internal = NativeObjectProxyFactory.CreateInstance<StreamerInternal>();
   
         public class StreamerInternal
         {

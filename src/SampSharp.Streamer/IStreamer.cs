@@ -14,12 +14,14 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using SampSharp.GameMode;
 using SampSharp.GameMode.Controllers;
 using SampSharp.GameMode.Events;
 using SampSharp.GameMode.World;
 using SampSharp.Streamer.Definitions;
 using SampSharp.Streamer.Events;
+using SampSharp.Streamer.World;
 
 namespace SampSharp.Streamer
 {
@@ -29,9 +31,10 @@ namespace SampSharp.Streamer
         float CellSize { get; set; }
         bool IsErrorCallbackEnabled { get; set; }
         bool IsToggleErrorCallback { get; set; }
-        Streamer.OptionItemTypeCollection ItemType { get; }
+        OptionItemTypeSet ItemType { get; }
         bool PrintStackTraceOnError { get; set; }
         int TickRate { get; set; }
+
         event EventHandler<EventArgs> DynamicObjectMoved;
 
         event EventHandler<PlayerEditEventArgs> PlayerEditDynamicObject;
@@ -73,5 +76,13 @@ namespace SampSharp.Streamer
         void ToggleCameraUpdate(BasePlayer player, bool toggle);
         void ToggleIdleUpdate(BasePlayer player, bool toggle);
         void Update(BasePlayer player, Vector3 position, int worldid = -1, int interiorid = -1, int compensatedtime = -1, bool freezeplayer = true);
+        void Update(BasePlayer player);
+        void SetPlayerTickRate(BasePlayer player, int rate);
+        int GetPlayerTickRate(BasePlayer player);
+        IEnumerable<T> GetNearbyItems<T>(Vector3 position, float range = 300, int maxItems = 32, int worldid = -1) where T : IDynamicWorldObject;
+        IEnumerable<T> GetVisibleItems<T>(BasePlayer player, int maxItems = 32) where T : IDynamicWorldObject;
+        DynamicObject GetPlayerCameraTargetObject(BasePlayer player);
+        DynamicActor GetPlayerTargetActor(BasePlayer player);
+        DynamicActor GetPlayerCameraTargetActor(BasePlayer player);
     }
 }
