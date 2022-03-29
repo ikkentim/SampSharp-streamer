@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SampSharp.GameMode" Version="0.10.0-alpha1" />
+    <PackageReference Include="SampSharp.GameMode" Version="0.10.0" />
   </ItemGroup>
 
 </Project>

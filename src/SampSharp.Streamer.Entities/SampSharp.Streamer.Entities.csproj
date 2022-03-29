@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SampSharp.Entities" Version="0.10.0-alpha1" />
+    <PackageReference Include="SampSharp.Entities" Version="0.10.0" />
   </ItemGroup>
 
 </Project>
