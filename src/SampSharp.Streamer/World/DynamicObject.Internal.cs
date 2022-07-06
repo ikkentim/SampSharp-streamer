@@ -114,6 +114,13 @@ namespace SampSharp.Streamer.World
             }
 
             [NativeMethod]
+            public virtual int AttachDynamicObjectToObject(int objectid, int attachtoid, float offsetx, float offsety,
+                float offsetz, float rx, float ry, float rz, int syncrotation = 1)
+            {
+                throw new NativeNotImplementedException();
+            }
+
+            [NativeMethod]
             public virtual int AttachDynamicObjectToVehicle(int objectid, int vehicleid, float offsetx, float offsety,
                 float offsetz, float rx, float ry, float rz)
             {
