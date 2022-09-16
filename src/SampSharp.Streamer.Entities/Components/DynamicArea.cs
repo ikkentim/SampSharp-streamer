@@ -83,7 +83,7 @@ namespace SampSharp.Streamer.Entities
         /// <inheritdoc />
         protected override void OnDestroyComponent()
         {
-            GetComponent<NativeDynamicTextLabel>().DestroyDynamic3DTextLabel();
+            GetComponent<NativeDynamicArea>().DestroyDynamicArea();
         }
     }
 }
