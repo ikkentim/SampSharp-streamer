@@ -24,6 +24,54 @@ namespace SampSharp.Streamer.Entities
         #region Updates
 
         [NativeMethod]
+        public virtual void Streamer_ProcessActiveItems()
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_ToggleIdleUpdate(int playerid, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_IsToggleIdleUpdate(int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_ToggleCameraUpdate(int playerid, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_IsToggleCameraUpdate(int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_ToggleItemUpdate(int playerid, int type, bool toggle)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual bool Streamer_IsToggleItemUpdate(int playerid, int type)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual void Streamer_GetLastUpdateTime(out float time)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
         public virtual bool Streamer_Update(int playerid, int type)
         {
             throw new NativeNotImplementedException();
