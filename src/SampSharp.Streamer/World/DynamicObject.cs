@@ -132,6 +132,26 @@ namespace SampSharp.Streamer.World
             Internal.AttachDynamicObjectToVehicle(Id, vehicle.Id, offset.X, offset.Y, offset.Z, rotation.X,
                 rotation.Y, rotation.Z);
         }
+        public virtual void AttachTo(BasePlayer player, Vector3 offset, Vector3 rotation)
+        {
+            AssertNotDisposed();
+
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
+            Internal.AttachDynamicObjectToPlayer(Id, player.Id, offset.X, offset.Y, offset.Z, rotation.X,
+                rotation.Y, rotation.Z);
+        }
+        public virtual void AttachTo(DynamicObject obj, Vector3 offset, Vector3 rotation)
+        {
+            AssertNotDisposed();
+
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
+            Internal.AttachDynamicObjectToObject(Id, obj.Id, offset.X, offset.Y, offset.Z, rotation.X,
+                rotation.Y, rotation.Z);
+        }
 
         public virtual void SetNoCameraCollision()
         {
