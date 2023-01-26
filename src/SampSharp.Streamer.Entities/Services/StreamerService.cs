@@ -38,6 +38,84 @@ namespace SampSharp.Streamer.Entities
         #region Updates
 
         /// <inheritdoc />
+        public void ProcessActiveItems()
+        {
+			_native.Streamer_ProcessActiveItems();
+        }
+
+        /// <inheritdoc />
+        public bool ToggleIdleUpdate(EntityId player, bool toggle)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var success = _native.Streamer_ToggleIdleUpdate(player.Handle, toggle);
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool IsToggleIdleUpdate(EntityId player)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var isToggled = _native.Streamer_IsToggleIdleUpdate(player.Handle);
+            return isToggled;
+        }
+
+        /// <inheritdoc />
+        public bool ToggleCameraUpdate(EntityId player, bool toggle)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var success = _native.Streamer_ToggleCameraUpdate(player.Handle, toggle);
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool IsToggleCameraUpdate(EntityId player)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var isToggled = _native.Streamer_IsToggleCameraUpdate(player.Handle);
+            return isToggled;
+        }
+
+        /// <inheritdoc />
+        public bool ToggleItemUpdate(EntityId player, StreamerType type, bool toggle)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var success = _native.Streamer_ToggleItemUpdate(player.Handle, (int)type, toggle);
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool IsToggleItemUpdate(EntityId player, StreamerType type)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            var isToggled = _native.Streamer_IsToggleItemUpdate(player.Handle, (int)type);
+            return isToggled;
+        }
+
+        /// <inheritdoc />
         public bool Update(EntityId player, StreamerType type)
         {
             if (!player.IsOfAnyType(SampEntities.PlayerType))
@@ -64,12 +142,12 @@ namespace SampSharp.Streamer.Entities
         #region Objects
 
         /// <inheritdoc />
-        public DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation, 
-            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 300.0f, 
+        public DynamicObject CreateDynamicObject(int modelId, Vector3 position, Vector3 rotation,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 300.0f,
             float drawDistance = 0.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicObject(modelId, position.X, position.Y, position.Z,
-                rotation.X, rotation.Y, rotation.Z, virtualWorld, interior, player ? player.Entity.Handle : -1, 
+                rotation.X, rotation.Y, rotation.Z, virtualWorld, interior, player ? player.Entity.Handle : -1,
                 streamDistance, drawDistance, areaid, priority);
 
             if (id == NativeDynamicObject.InvalidId)
@@ -89,7 +167,7 @@ namespace SampSharp.Streamer.Entities
         #region Pickups
 
         /// <inheritdoc />
-        public DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1, 
+        public DynamicPickup CreateDynamicPickup(int modelId, PickupType pickupType, Vector3 position, int virtualWorld = -1, int interior = -1,
             Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicPickup(modelId, (int)pickupType, position.X, position.Y, position.Z, virtualWorld, interior,
@@ -115,7 +193,7 @@ namespace SampSharp.Streamer.Entities
         public DynamicCheckpoint CreateDynamicCheckpoint(Vector3 position, float size, int virtualWorld = -1, int interior = -1,
             Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
-            var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior, 
+            var id = _native.CreateDynamicCP(position.X, position.Y, position.Z, size, virtualWorld, interior,
                 player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
 
             if (id == NativeDynamicCheckpoint.InvalidId)
@@ -139,7 +217,7 @@ namespace SampSharp.Streamer.Entities
             int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0,
             EntityId parent = default)
         {
-            var id = _native.CreateDynamicRaceCP((int)type, position.X, position.Y, position.Z, nextPosition.X, nextPosition.Y, nextPosition.Z, 
+            var id = _native.CreateDynamicRaceCP((int)type, position.X, position.Y, position.Z, nextPosition.X, nextPosition.Y, nextPosition.Z,
                 size, virtualWorld, interior, player ? player.Entity.Handle : -1, streamDistance, areaid, priority);
 
             if (id == NativeDynamicRaceCheckpoint.InvalidId)
@@ -159,8 +237,8 @@ namespace SampSharp.Streamer.Entities
         #region Map Icon
 
         /// <inheritdoc />
-        public DynamicMapIcon CreateDynamicMapIcon(Vector3 position, MapIcon mapIcon, Color color, 
-            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f, 
+        public DynamicMapIcon CreateDynamicMapIcon(Vector3 position, MapIcon mapIcon, Color color,
+            int virtualWorld = -1, int interior = -1, Player player = null, float streamDistance = 200.0f,
             MapIconType style = MapIconType.Local, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicMapIcon(position.X, position.Y, position.Z, (int)mapIcon, color,
@@ -183,8 +261,8 @@ namespace SampSharp.Streamer.Entities
         #region Text Labels
 
         /// <inheritdoc />
-        public DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance, 
-            Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1, 
+        public DynamicTextLabel CreateDynamicTextLabel(string text, Color color, Vector3 position, float drawDistance,
+            Player attachedPlayer = null, Vehicle attachedVehicle = null, bool testLos = false, int virtualWorld = -1, int interior = -1,
             Player player = null, float streamDistance = 200.0f, int areaid = -1, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamic3DTextLabel(text, color, position.X, position.Y, position.Z,
@@ -209,10 +287,10 @@ namespace SampSharp.Streamer.Entities
         #region Area
 
         /// <inheritdoc />
-        public DynamicArea CreateCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1, 
+        public DynamicArea CreateCircle(Vector2 position, float size, int virtualWorld = -1, int interior = -1,
             Player player = null, int priority = 0, EntityId parent = default)
         {
-            var id = _native.CreateDynamicCircle(position.X, position.Y, size, virtualWorld, interior, 
+            var id = _native.CreateDynamicCircle(position.X, position.Y, size, virtualWorld, interior,
                 player ? player.Entity.Handle : -1, priority);
 
             if (id == NativeDynamicArea.InvalidId)
@@ -226,9 +304,9 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
-        public DynamicArea CreateCylinder(Vector2 position, float minz, float maxz, float size, 
+        public DynamicArea CreateCylinder(Vector2 position, float minz, float maxz, float size,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
         {
             var id = _native.CreateDynamicCylinder(position.X, position.Y, minz, maxz, size, virtualWorld, interior,
@@ -245,7 +323,7 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
         public DynamicArea CreateSphere(Vector3 position, float size,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
@@ -264,7 +342,7 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
         public DynamicArea CreateRectangle(Vector2 min, Vector2 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
@@ -283,7 +361,7 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
         public DynamicArea CreateCuboid(Vector3 min, Vector3 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
@@ -302,7 +380,7 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
         public DynamicArea CreateCube(Vector3 min, Vector3 max,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)
@@ -321,7 +399,7 @@ namespace SampSharp.Streamer.Entities
 
             return _entityManager.AddComponent<DynamicArea>(entity);
         }
-        
+
         /// <inheritdoc />
         public DynamicArea CreatePolygon(float[] points, float minz = float.NegativeInfinity, float maxz = float.PositiveInfinity,
             int virtualWorld = -1, int interior = -1, Player player = null, int priority = 0, EntityId parent = default)

@@ -26,11 +26,100 @@ namespace SampSharp.Streamer.Entities
         #region Updates
 
         /// <summary>
+        ///		Updates any item that is currently active (that is, moving or attached), including:
+        ///		<list type="bullet">
+        ///		<item>
+        ///		<description>
+        ///		Moving and attached objects.
+        ///		</description>
+        ///		</item>
+        ///		<item>
+        ///		<description>
+        ///		Attached areas and 3D text labels.
+        ///		</description>
+        ///		</item>
+        ///		</list>
+        /// </summary>
+        void ProcessActiveItems();
+
+        /// <summary>
+		///		Toggles whether updates are issued while the player is idle.
+		///		By default, this is turned off.
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <param name="toggle"><c>false</c> to turn off, <c>true</c> to turn on.</param>
+		/// <returns>
+		///		<c>false</c> on failure, <c>true</c> on success.
+		///		<see cref="bool"/>
+		/// </returns>
+		bool ToggleIdleUpdate(EntityId player, bool toggle);
+
+        /// <summary>
+		/// Returns whether <c>Streamer_ToggleIdleUpdate</c> is enabled for the player.
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <returns>
+		///		<see cref="bool"/>
+		/// </returns>
+		bool IsToggleIdleUpdate(EntityId player);
+
+        /// <summary>
+		/// Toggles whether updates are based on the player's current camera position
+		/// rather than the player's current world position.
+		/// <para>
+		/// By default, this is turned off.
+		/// </para>
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <param name="toggle"><c>false</c> to turn off, <c>true</c> to turn on.</param>
+		/// <returns>
+		///		<c>false</c> on failure, <c>true</c> on success.
+		///		<see cref="bool"/>
+		/// </returns>
+		bool ToggleCameraUpdate(EntityId player, bool toggle);
+
+        /// <summary>
+		/// Returns whether <c>Streamer_ToggleCameraUpdate</c> is enabled for the player.
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <returns>
+		///		<see cref="bool"/>
+		/// </returns>
+		bool IsToggleCameraUpdate(EntityId player);
+
+        /// <summary>
+		/// Toggles whether updates are issued for the specified player and item type.
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <param name="type">The item type.</param>
+		/// <param name="toggle"><c>false</c> to turn off, <c>true</c> to turn on.</param>
+		/// <returns>
+		///		<c>false</c> on failure, <c>true</c> on success.
+		///		<see cref="bool"/>
+		/// </returns>
+		bool ToggleItemUpdate(EntityId player, StreamerType type, bool toggle);
+
+        /// <summary>
+		/// Returns whether <c>Streamer_ToggleItemUpdate</c>
+		/// is enabled for the specified player and item type.
+		/// <para>
+		/// By default, every item type is turned on, except for NPCs.
+		/// </para>
+        /// </summary>
+		/// <param name="player">The player.</param>
+		/// <param name="type">The item type.</param>
+		/// <returns>
+		///		<see cref="bool"/>
+		/// </returns>
+		bool IsToggleItemUpdate(EntityId player, StreamerType type);
+
+        /// <summary>
         ///     Issues an update for the player.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="type">The item type.</param>
         /// <returns>
+		///		<c>false</c> on failure, <c>true</c> on success.
         ///     <see cref="bool"/>
         /// </returns>
         bool Update(EntityId player, StreamerType type);
