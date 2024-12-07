@@ -23,6 +23,48 @@ namespace SampSharp.Streamer.Entities
     /// </summary>
     public interface IStreamerService
     {
+        #region General
+        /// <summary>
+		/// Gets the current maximum item amount (number of items that can be created with the plugin natives) for specified item type.
+        /// </summary>
+		/// <param name="type">The item type.</param>
+		/// <returns>
+		///		<see cref="int"/>
+		/// </returns>
+        int GetMaxItems(StreamerType type);
+
+        /// <summary>
+        /// Sets the current maximum item amount (number of items that can be created with the plugin natives) for the specified item type.
+        /// </summary>
+        /// <param name="type">The item type.</param>
+        /// <param name="items">The maximum item amount (-1 for no imposed limit).</param>
+        /// <returns>
+        ///		<see cref="int"/>
+        /// </returns>
+        int SetMaxItems(StreamerType type, int items);
+
+        /// <summary>
+        /// Gets the current visible item amount (number of items that can be streamed) for the specified item type and player.
+        /// </summary>
+        /// <param name="type">The item type.</param>
+        /// <param name="playerid">The player ID.</param>
+        /// <returns>
+        ///		<see cref="int"/>
+        /// </returns>
+        int GetVisibleItems(StreamerType type, EntityId playerid);
+
+        /// <summary>
+        /// Gets the current visible item amount (number of items that can be streamed) for the specified item type and player.
+        /// </summary>
+        /// <param name="type">The item type.</param>
+        /// <param name="items">The maximum item amount (-1 for no imposed limit).</param>
+        /// <param name="playerid">The player ID.</param>
+        /// <returns>
+        ///		<see cref="int"/>
+        /// </returns>
+        int SetVisibleItems(StreamerType type, int items, EntityId playerid);
+        #endregion
+
         #region Updates
 
         /// <summary>
