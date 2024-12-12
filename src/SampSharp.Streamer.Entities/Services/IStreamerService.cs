@@ -63,6 +63,17 @@ namespace SampSharp.Streamer.Entities
         ///		<see cref="int"/>
         /// </returns>
         int SetVisibleItems(StreamerType type, int items, EntityId playerid);
+
+        /// <summary>
+        /// Sets the current streaming radius multiplier for the specified item type and player.
+        /// </summary>
+        /// <param name="type">The item type.</param>
+        /// <param name="multiplier">The float multiplier.</param>
+        /// <param name="playerid">The player ID.</param>
+        /// <returns>
+        ///		<see cref="int"/>
+        /// </returns>
+        int SetRadiusMultiplier(StreamerType type, float multiplier, EntityId playerid);
         #endregion
 
         #region Updates
