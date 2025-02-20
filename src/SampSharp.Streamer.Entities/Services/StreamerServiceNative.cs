@@ -21,6 +21,38 @@ namespace SampSharp.Streamer.Entities
 {
     public class StreamerServiceNative
     {
+        #region Settings
+        [NativeMethod]
+        public virtual int Streamer_GetMaxItems(int type)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int Streamer_SetMaxItems(int type, int items)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int Streamer_GetVisibleItems(int type, int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int Streamer_SetVisibleItems(int type, int items, int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
+
+        [NativeMethod]
+        public virtual int Streamer_SetRadiusMultiplier(int type, float multiplier, int playerid)
+        {
+            throw new NativeNotImplementedException();
+        }
+        #endregion
+
         #region Updates
 
         [NativeMethod]

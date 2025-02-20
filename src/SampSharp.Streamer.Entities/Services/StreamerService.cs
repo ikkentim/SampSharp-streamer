@@ -35,6 +35,53 @@ namespace SampSharp.Streamer.Entities
             _native = nativeProxy.Instance;
         }
 
+        #region Settings
+        /// <inheritdoc />
+        public int GetMaxItems(StreamerType type)
+        {
+            return _native.Streamer_GetMaxItems((int)type);
+        }
+
+        /// <inheritdoc />
+        public int SetMaxItems(StreamerType type, int items)
+        {
+            return _native.Streamer_SetMaxItems((int)type, items);
+        }
+
+        /// <inheritdoc />
+        public int GetVisibleItems(StreamerType type, EntityId player)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            return _native.Streamer_GetVisibleItems((int)type, player.Handle);
+        }
+
+        /// <inheritdoc />
+        public int SetVisibleItems(StreamerType type, int items, EntityId player)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            return _native.Streamer_SetVisibleItems((int)type, items, player.Handle);
+        }
+
+        /// <inheritdoc />
+        public int SetRadiusMultiplier(StreamerType type, float multiplier, EntityId player)
+        {
+            if (!player.IsOfAnyType(SampEntities.PlayerType))
+            {
+                throw new InvalidEntityArgumentException(nameof(player), SampEntities.PlayerType);
+            }
+
+            return _native.Streamer_SetRadiusMultiplier((int)type, multiplier, player.Handle);
+        }
+        #endregion
+
         #region Updates
 
         /// <inheritdoc />
